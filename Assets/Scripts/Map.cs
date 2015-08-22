@@ -7,9 +7,17 @@ public class Map : MonoBehaviour {
 	public Tile startingTile;
 	public float tileSearchRadius;
 
+
 	//public int markedTileProbability = 0;
 
 	//private List<Astar> astars;
+	public GameObject playerPrefab;
+	public List<GameObject> actorPrefabs;
+
+	public List<Tile> playerSpawnPositions;
+	public List<Tile> actorSpawnPositions;
+
+	static int actorNameIndex =0;
 
 	// Use this for initialization
 
@@ -77,12 +85,20 @@ public class Map : MonoBehaviour {
 					}
 				}
 			}
-
+		}
+		if (playerSpawnPositions.Count > 0) {
+			Tile t = playerSpawnPositions[Random.Range(0,playerSpawnPositions.Count)];
+			GameObject g=(GameObject)GameObject.Instantiate(playerPrefab,t.characterPosition,Quaternion.identity);
+			g.GetComponent<Player>().currentTile = t;
 
 		}
-
-
-
+		for (int i = 0; i < actorPrefabs.Count; ++i) {
+			Tile t =actorSpawnPositions[Random.Range(0,actorSpawnPositions.Count)];
+			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
+			g.GetComponent<Actors>().currentTile = t;
+			g.GetComponent<Actors>().actorName = LevelController.ConvertIntToName(actorNameIndex);
+			actorNameIndex++;
+		}
 	}
 	
 	// Update is called once per frame

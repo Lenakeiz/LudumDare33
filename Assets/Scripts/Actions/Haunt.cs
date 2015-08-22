@@ -45,12 +45,14 @@ public class Haunt : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (arrowPrefab) {
+			arrowPrefab = GameObject.Instantiate<GameObject>(arrowPrefab);
 			arrowPrefab.SetActive (false);
 		} else {
 			Debug.LogError ("NO ARROW PREFAB FOR HAUNT");
 		}
 
 		if (hauntPrefab) {
+			hauntPrefab = GameObject.Instantiate<GameObject>(hauntPrefab);
 			hauntPrefab.SetActive (false);
 		} else {
 			Debug.LogError ("NO HAUNT PREFAB FOR HAUNT");

@@ -20,6 +20,8 @@ public class Actors : MonoBehaviour {
 		RIGHT = 3,
 	}
 
+
+	public LevelController.ACTOR_NAMES actorName;
 	public ACTOR_STATE state = ACTOR_STATE.CHOOSING;
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
 
@@ -29,6 +31,7 @@ public class Actors : MonoBehaviour {
 	public bool isPanicking;
 
 	public float fear = 0;
+	public float fearSpookedAmount =30;
 	public float fearPanicAmount = 60;
 	public float fearReductionPerSecond = 1.0f;
 
@@ -45,6 +48,21 @@ public class Actors : MonoBehaviour {
 	float roamingT = 0.0f;
 
 	private Astar pathHelper;
+
+	public LevelController.ACTOR_STATES GetActorFearState()
+	{
+		if (fear > fearPanicAmount) {
+			return LevelController.ACTOR_STATES.PANICKED;
+		}
+		if (fear > fearSpookedAmount) {
+			return LevelController.ACTOR_STATES.SPOOKED;
+		}
+		if (fear >= 100) {
+			return LevelController.ACTOR_STATES.FAINTED;
+		}
+		return LevelController.ACTOR_STATES.NORMAL;
+
+	}
 
 	static ACTOR_DIRECTION GetOppositeDirection( ACTOR_DIRECTION dir)
 	{
