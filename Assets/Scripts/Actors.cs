@@ -31,6 +31,7 @@ public class Actors : MonoBehaviour {
 	public bool isPanicking;
 
 	public float fear = 0;
+	public float fearSpookedAmount =30;
 	public float fearPanicAmount = 60;
 	public float fearReductionPerSecond = 1.0f;
 
@@ -46,6 +47,21 @@ public class Actors : MonoBehaviour {
 	float roamingWaitTime =0.0f;
 	float roamingT = 0.0f;
 
+
+	public LevelController.ACTOR_STATES GetActorFearState()
+	{
+		if (fear > fearPanicAmount) {
+			return LevelController.ACTOR_STATES.PANICKED;
+		}
+		if (fear > fearSpookedAmount) {
+			return LevelController.ACTOR_STATES.SPOOKED;
+		}
+		if (fear >= 100) {
+			return LevelController.ACTOR_STATES.FAINTED;
+		}
+		return LevelController.ACTOR_STATES.NORMAL;
+
+	}
 
 	static ACTOR_DIRECTION GetOppositeDirection( ACTOR_DIRECTION dir)
 	{
