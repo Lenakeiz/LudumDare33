@@ -10,13 +10,12 @@ public class Map : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Queue<Tile> searchQueue = new Queue<Tile> ();
-		List<Tile> searched = new List<Tile> ();
 
 
 		searchQueue.Enqueue (startingTile);
 		while (searchQueue.Count>0) {
 			Tile curr = searchQueue.Dequeue();
-			searched.Add(curr);
+			curr.searched = true;
 			Collider[] colliders;
 			if((colliders = Physics.OverlapSphere(curr.transform.position,tileSearchRadius)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
 			{
@@ -41,7 +40,7 @@ public class Map : MonoBehaviour {
 					{
 						curr.left = other;
 					}
-					if(!searched.Contains(other))
+					if(!other.searched)
 					{
 						searchQueue.Enqueue(other);
 					}
