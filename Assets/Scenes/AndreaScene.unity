@@ -620,16 +620,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9be34f5103aaa4bba86428d3d4ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actorName: 0
   state: 0
   currentTile: {fileID: 1780095329}
   isPanicking: 0
   fear: 0
+  fearSpookedAmount: 30
   fearPanicAmount: 60
   fearReductionPerSecond: 1
-  movementSpeed: .600000024
+  movementSpeed: 3
   panicSpeed: 1.39999998
-  maxRoamingWaitTime: 5
-  minRoamingWaitTime: 2
+  maxRoamingWaitTime: 2
+  minRoamingWaitTime: 0
+  markedTilesPercentage: 35
 --- !u!114 &1093057794
 MonoBehaviour:
   m_ObjectHideFlags: 0

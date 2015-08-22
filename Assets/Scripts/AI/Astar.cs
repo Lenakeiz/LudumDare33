@@ -8,6 +8,8 @@ public class Astar : MonoBehaviour {
 
 	public float minTileSpanning;
 
+	//private List<Tile> allTiles;
+
 	private List<Tile> markedTiles;
 	private Tile currTargetPosition;
 	private Tile currInitialPosition;
@@ -15,14 +17,17 @@ public class Astar : MonoBehaviour {
 	private List<Tile> openList;
 	private List<Tile> closedList;
 
-	private Queue<Tile> movements;
+	private List<Tile> movements;
+	private Dictionary<int,int> mappedMovements;
+
 
 	// Use this for initialization
 	void Awake () {
 		markedTiles = new List<Tile>();
-		movements = new Queue<Tile>();
+		movements = new List<Tile>();
 		openList = new List<Tile>();
 		closedList = new List<Tile>();
+		mappedMovements = new Dictionary<int, int>();
 	}
 
 	public void AddTile(Tile tile)
@@ -35,6 +40,8 @@ public class Astar : MonoBehaviour {
 	{
 		movements.Clear();
 		openList.Clear();
+		closedList.Clear();
+		mappedMovements.Clear();
 		currInitialPosition.Parent = null;
 		currTargetPosition.Parent = null;
 	}
@@ -47,58 +54,142 @@ public class Astar : MonoBehaviour {
 
 		Tile currTile = null;
 
-		while(openList.Count != 0 || closedList.Contains(currTargetPosition))
+		while(openList.Count != 0 || (closedList.FirstOrDefault(x => x.Index == currTargetPosition.Index)) != null)
 		{
 			openList = openList.OrderBy(x => x.cost).ToList();
 			currTile = openList[0];
+
 			openList.Remove(currTile);
+			closedList.Add(currTile);
 
-			closedList.Add(currTargetPosition);
+			if(currTile.Index == currTargetPosition.Index)
+				break;
 
-			Collider[] colliders;
-			if((colliders = Physics.OverlapSphere(currTile.transform.position, minTileSpanning)).Length > 1)
+			if(currTile.up != null && (closedList.FirstOrDefault(x => x.Index == currTile.up.Index)) == null)
 			{
-				foreach(Collider collider in colliders)
+				Tile detectedTile = currTile.up;
+				Tile prevTile = openList.FirstOrDefault(x => x.Index == detectedTile.Index);
+				float computed_cost = Mathf.Abs(currTargetPosition.transform.position.x - detectedTile.transform.position.x) + Mathf.Abs(currTargetPosition.transform.position.z - detectedTile.transform.position.z);
+
+				if(prevTile == null)
 				{
-					Tile detectedTile = collider.transform.parent.gameObject.GetComponent<Tile>();
-
-					Tile prevTile = null;
-					prevTile = openList.FirstOrDefault(x => x.Index == detectedTile.Index);
-
-					float computed_cost = Mathf.Abs(currTargetPosition.transform.position.x - detectedTile.transform.position.x) + Mathf.Abs(currTargetPosition.transform.position.z - detectedTile.transform.position.z);
-
-					if(prevTile == null)
-					{
-						detectedTile.Parent = currTile;
-						detectedTile.cost = computed_cost;
-						openList.Add(detectedTile);
-					}
-					else
-					{
-						if(computed_cost < prevTile.cost)
-						{
-							prevTile.cost = computed_cost;
-							prevTile.Parent = currTile;
-						}
-					}
+					//detectedTile.Parent = currTile;
+					mappedMovements.Add(detectedTile.Index,currTile.Index);
+					detectedTile.cost = computed_cost;
+					openList.Add(detectedTile);
 				}
+				else
+				{
+					if(computed_cost < prevTile.cost)
+					{
+						mappedMovements[detectedTile.Index] = currTile.Index;
+						prevTile.cost = computed_cost;
+						//prevTile.Parent = currTile;
+					}
+				}		
+			}
+
+			if(currTile.right != null && (closedList.FirstOrDefault(x => x.Index == currTile.right.Index)) == null)
+			{
+				Tile detectedTile = currTile.right;
+				Tile prevTile = openList.FirstOrDefault(x => x.Index == detectedTile.Index);
+				float computed_cost = Mathf.Abs(currTargetPosition.transform.position.x - detectedTile.transform.position.x) + Mathf.Abs(currTargetPosition.transform.position.z - detectedTile.transform.position.z);
+				
+				if(prevTile == null)
+				{
+					//detectedTile.Parent = currTile;
+					mappedMovements.Add(detectedTile.Index,currTile.Index);
+					detectedTile.cost = computed_cost;
+					openList.Add(detectedTile);
+				}
+				else
+				{
+					if(computed_cost < prevTile.cost)
+					{
+						prevTile.cost = computed_cost;
+						//prevTile.Parent = currTile;
+						mappedMovements[detectedTile.Index] = currTile.Index;
+					}
+				}		
+			}
+
+			if(currTile.down != null && (closedList.FirstOrDefault(x => x.Index == currTile.down.Index)) == null)
+			{
+				Tile detectedTile = currTile.down;
+				Tile prevTile = openList.FirstOrDefault(x => x.Index == detectedTile.Index);
+				float computed_cost = Mathf.Abs(currTargetPosition.transform.position.x - detectedTile.transform.position.x) + Mathf.Abs(currTargetPosition.transform.position.z - detectedTile.transform.position.z);
+				
+				if(prevTile == null)
+				{
+					//detectedTile.Parent = currTile;
+					mappedMovements.Add(detectedTile.Index,currTile.Index);
+					detectedTile.cost = computed_cost;
+					openList.Add(detectedTile);
+				}
+				else
+				{
+					if(computed_cost < prevTile.cost)
+					{
+						prevTile.cost = computed_cost;
+						//prevTile.Parent = currTile;
+						mappedMovements[detectedTile.Index] = currTile.Index;
+					}
+				}		
+			}
+
+			if(currTile.left != null && (closedList.FirstOrDefault(x => x.Index == currTile.left.Index)) == null)
+			{
+				Tile detectedTile = currTile.left;
+				Tile prevTile = openList.FirstOrDefault(x => x.Index == detectedTile.Index);
+				float computed_cost = Mathf.Abs(currTargetPosition.transform.position.x - detectedTile.transform.position.x) + Mathf.Abs(currTargetPosition.transform.position.z - detectedTile.transform.position.z);
+				
+				if(prevTile == null)
+				{
+				    //detectedTile.Parent = currTile;
+					mappedMovements.Add(detectedTile.Index,currTile.Index);
+					detectedTile.cost = computed_cost;
+					openList.Add(detectedTile);
+				}
+				else
+				{
+					if(computed_cost < prevTile.cost)
+					{
+						prevTile.cost = computed_cost;
+						//prevTile.Parent = currTile;
+						mappedMovements[detectedTile.Index] = currTile.Index;
+					}
+				}		
 			}
 		}
 
-		currTile = currTargetPosition;
+		int currIndexTile = currTargetPosition.Index;
+
 		//walking backward
-		while (currTile.Parent != null)
+		while(mappedMovements.ContainsKey(currIndexTile))
 		{
-			movements.Enqueue(currTile);
-			currTile = currTile.Parent;
+			currTile = closedList.FirstOrDefault(x => x.Index == currIndexTile);
+			if(currTile != null)
+				movements.Add(currTile);
+			else 
+				Debug.Log ("Found a mapped int not in the closed List");
+			currIndexTile = mappedMovements[currIndexTile];
 		}
+
+	}
+
+	private void ComputeCost(Tile calculatingTile)
+	{
 
 	}
 
 	public Tile GetNextMove()
 	{
 		if(movements != null && movements.Count != 0)
-			return movements.Dequeue();
+		{
+			Tile retTile = movements[movements.Count - 1];
+			movements.RemoveAt(movements.Count - 1);
+			return retTile;
+		}
 		else
 			return null;
 	}

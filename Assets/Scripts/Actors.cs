@@ -40,14 +40,14 @@ public class Actors : MonoBehaviour {
 	float movementT = 0.0f;
 	Tile movementTarget;
 
-
 	public float maxRoamingWaitTime;
 	public float minRoamingWaitTime;
 
-	float roamingWaitTime =1.0f;
+	float roamingWaitTime =0.0f;
 	float roamingT = 0.0f;
 
 	private Astar pathHelper;
+	public int markedTilesPercentage = 35;
 
 	public LevelController.ACTOR_STATES GetActorFearState()
 	{
@@ -144,7 +144,7 @@ public class Actors : MonoBehaviour {
 		Tile currTile = null;
 		for (int i = 0; i < tiles.Length; i++) {
 			currTile = tiles[i].GetComponent<Tile>();
-			if(currTile.useAstar)
+			if(currTile.useAstar || Random.Range(0,101) < markedTilesPercentage)
 			{
 				pathHelper.AddTile(currTile);
 			}
