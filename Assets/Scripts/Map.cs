@@ -43,6 +43,9 @@ public class Map : MonoBehaviour {
 			Tile curr = searchQueue.Dequeue();
 			curr.searched = true;
 			curr.Index = indexCount;
+
+			curr.name = "Tile_" + indexCount;
+
 			Debug.Log (indexCount);
 			indexCount++;
 //			//Adding tiles to the astar
