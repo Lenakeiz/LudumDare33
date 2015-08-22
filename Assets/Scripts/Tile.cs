@@ -20,6 +20,13 @@ public class Tile : MonoBehaviour {
 	public Tile left; 
 	public Tile down;
 
+	//Used for astar
+	public Tile Parent;
+	public float cost = 0.0f;
+
+	public bool useAstar = false;
+	public int Index = -1;
+
 	// Use this for initialization
 	void Start () {
 		characterPosition = this.transform.position + new Vector3 (0, 1, 0);

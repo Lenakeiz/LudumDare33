@@ -7,15 +7,45 @@ public class Map : MonoBehaviour {
 	public Tile startingTile;
 	public float tileSearchRadius;
 
+	//public int markedTileProbability = 0;
+
+	//private List<Astar> astars;
+
 	// Use this for initialization
+
+	bool breakout = false;
+
 	void Start () {
 		Queue<Tile> searchQueue = new Queue<Tile> ();
 
+//		astars = new List<Astar>();
+//		GameObject[] actors = GameObject.FindGameObjectsWithTag("Actor");
+//
+//		for (int i = 0; i < actors.Length; i++) {
+//			astars.Add(actors[i].GetComponent<Astar>() as Astar);
+//		}
 
 		searchQueue.Enqueue (startingTile);
+		int indexCount = 0;
 		while (searchQueue.Count>0) {
+			if(breakout)
+			{
+				break;
+			}
 			Tile curr = searchQueue.Dequeue();
 			curr.searched = true;
+			curr.Index = indexCount;
+			Debug.Log (indexCount);
+			indexCount++;
+//			//Adding tiles to the astar
+//			foreach (Astar helperPath in astars) {
+//				if(Random.Range(5,101) < markedTileProbability || curr.useAstar == true)
+//				{
+//					helperPath.AddTile(curr);
+//				}
+//			}
+
+
 			Collider[] colliders;
 			if((colliders = Physics.OverlapSphere(curr.transform.position,tileSearchRadius)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
 			{
@@ -42,6 +72,7 @@ public class Map : MonoBehaviour {
 					}
 					if(!other.searched)
 					{
+						other.searched = true;
 						searchQueue.Enqueue(other);
 					}
 				}
