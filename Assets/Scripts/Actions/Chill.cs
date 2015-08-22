@@ -89,7 +89,7 @@ public class Chill : MonoBehaviour {
 		}
 		if (chillCooldownTimer > 0) {
 			chillCooldownTimer -= Time.deltaTime;
-			if(chillCooldownTimer <= 0)
+			if(chillCooldownTimer <= 0 && chillCooldown >0)
 			{
 				chillCooldownTimer = 0;
 			}
@@ -97,7 +97,7 @@ public class Chill : MonoBehaviour {
 
 		if (chillDurationTimer > 0) {
 			chillDurationTimer -= Time.deltaTime;
-			if(chillDurationTimer <= 0)
+			if(chillDurationTimer <= 0 && chillDuration >0)
 			{
 				MarkChilledNodes(true);
 				chillDurationTimer = 0;

@@ -49,6 +49,7 @@ public class Map : MonoBehaviour {
 					}
 					if(!other.searched)
 					{
+						other.searched = true;
 						searchQueue.Enqueue(other);
 					}
 				}

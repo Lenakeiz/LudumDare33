@@ -68,7 +68,7 @@ public class LevelController : MonoBehaviour {
 		for (int i = 0; i < s.actorNames.Count; ++i) {
 			for(int j = 0; j < tasks[task].actorNames.Count; ++j)
 			{
-				if(s.actorNames[i] == tasks[task].actorNames[j] &&
+				if((s.actorNames[i] == tasks[task].actorNames[j])|| tasks[task].actorNames[i]==ACTOR_NAMES.ANY &&
 				   s.actorStates[i] == tasks[task].actorStates[j])
 				{
 					matches++;
@@ -99,7 +99,7 @@ public class LevelController : MonoBehaviour {
 			if(GeometryUtility.TestPlanesAABB(planes,
 			                                  actor.GetComponent<CapsuleCollider>().bounds))
 			{
-				Debug.Log("I SEE A GUY");
+				//Debug.Log("I SEE A GUY");
 				sit.actorNames.Add(actor.actorName);
 				sit.actorStates.Add (actor.GetActorFearState());
 			}
@@ -192,6 +192,6 @@ public class LevelController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		BuildSituation (0);
+	
 	}
 }

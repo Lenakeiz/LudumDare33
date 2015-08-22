@@ -334,15 +334,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 29.9899998
+      value: 29.7999992
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -22.5799999
+      value: -15.8000002
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalRotation.x
-      value: .57357651
+      value: .642787695
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalRotation.y
@@ -354,11 +354,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .819151998
+      value: .766044378
       objectReference: {fileID: 0}
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2089288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: orthographic

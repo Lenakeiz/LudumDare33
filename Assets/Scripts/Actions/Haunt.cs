@@ -36,7 +36,7 @@ public class Haunt : MonoBehaviour {
 		arrowPrefab.transform.position = this.transform.position + hauntDirection * arrowOffset;
 		arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,hauntDirection);
 
-		hauntCooldownTimer = hauntCooldown;
+
 		hauntDurationTimer = hauntDuration;
 		lockNumber = lockNum;
 		return true;
@@ -68,11 +68,18 @@ public class Haunt : MonoBehaviour {
 	{
 		if (hauntCooldownTimer > 0) {
 			hauntCooldownTimer -= Time.deltaTime;
-			if(hauntCooldown < 0)
+			if(hauntCooldown < 0 && hauntCooldown >0)
 			{
 				hauntCooldownTimer = 0;
 			}
-		
+		}
+
+		if (hauntDurationTimer > 0) {
+			hauntDurationTimer -= Time.deltaTime;
+			if(hauntDurationTimer < 0 && hauntDuration >0)
+			{
+				hauntPrefab.SetActive(false);
+			}
 		}
 
 		if (choosingDirection) {
@@ -83,6 +90,7 @@ public class Haunt : MonoBehaviour {
 				hauntPrefab.transform.localRotation = Quaternion.LookRotation(hauntDirection,Vector3.up);
 				arrowPrefab.gameObject.SetActive(false);
 				player.CancelAction(lockNumber);
+				hauntCooldownTimer = hauntCooldown;
 				choosingDirection = false;
 			}
 
