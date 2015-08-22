@@ -22,21 +22,22 @@ public class Map : MonoBehaviour {
 			{
 				foreach(Collider collider in colliders)
 				{
-					if(collider.gameObject == curr.gameObject || collider.tag !="Tile")continue;
-					Tile other = collider.GetComponent<Tile>();
-					if(collider.transform.position == curr.transform.position + new Vector3(0,0,tileSearchRadius))
+					if(collider.transform.parent == null) continue;
+					if(collider.transform.parent.gameObject == curr.gameObject || collider.transform.parent.gameObject.tag !="Tile")continue;
+					Tile other = collider.transform.parent.gameObject.GetComponent<Tile>();
+					if(other.transform.position == curr.transform.position + new Vector3(0,0,tileSearchRadius))
 					{
 						curr.up = other;
 					}
-					if(collider.transform.position == curr.transform.position + new Vector3(0,0,-tileSearchRadius))
+					if(other.transform.position == curr.transform.position + new Vector3(0,0,-tileSearchRadius))
 					{
 						curr.down = other;
 					}
-					if(collider.transform.position == curr.transform.position + new Vector3(tileSearchRadius,0,0))
+					if(other.transform.position == curr.transform.position + new Vector3(tileSearchRadius,0,0))
 					{
 						curr.right = other;
 					}
-					if(collider.transform.position == curr.transform.position + new Vector3(-tileSearchRadius,0,0))
+					if(other.transform.position == curr.transform.position + new Vector3(-tileSearchRadius,0,0))
 					{
 						curr.left = other;
 					}
