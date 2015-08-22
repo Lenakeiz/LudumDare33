@@ -44,9 +44,10 @@ public class Actors : MonoBehaviour {
 	public float maxRoamingWaitTime;
 	public float minRoamingWaitTime;
 
-	float roamingWaitTime =0.0f;
+	float roamingWaitTime =1.0f;
 	float roamingT = 0.0f;
 
+	private Astar pathHelper;
 
 	public LevelController.ACTOR_STATES GetActorFearState()
 	{
@@ -137,10 +138,23 @@ public class Actors : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.transform.position = currentTile.characterPosition;
+		pathHelper = gameObject.GetComponent<Astar>() as Astar;
+
+		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+		Tile currTile = null;
+		for (int i = 0; i < tiles.Length; i++) {
+			currTile = tiles[i].GetComponent<Tile>();
+			if(currTile.useAstar)
+			{
+				pathHelper.AddTile(currTile);
+			}
+		}
+		roamingT = 0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		if (fear > fearPanicAmount) {
 			isPanicking = true;
 		} else {
@@ -153,9 +167,6 @@ public class Actors : MonoBehaviour {
 			fear -= Time.deltaTime * fearReductionPerSecond;
 		}
 		fear = Mathf.Max(fear, 0);
-
-
-
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
@@ -170,10 +181,16 @@ public class Actors : MonoBehaviour {
 			{
 				previousTile = currentTile;
 				currentTile = movementTarget;
-				movementTarget = null;
+				//movementTarget = null;
+				movementTarget = pathHelper.GetNextMove();
 				currentTile.occupant = this.gameObject;
 				movementT = 0;
-				state = ACTOR_STATE.CHOOSING;
+				//state = ACTOR_STATE.CHOOSING;
+				if(movementTarget == null)
+				{
+					state = ACTOR_STATE.CHOOSING;
+				}
+
 				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 				if(isPanicking)
 				{
@@ -186,51 +203,63 @@ public class Actors : MonoBehaviour {
 			roamingT += Time.deltaTime;
 			if(roamingT > roamingWaitTime)
 			{
-				moveDirection = MakeChoice();
-				Debug.Log(moveDirection);
+				//moveDirection = MakeChoice();
 				roamingT = 0;
+				pathHelper.RequestNewRandomPath(currentTile);
+				Debug.Log(moveDirection);
+
 				state = ACTOR_STATE.STANDING;
 			}
 
 		}
 
 		if (state == ACTOR_STATE.STANDING) {
-			if (moveDirection ==ACTOR_DIRECTION.RIGHT) 
+			movementTarget = pathHelper.GetNextMove();
+			if(movementTarget != null)
 			{
-				if (currentTile.right) 
-				{
-					state = ACTOR_STATE.MOVING;
-					movementTarget = currentTile.right;
-					currentTile.occupant = null;
-				}
-			} 
-			else if(moveDirection == ACTOR_DIRECTION.LEFT)
-			{
-				if (currentTile.left) 
-				{
-					state = ACTOR_STATE.MOVING;
-					movementTarget = currentTile.left;
-					currentTile.occupant = null;
-				}
+				currentTile.occupant = null;
+				state = ACTOR_STATE.MOVING;
 			}
-			else if (moveDirection == ACTOR_DIRECTION.UP)
+			else
 			{
-				if(currentTile.up)
-				{
-					state = ACTOR_STATE.MOVING;
-					movementTarget = currentTile.up;
-					currentTile.occupant = null;
-				}
+				state = ACTOR_STATE.CHOOSING;
 			}
-			else if (moveDirection == ACTOR_DIRECTION.DOWN)
-			{
-				if(currentTile.down)
-				{
-					state = ACTOR_STATE.MOVING;
-					movementTarget = currentTile.down;
-					currentTile.occupant = null;
-				}
-			}
+//			if (moveDirection ==ACTOR_DIRECTION.RIGHT) 
+//			{
+//				if (currentTile.right) 
+//				{
+//					state = ACTOR_STATE.MOVING;
+//					movementTarget = currentTile.right;
+//					currentTile.occupant = null;
+//				}
+//			} 
+//			else if(moveDirection == ACTOR_DIRECTION.LEFT)
+//			{
+//				if (currentTile.left) 
+//				{
+//					state = ACTOR_STATE.MOVING;
+//					movementTarget = currentTile.left;
+//					currentTile.occupant = null;
+//				}
+//			}
+//			else if (moveDirection == ACTOR_DIRECTION.UP)
+//			{
+//				if(currentTile.up)
+//				{
+//					state = ACTOR_STATE.MOVING;
+//					movementTarget = currentTile.up;
+//					currentTile.occupant = null;
+//				}
+//			}
+//			else if (moveDirection == ACTOR_DIRECTION.DOWN)
+//			{
+//				if(currentTile.down)
+//				{
+//					state = ACTOR_STATE.MOVING;
+//					movementTarget = currentTile.down;
+//					currentTile.occupant = null;
+//				}
+//			}
 		}
 	}
 }
