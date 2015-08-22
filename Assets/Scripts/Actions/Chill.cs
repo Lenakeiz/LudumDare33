@@ -76,6 +76,7 @@ public class Chill : MonoBehaviour {
 			Debug.LogError("CANT FIND PLAYER");
 		}
 		if (chillObject) {
+			chillObject = GameObject.Instantiate<GameObject>(chillObject);
 			chillObject.SetActive(false);
 		}
 	}

@@ -32,6 +32,18 @@ public class Tile : MonoBehaviour {
 			               this.transform.position + new Vector3(0,2,0),Color.cyan);
 		}
 
+
+
+
+		Debug.DrawLine (this.transform.position + new Vector3( this.transform.localScale.x  ,0, -this.transform.localScale.y ),
+		                this.transform.position + new Vector3( -this.transform.localScale.x  ,0, -this.transform.localScale.y ));
+
+
+
+		Debug.DrawLine (this.transform.position + new Vector3( -this.transform.localScale.x  ,0, this.transform.localScale.y ),
+		                this.transform.position + new Vector3( -this.transform.localScale.x  ,0, -this.transform.localScale.y ));
+
+		/*
 		if (right) {
 			if(right.left == this)
 			{
@@ -54,5 +66,6 @@ public class Tile : MonoBehaviour {
 				               down.transform.position,Color.red);
 			}
 		}
+		*/
 	}
 }

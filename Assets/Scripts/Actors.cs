@@ -20,6 +20,8 @@ public class Actors : MonoBehaviour {
 		RIGHT = 3,
 	}
 
+
+	public LevelController.ACTOR_NAMES actorName;
 	public ACTOR_STATE state = ACTOR_STATE.CHOOSING;
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
 
