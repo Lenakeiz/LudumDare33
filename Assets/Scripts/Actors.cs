@@ -45,7 +45,19 @@ public class Actors : MonoBehaviour {
 	float roamingT = 0.0f;
 
 
-
+	static ACTOR_DIRECTION GetOppositeDirection( ACTOR_DIRECTION dir)
+	{
+		if (dir == ACTOR_DIRECTION.DOWN) {
+			return ACTOR_DIRECTION.UP;
+		} else if (dir == ACTOR_DIRECTION.UP) {
+			return ACTOR_DIRECTION.DOWN;
+		} else if (dir == ACTOR_DIRECTION.LEFT) {
+			return ACTOR_DIRECTION.RIGHT;
+		} else if (dir == ACTOR_DIRECTION.RIGHT) {
+			return ACTOR_DIRECTION.LEFT;
+		}
+		return ACTOR_DIRECTION.NONE;
+	}
 
 	static ACTOR_DIRECTION IntToDirection(int dir)
 	{

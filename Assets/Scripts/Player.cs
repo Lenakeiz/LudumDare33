@@ -55,6 +55,8 @@ public class Player : MonoBehaviour {
 	{
 		if (lockNumber == actionLockNumber) {
 			state = PLAYER_STATE.STANDING;
+		} else {
+			Debug.Log("Wrong lock number");
 		}
 	}
 
@@ -63,6 +65,14 @@ public class Player : MonoBehaviour {
 		if (Input.GetButtonDown ("Fire1")) {
 			int lockNumber = Random.Range(0,100);
 			if(this.GetComponent<Chill>().Activate(lockNumber))
+			{
+				actionLockNumber =lockNumber;
+				state = PLAYER_STATE.DOING_ACTION;
+			}
+		}
+		else if (Input.GetButtonDown ("Fire2")) {
+			int lockNumber = Random.Range(0,100);
+			if(this.GetComponent<Haunt>().Activate(lockNumber))
 			{
 				actionLockNumber =lockNumber;
 				state = PLAYER_STATE.DOING_ACTION;
