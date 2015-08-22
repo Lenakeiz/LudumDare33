@@ -98,9 +98,15 @@ public class Actors : MonoBehaviour {
 		return possibleChoices [Random.Range (0, possibleChoices.Count)];
 	}
 
+	public void AddFear (float argFear)
+	{
+		//we can trigger animations in here
+		fear += argFear;
+	}
+
 	// Use this for initialization
 	void Start () {
-	
+		this.transform.position = currentTile.characterPosition;
 	}
 	
 	// Update is called once per frame

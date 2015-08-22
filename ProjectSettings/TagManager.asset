@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tile
+  - Actor
   layers:
   - Default
   - TransparentFX
