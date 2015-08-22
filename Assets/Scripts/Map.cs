@@ -46,7 +46,6 @@ public class Map : MonoBehaviour {
 
 			curr.name = "Tile_" + indexCount;
 
-			Debug.Log (indexCount);
 			indexCount++;
 //			//Adding tiles to the astar
 //			foreach (Astar helperPath in astars) {
