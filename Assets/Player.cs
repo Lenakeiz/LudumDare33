@@ -30,14 +30,15 @@ public class Player : MonoBehaviour {
 	
 		if (state == PLAYER_STATE.MOVING) 
 		{
-			movementT += Time.deltaTime;
+			movementT += Time.deltaTime * movementSpeed;
 			if(movementT < 1)
 			{
 				this.transform.position = Vector3.Lerp(currentTile.characterPosition,
 			                                       movementTarget.characterPosition,
 			                                       movementT);
 			}
-			else{
+			else
+			{
 				currentTile = movementTarget;
 				movementTarget=null;
 				movementT = 0.0f;
