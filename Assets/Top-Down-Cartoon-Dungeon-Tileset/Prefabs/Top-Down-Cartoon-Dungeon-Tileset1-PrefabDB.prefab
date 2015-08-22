@@ -1,0 +1,386 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &163510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 463510}
+  - 114: {fileID: 11463510}
+  m_Layer: 0
+  m_Name: Top-Down-Cartoon-Dungeon-Tileset1-PrefabDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463510
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11463510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1557640053, guid: 5d4184d92941b574f8f8757b78a9c9f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - name: 5370656369616c2054696c6573
+    editorColor:
+      r: .149169609
+      g: .641060948
+      b: .333025008
+      a: 1
+    kind: 0
+    allowedMapsMask: -3
+    tiles:
+    - {fileID: 158434, guid: ab1c1ee30623f1b4eac1726fec92a814, type: 2}
+    - {fileID: 158434, guid: eac2b5498b44e3248a09e5e4b5ac7435, type: 2}
+    - {fileID: 186454, guid: 9b6b8f9d70c653e4b87ef2354a6a7b5b, type: 2}
+    - {fileID: 186454, guid: a3aa05ad4a3fad240aa36849b783c576, type: 2}
+    - {fileID: 186454, guid: 6abcad9a961f12d43bcbd2aac7ffe1fb, type: 2}
+    - {fileID: 186454, guid: 7454ea612af9de945870c848232745f0, type: 2}
+  autoTiles:
+  - name: 42617365
+    editorColor:
+      r: 0
+      g: 1
+      b: 1
+      a: 1
+    kind: 1
+    isLower: 0
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: 381ebba572acefa4c9e105e5f20c3b44, type: 2}
+      - {fileID: 130466, guid: ad8223a5597b76e4fbef2f2d87325eaf, type: 2}
+      - {fileID: 186454, guid: f7464675c2aa9fd418cc8aabf0f6ec11, type: 2}
+      - {fileID: 132840, guid: 6451265a82b877c41853a7ddb257f3e3, type: 2}
+      - {fileID: 126500, guid: 0f3c6902af7b7e94c90566643e5c8c8e, type: 2}
+      - {fileID: 105822, guid: 36291129b8144d641900c467ce9c3c02, type: 2}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: ac603f226fd4d1b428d9d016a9905040, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: 0ed619a5de326ac499cac1ab77805777, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+  - name: 426173652d50696c6c617273
+    editorColor:
+      r: .178715751
+      g: .476123333
+      b: .724456966
+      a: 1
+    kind: 1
+    isLower: 0
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: 381ebba572acefa4c9e105e5f20c3b44, type: 2}
+      - {fileID: 130466, guid: ad8223a5597b76e4fbef2f2d87325eaf, type: 2}
+      - {fileID: 186454, guid: ae4a6bc2d9aa6784db752f5988dcee85, type: 2}
+      - {fileID: 132840, guid: 8e4f89c2739c5c34fb1bae1f375ee53f, type: 2}
+      - {fileID: 126500, guid: 0f3c6902af7b7e94c90566643e5c8c8e, type: 2}
+      - {fileID: 105822, guid: 36291129b8144d641900c467ce9c3c02, type: 2}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: ac603f226fd4d1b428d9d016a9905040, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 148584, guid: 0ed619a5de326ac499cac1ab77805777, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+  - name: 44726f70
+    editorColor:
+      r: .147222966
+      g: .557320356
+      b: .779949427
+      a: 1
+    kind: 1
+    isLower: 1
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: f19b2f181fc0057438c70b10de21e043, type: 2}
+      - {fileID: 156504, guid: b8714eb7a4b9cdb4f97bc9a5968f5b62, type: 2}
+      - {fileID: 185836, guid: 7ca94bca3ba8cab45bf2c0e64632f995, type: 2}
+      - {fileID: 185836, guid: d72a139b6ecc1fb4bbaffb79f47aef52, type: 2}
+      - {fileID: 185836, guid: c08c99b970edeb341b1cb2b5fdeae82c, type: 2}
+      - {fileID: 185836, guid: 6d76d87668238ea46ac1695e4f5aac1a, type: 2}
+      upperSet: 0
+      upperTile: 0
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: af2ebed8e704adf4eae24bc749e9f9ce, type: 2}
+      - {fileID: 0}
+      - {fileID: 185836, guid: 7ca94bca3ba8cab45bf2c0e64632f995, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: 0
+      upperTile: 0
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: 283b82a13f48b8d42b701d871f6475c4, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: 0
+      upperTile: 0
+  - name: 44726f702d48616c66
+    editorColor:
+      r: .41059193
+      g: .718081117
+      b: .602160335
+      a: 1
+    kind: 1
+    isLower: 1
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: 91b34dce05bfe1d47b53997d0b5c5cfc, type: 2}
+      - {fileID: 156504, guid: 6dc48cdfd54a37a44899ac441330daff, type: 2}
+      - {fileID: 185836, guid: c38e8a4d0164ab94cb69caac4b12003a, type: 2}
+      - {fileID: 185836, guid: 68a99fbcb76a29a4589d5903e88365da, type: 2}
+      - {fileID: 0}
+      - {fileID: 185836, guid: 4ebdca6a372d4834892db1c2515e1058, type: 2}
+      upperSet: 0
+      upperTile: 0
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: 3c1135ac3ada47248897fc8b2a1fce61, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: 0
+      upperTile: 0
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: 25f3fc8f2aa622a4da74e6e234d28795, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: 0
+      upperTile: 0
+  - name: 506974
+    editorColor:
+      r: .865289986
+      g: .745230675
+      b: .105765894
+      a: 1
+    kind: 1
+    isLower: 1
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 167216, guid: acee0eb72d71c8d4db08179628f3c8f6, type: 2}
+      - {fileID: 156504, guid: 60e6f158953e31d48824b9945b813887, type: 2}
+      - {fileID: 185836, guid: 91533bbf5453eee49bfe85dea7d6f534, type: 2}
+      - {fileID: 185836, guid: 622e774a7dedbdc4fb836744032c32e1, type: 2}
+      - {fileID: 185836, guid: 3eb760ae9bf01af46a5107662b67001e, type: 2}
+      - {fileID: 185836, guid: 04279180e9dcf4d42ac254cf92e1e1bd, type: 2}
+      upperSet: 0
+      upperTile: 0
+  - name: 416c7465726e61746531
+    editorColor:
+      r: .919487476
+      g: .660255671
+      b: .653232515
+      a: 1
+    kind: 100
+    isLower: 0
+    is_4_tile_system: 1
+    allowedMapsMask: -1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 185836, guid: 7163bad09ea16cc4ba5cb3adb4360b80, type: 2}
+      - {fileID: 185836, guid: b1400a2ec050b7e47b7b25e05b66683c, type: 2}
+      - {fileID: 185836, guid: b66406a6116ff184cad6c389b0437db6, type: 2}
+      - {fileID: 185836, guid: aac8f35559d69c84ea55e5cb7ec89341, type: 2}
+      - {fileID: 185836, guid: e146c38a80ac58440b0994e382db1c05, type: 2}
+      - {fileID: 185836, guid: d195a768580fdf344875489317c746e3, type: 2}
+      - {fileID: 185836, guid: 09ae6ba7f3b43fb4c8883b41f4bbe7ae, type: 2}
+      - {fileID: 185836, guid: 75680a1f432924d4bb892720b5a15813, type: 2}
+      - {fileID: 185836, guid: 027fb33936a74dc49a7bcd8f8dce7e7d, type: 2}
+      - {fileID: 185836, guid: e6a5e070c276efd44a173b40597d38bf, type: 2}
+      - {fileID: 185836, guid: d971dfd2877728b4b804f9e2bb80593c, type: 2}
+      - {fileID: 185836, guid: 9c98e9529b101314b8773b62b2f6f9d7, type: 2}
+      - {fileID: 185836, guid: e45fe68990d931941beb4043233e516d, type: 2}
+      - {fileID: 185836, guid: 8bec3e91a7060fd4a86edb62bb9f8e03, type: 2}
+      - {fileID: 185836, guid: e47456b88bd56154aa11f39717401324, type: 2}
+      upperSet: -1
+      upperTile: -1
+  - name: 416c7465726e61746532
+    editorColor:
+      r: .9237082
+      g: .248661116
+      b: .362395614
+      a: 1
+    kind: 100
+    isLower: 0
+    is_4_tile_system: 1
+    allowedMapsMask: -1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 185836, guid: 4380d63a2275adc4fae53be054c6c086, type: 2}
+      - {fileID: 185836, guid: 484c991c0756833478b3f9708d5ec315, type: 2}
+      - {fileID: 185836, guid: 7fd2eb3b77a63cb4ca40b340e373c8d9, type: 2}
+      - {fileID: 185836, guid: e804e98c98df82846b9fbf9289cd8039, type: 2}
+      - {fileID: 185836, guid: df4ce013ea479ec41abdf0b12c965e19, type: 2}
+      - {fileID: 185836, guid: 607e2dbd35fb5ff4bbd19da3a3dd7135, type: 2}
+      - {fileID: 185836, guid: 8d92635357e6afd45832bcea39e6dc35, type: 2}
+      - {fileID: 185836, guid: b86a96f689e53044b95676f0ec5c0efe, type: 2}
+      - {fileID: 185836, guid: 6d355cafe972cd746bc37af71690976b, type: 2}
+      - {fileID: 185836, guid: db48bfbeb6a398548995ce8f22d406d6, type: 2}
+      - {fileID: 185836, guid: 44364c31e9b050748affe7152ea59369, type: 2}
+      - {fileID: 185836, guid: 769cd41134567ca4bb7054fdfcbff001, type: 2}
+      - {fileID: 185836, guid: ac1c0800be8c3c54ab52570e49ec32c3, type: 2}
+      - {fileID: 185836, guid: d53c7b9732b9fb742abd691e3d26c909, type: 2}
+      - {fileID: 185836, guid: f632a0872735fa145a0ac60a6e41cc9d, type: 2}
+      upperSet: -1
+      upperTile: -1
+  - name: 546f7046696c6c
+    editorColor:
+      r: .858825326
+      g: .987345636
+      b: .324084193
+      a: 1
+    kind: 1
+    isLower: 0
+    is_4_tile_system: 1
+    allowedMapsMask: 1
+    tiles:
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: f8d6bfa2cd5eba546bf6bd1dd6a8ce4b, type: 2}
+      - {fileID: 162364, guid: 8a36750c9e9cbc84cb3de0c09d65e659, type: 2}
+      - {fileID: 171420, guid: 5bd4be94cf6ff7c43ab45b3e4cf0d7de, type: 2}
+      - {fileID: 198648, guid: c3e8211014ead9f43b44f5a342ab9570, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: 23cb3c7143d153c4c924ed1e7b320cab, type: 2}
+      - {fileID: 162364, guid: 1504c98414d17a443ab07f139f1c17ea, type: 2}
+      - {fileID: 171420, guid: 424cb22e839ec6a4cb39ae3182bba942, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: d548a6b0f2be95e4e93654b97546ee77, type: 2}
+      - {fileID: 162364, guid: c66a68ef8d443b847a2630056f650173, type: 2}
+      - {fileID: 171420, guid: 69e891490cbd28e40ae0581bb15aef89, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: 54a82e1dabeddcc47b2ef788351434cb, type: 2}
+      - {fileID: 162364, guid: d6d5b34c165cbeb4491a81ebe41b9075, type: 2}
+      - {fileID: 171420, guid: ae14b83138de6474c828294d6114b107, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: 0c4cf581be7e72e4ca5a869bec4068b1, type: 2}
+      - {fileID: 162364, guid: 318df5ffccbde9049bd00b96722bbb98, type: 2}
+      - {fileID: 171420, guid: d34811aed2b9cd74e9def5d16aafb67a, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+    - is_4_tile_system: 1
+      pieces:
+      - {fileID: 170394, guid: ebd35856aacaada4e82a4d0072ce63b0, type: 2}
+      - {fileID: 162364, guid: 8761a1790356e0440b7fcc98b77bc603, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      upperSet: -1
+      upperTile: -1
+  plopSets: []
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 163510}
+  m_IsPrefabParent: 1

@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour {
 	
 	public GameObject occupant;
 	public string effectsOnTile;
+	public bool searched = false;
 
 	public Vector3 characterPosition;
 	
