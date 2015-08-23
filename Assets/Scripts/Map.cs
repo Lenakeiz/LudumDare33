@@ -23,9 +23,6 @@ public class Map : MonoBehaviour {
 	public Vector3 ImageInitialLocalPos;
 	public float ImageGuiOffset;
 
-	public Vector2 OnGuiInitialPos;
-	public float OnGuiBarOffset;
-
 	// Use this for initialization
 
 	bool breakout = false;
@@ -113,10 +110,7 @@ public class Map : MonoBehaviour {
 			imagePos.y += i * ImageGuiOffset;
 			uiElement.GetComponent<RectTransform>().localPosition = imagePos;//new Vector2(imagePos.x, imagePos.y);
 
-			Vector2 healthGui = OnGuiInitialPos;
-			healthGui.y += i * OnGuiBarOffset;
-			actorPrefabs[i].GetComponent<Actors>().InitialOnGUIPos = healthGui;
-
+//		
 		}
 	}
 

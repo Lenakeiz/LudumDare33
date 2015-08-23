@@ -97,8 +97,6 @@ public class StartOptions : MonoBehaviour {
 		Invoke("HideDelayed", fadeAlphaAnimationClip.length);
 
 		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
-
-		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
 	}
 
 
@@ -114,5 +112,7 @@ public class StartOptions : MonoBehaviour {
 	{
 		//Hide the main menu UI element
 		showPanels.HideMenu();
+		showPanels.ShowGamePanel();
+		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
 	}
 }

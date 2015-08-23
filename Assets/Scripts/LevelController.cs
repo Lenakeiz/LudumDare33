@@ -48,6 +48,7 @@ public class LevelController : MonoBehaviour {
 		public int cameraNum;
 		public List<ACTOR_NAMES> actorNames;
 		public List<ACTOR_STATES> actorStates;
+
 	};
 
 	string cameraNames = "Camera #";
@@ -55,12 +56,16 @@ public class LevelController : MonoBehaviour {
 	public List<Situation> tasks;
 	public List<bool> taskIsDone;
 	public int numTasks;
-	public float levelTimeLimit;
+	public float levelTimeLimit = 15.0f;
 	public Map map;
 
-	public bool checkTasks = true;
+	public bool checkTasks = false;
+	public bool lostGame = false;
+	public TimeUI uiUpdater;
+	public TaskUIScript uiTaskUpdater;
 
 	float levelTimeLimitTimer;
+	bool timerFinished = true;
 	bool initializeLevel = false;
 
 	bool CheckConditiosnEASY(Situation s, int task)
@@ -116,13 +121,14 @@ public class LevelController : MonoBehaviour {
 		return sit;
 	}
 
-	public string ParseSituation(Situation s)
+	public string ParseSituation(Situation s, bool done)
 	{
-		string sitString = "I want you to bring " + GetName(s.actorNames [0]) + " looking " + GetName(s.actorStates [0]);
+		string sitString = done ? "[X]" : "[]";
+		sitString += "Bring " + GetName(s.actorNames [0]) + " looking " + GetName(s.actorStates [0]);
 		for (int i = 1; i < s.actorNames.Count; ++i) {
 			sitString += ", and " + GetName(s.actorNames[i]) + " looking " + GetName(s.actorStates[i]);
 		}
-		sitString += " infront of " + cameraNames + s.cameraNum;
+		sitString += " in front of " + cameraNames + s.cameraNum;
 		return sitString;
 
 	}
@@ -188,7 +194,7 @@ public class LevelController : MonoBehaviour {
 			task.actorNames.Add( ConvertIntToName(Random.Range (0, actor_names.Length)));
 			task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
 			task.cameraNum = Random.Range (0, cameras.Count);
-			Debug.Log(ParseSituation(task));
+			Debug.Log(ParseSituation(task,false));
 			tasks.Add(task);
 			taskIsDone.Add (false);
 		}
@@ -208,11 +214,18 @@ public class LevelController : MonoBehaviour {
 	{
 		map.PreparePrefabs();
 		RandomizeTasks();
+		uiUpdater.ResetGauge();
+		levelTimeLimitTimer = 0.0f;
+		timerFinished = false;
+		lostGame = false;
+		Debug.Log ("Starting Timer");
+		checkTasks = true;
 	}
 
 	// Use this for initialization
 	void Start () {
 		//RandomizeTasks ();
+		checkTasks = false;
 	}
 	
 	// Update is called once per frame
@@ -224,24 +237,51 @@ public class LevelController : MonoBehaviour {
 			StartNewLevel();
 		}
 		
-		if (checkTasks) {
+		if (checkTasks && !timerFinished) {
 			int numTasksDone = 0;
+			string UIText =  string.Empty;
 			for (int i = 0; i < tasks.Count; ++i) {
-				if (!taskIsDone[i]) {
-					Situation s = BuildSituation (tasks [i].cameraNum);
+				Situation s = BuildSituation (tasks [i].cameraNum);
+				if (!taskIsDone[i]) {					 
 					if (CheckConditiosnEASY (s, i)) {
 						taskIsDone [i] = true;
-						Debug.Log (ParseSituation (s));
+						Debug.Log (ParseSituation (s,taskIsDone[i]));
 						Debug.Log ("Is done!");
 					}
 				} else {
 					numTasksDone ++;
 				}
+				UIText += ParseSituation (s,taskIsDone [i]);
 			}
+			uiTaskUpdater.SetCurrentTask(UIText);
 			if (numTasksDone == tasks.Count) {
 				Debug.Log ("YOU WIN");
+				uiTaskUpdater.WinGameText();
 				checkTasks = false;
 			}
 		}
+
+		if(!timerFinished)
+		{
+			levelTimeLimitTimer += Time.deltaTime;
+			if(levelTimeLimitTimer > levelTimeLimit)
+			{
+				timerFinished = true;
+				Debug.Log("Time is finished");
+				if(checkTasks)
+				{
+					lostGame = true;
+					uiTaskUpdater.LoseGameText();
+				}
+			}
+
+			if(uiUpdater != null)
+				uiUpdater.UpdateUI(1.0f - levelTimeLimitTimer/levelTimeLimit);
+			else Debug.Log ("UI Updater not found");
+			
+		}
+
+
+
 	}
 }
