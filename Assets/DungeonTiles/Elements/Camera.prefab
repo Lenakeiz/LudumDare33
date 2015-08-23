@@ -79,7 +79,7 @@ GameObject:
   - 124: {fileID: 12489288}
   - 81: {fileID: 8189288}
   - 114: {fileID: 11481238}
-  - 114: {fileID: 11447366}
+  - 114: {fileID: 11424744}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -238,7 +238,7 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189288}
   m_Enabled: 1
---- !u!114 &11447366
+--- !u!114 &11424744
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -250,9 +250,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameras: []
+  taskIsDone: 
   numTasks: 0
-  levelTimeLimit: 0
+  levelTimeLimit: 10
   map: {fileID: 0}
+  checkTasks: 0
+  lostGame: 0
+  uiUpdater: {fileID: 0}
+  uiTaskUpdater: {fileID: 0}
 --- !u!114 &11481238
 MonoBehaviour:
   m_ObjectHideFlags: 1

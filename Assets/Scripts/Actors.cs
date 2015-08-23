@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class Actors : MonoBehaviour {
 
 	public Sprite Face;
+
 	public int uiIndex;
+	public BarScript barScript;
 
 	public Vector2 InitialOnGUIPos;
-	//public float GuiBarScriptOffet;
 
 	public enum ACTOR_STATE
 	{
@@ -161,21 +162,17 @@ public class Actors : MonoBehaviour {
 		this.talkTarget = null;
 		pathHelper = gameObject.GetComponent<Astar>() as Astar;
 
-//		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
-//		if(uiElement != null)
-//		{
-//			Transform targetChild = uiElement.transform.GetChild(uiIndex);
-//			if(targetChild != null)
-//			{
-//				GuiScript = targetChild.gameObject.GetComponentInChildren<GUIBarScript>();
-//				if(GuiScript != null)
-//				{
-//					GuiScript.Position = InitialOnGUIPos;
-//				}
-//			}
-//			else{Debug.Log("UI Child Not Found");};
-//		}
-//		else{Debug.Log("UI for lifes not found");}
+		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
+		if(uiElement != null)
+		{
+			Transform targetChild = uiElement.transform.GetChild(uiIndex);
+			if(targetChild != null)
+			{
+				barScript = targetChild.gameObject.GetComponentInChildren<BarScript>();
+			}
+			else{Debug.Log("UI Child Not Found");};
+		}
+		else{Debug.Log("UI for lifes not found");}
 
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
 		Tile currTile = null;
@@ -192,7 +189,10 @@ public class Actors : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-	
+		if(barScript != null)
+		{
+			barScript.SetAmount(fear * 0.01f);
+		}
 
 		if (fear > fearPanicAmount) {
 			isPanicking = true;

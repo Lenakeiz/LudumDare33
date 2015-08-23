@@ -23,9 +23,6 @@ public class Map : MonoBehaviour {
 	public Vector3 ImageInitialLocalPos;
 	public float ImageGuiOffset;
 
-	public Vector2 OnGuiInitialPos;
-	public float OnGuiBarOffset;
-
 	// Use this for initialization
 
 	bool breakout = false;
@@ -104,10 +101,8 @@ public class Map : MonoBehaviour {
 			g.name = g.GetComponent<Actors>().actorName.ToString();
 			actorNameIndex++;
 
-			/*
 			GameObject uiElement = GameObject.Instantiate(Resources.Load("UIPrefabs/Actor"),Vector3.zero,Quaternion.identity) as GameObject;
 
-			//actorPrefabs[i].GetComponent<Actors>().GuiScript = barscript;
 			uiElement.GetComponent<RectTransform>().SetParent(ActorUIPrefabHolder.GetComponent<RectTransform>(),false);
 			uiElement.GetComponent<Image>().sprite = actorPrefabs[i].GetComponent<Actors>().Face;
 			actorPrefabs[i].GetComponent<Actors>().uiIndex = i;
@@ -115,10 +110,6 @@ public class Map : MonoBehaviour {
 			Vector3 imagePos = ImageInitialLocalPos;
 			imagePos.y += i * ImageGuiOffset;
 			uiElement.GetComponent<RectTransform>().localPosition = imagePos;//new Vector2(imagePos.x, imagePos.y);
-
-			Vector2 healthGui = OnGuiInitialPos;
-			healthGui.y += i * OnGuiBarOffset;
-			actorPrefabs[i].GetComponent<Actors>().InitialOnGUIPos = healthGui;*/
 
 		}
 	}
