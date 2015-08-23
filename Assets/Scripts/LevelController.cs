@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -64,10 +65,14 @@ public class LevelController : MonoBehaviour {
 	public bool lostGame = false;
 	public TimeUI uiUpdater;
 	public TaskUIScript uiTaskUpdater;
+	public Text cameraUIText;
 
 	float levelTimeLimitTimer;
 	bool timerFinished = true;
 	bool initializeLevel = false;
+
+	int previousCameraIndex = -1;
+	int currCameraIndex = -1;
 
 	bool CheckConditiosnEASY(Situation s, int task)
 	{
@@ -188,6 +193,27 @@ public class LevelController : MonoBehaviour {
 		return ACTOR_STATES.NORMAL;
 	}
 
+	public void ChangeMiniCamera(int newCameraIndex)
+	{
+		if(newCameraIndex != currCameraIndex)
+		{
+			previousCameraIndex = currCameraIndex;
+			currCameraIndex = newCameraIndex;
+
+			if(newCameraIndex >= cameras.Count)
+			{
+				Debug.LogError("Collideer is no tmapped correctly to camera");
+			}
+			else
+			{
+				cameraUIText.text = "Camera #" + (currCameraIndex + 1).ToString();
+				cameras[previousCameraIndex].enabled = false;
+				cameras[currCameraIndex].enabled = true;
+			}
+
+		}
+	}
+
 	void RandomizeTasks()
 	{
 		tasks = new List<Situation> ();
@@ -209,9 +235,34 @@ public class LevelController : MonoBehaviour {
 		initializeLevel = true;
 	}
 
+	private void InitializeUIElements()
+	{
+		GameObject uielement = GameObject.FindGameObjectWithTag("UIMiniCamera");
+
+		if(uielement == null)
+		{
+			Debug.LogError("MiniCamera UI not found");
+			return;
+		}
+
+		cameraUIText = uielement.GetComponentInChildren<Text>();
+		
+		if(cameraUIText == null)
+		{
+			Debug.LogError("MiniCamera Text not found");
+		}
+	}
+
 	private void ResetLevel()
 	{
 		map.ResetLevel ();
+	}
+
+	private void ResetMiniCamera()
+	{
+		previousCameraIndex = currCameraIndex = 0;
+		cameraUIText.text = "Camera #" + (currCameraIndex + 1).ToString();
+		cameras[currCameraIndex].enabled = true;
 	}
 
 	private void StartNewLevel()
@@ -220,12 +271,17 @@ public class LevelController : MonoBehaviour {
 		map.PreparePrefabs();
 		RandomizeTasks();
 		uiUpdater.ResetGauge();
+<<<<<<< HEAD
+		ResetMiniCamera();
+=======
 	
 		levelTimeLimitTimer = 0.0f;
+>>>>>>> abb00f203113f32991635a7be774a031c92a1106
 		timerFinished = false;
 		lostGame = false;
 		Debug.Log ("Starting Timer");
 		checkTasks = true;
+		levelTimeLimitTimer = 0.0f;
 	}
 
 	// Use this for initialization
@@ -239,6 +295,7 @@ public class LevelController : MonoBehaviour {
 		if(initializeLevel)
 		{
 			initializeLevel = false;
+			InitializeUIElements();
 			ResetLevel();
 			StartNewLevel();
 		}
