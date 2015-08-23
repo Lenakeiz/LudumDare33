@@ -152,8 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9be34f5103aaa4bba86428d3d4ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Face: {fileID: 21300000, guid: 1d410685ff612b4469b050b4f7aa9d59, type: 3}
+  uiIndex: 1
+  barScript: {fileID: 0}
+  InitialOnGUIPos: {x: 0, y: 0}
   actorName: 0
   state: 0
+  talkAnimation: Happy 01
   talkCooldown: 20
   talkTarget: {fileID: 0}
   currentTile: {fileID: 0}
@@ -260,6 +265,11 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 0}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 21300000, guid: 1d410685ff612b4469b050b4f7aa9d59,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193554}

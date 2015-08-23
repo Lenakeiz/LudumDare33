@@ -125,10 +125,11 @@ public class LevelController : MonoBehaviour {
 	{
 		string sitString = done ? "[X]" : "[]";
 		sitString += "Bring " + GetName(s.actorNames [0]) + " looking " + GetName(s.actorStates [0]);
+		/*
 		for (int i = 1; i < s.actorNames.Count; ++i) {
 			sitString += ", and " + GetName(s.actorNames[i]) + " looking " + GetName(s.actorStates[i]);
-		}
-		sitString += " in front of " + cameraNames + s.cameraNum;
+		}*/
+		sitString += " in front of " + cameraNames + s.cameraNum + "\n";
 		return sitString;
 
 	}
@@ -252,7 +253,7 @@ public class LevelController : MonoBehaviour {
 				} else {
 					numTasksDone ++;
 				}
-				UIText += ParseSituation (s,taskIsDone [i]);
+				UIText += ParseSituation (tasks[i],taskIsDone [i]);
 			}
 			uiTaskUpdater.SetCurrentTask(UIText);
 			if (numTasksDone == tasks.Count) {
