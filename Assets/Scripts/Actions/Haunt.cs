@@ -161,6 +161,7 @@ public class Haunt : MonoBehaviour {
 				}
 				arrowPrefab.transform.position = this.transform.position + direction.normalized * arrowOffset;
 				arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,direction);
+				player.transform.localRotation = Quaternion.LookRotation(direction,Vector3.up);
 				hauntDirection = direction.normalized;
 			}
 		}

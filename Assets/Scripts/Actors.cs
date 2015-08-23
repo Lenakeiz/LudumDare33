@@ -34,6 +34,8 @@ public class Actors : MonoBehaviour {
 	bool forceDirection = false;
 
 
+	public string talkAnimation ="Happy 01";
+
 	public float talkCooldown = 5.0f;
 	float talkCooldownTimer =0.0f;
 	public Actors talkTarget; 
@@ -66,16 +68,20 @@ public class Actors : MonoBehaviour {
 	float GetSpeed()
 	{
 		if (forceDirection) {
+			gameObject.GetComponent<Animator>().Play("Run 01");
 			return spookedSpeed;
 		}
 
 		LevelController.ACTOR_STATES state = GetActorFearState ();
 		if (state == LevelController.ACTOR_STATES.PANICKED) {
+			gameObject.GetComponent<Animator>().Play("Run 01");
 			return panicSpeed;
 		}
 		if (state == LevelController.ACTOR_STATES.SPOOKED) {
+			gameObject.GetComponent<Animator>().Play("Run 01");
 			return spookedSpeed;
 		}
+		gameObject.GetComponent<Animator> ().Play ("Walk 01");
 		return movementSpeed;
 	}
 
@@ -83,14 +89,17 @@ public class Actors : MonoBehaviour {
 	public LevelController.ACTOR_STATES GetActorFearState()
 	{
 		if (fear > fearPanicAmount) {
+
 			return LevelController.ACTOR_STATES.PANICKED;
 		}
 		if (fear > fearSpookedAmount) {
+
 			return LevelController.ACTOR_STATES.SPOOKED;
 		}
 		if (fear >= 100) {
 			return LevelController.ACTOR_STATES.FAINTED;
 		}
+
 		return LevelController.ACTOR_STATES.NORMAL;
 
 	}
@@ -191,6 +200,7 @@ public class Actors : MonoBehaviour {
 			isPanicking = false;
 		}
 		if (fear >= 100) {
+			gameObject.GetComponent<Animator>().Play("Fall 03");
 			state = ACTOR_STATE.FIENTED;
 		}
 		if (fear > 0) {
@@ -236,6 +246,7 @@ public class Actors : MonoBehaviour {
 
 				if(talkTarget != null)
 				{
+					this.GetComponent<Animator>().Play(talkAnimation);
 					state = ACTOR_STATE.TALKING;
 				}
 
@@ -249,6 +260,7 @@ public class Actors : MonoBehaviour {
 				}
 				if(forceDirection)
 				{
+					state = ACTOR_STATE.MOVING;
 					if(moveDirection== ACTOR_DIRECTION.UP)
 					{
 						if(currentTile.up)
@@ -310,6 +322,20 @@ public class Actors : MonoBehaviour {
 		}
 		if (state == ACTOR_STATE.CHOOSING)
 		{
+			if(roamingT == 0)
+			{
+				LevelController.ACTOR_STATES fearState = GetActorFearState();
+				if(fearState == LevelController.ACTOR_STATES.NORMAL)
+				{
+					string str = "Idle 0"+Random.Range(1,4);
+					Debug.Log(str);
+					gameObject.GetComponent<Animator>().Play(str);
+				}
+				if(fearState == LevelController.ACTOR_STATES.SPOOKED)
+					gameObject.GetComponent<Animator>().Play("Scared 01");
+				if(fearState == LevelController.ACTOR_STATES.PANICKED)
+					gameObject.GetComponent<Animator>().Play("Scared 02");
+			}
 			roamingT += Time.deltaTime;
 			if(roamingT > roamingWaitTime)
 			{
@@ -355,7 +381,7 @@ public class Actors : MonoBehaviour {
 					talkCooldownTimer = talkCooldown;
 				}
 			}
-			if(talkTarget.talkTarget == null || talkTarget.talkTarget != this||
+			if(talkTarget == null || talkTarget.talkTarget == null || talkTarget.talkTarget != this||
 			   currentTile.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
 			{
 				talkTarget = null;
