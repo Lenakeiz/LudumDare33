@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
 
 	void ReadMoveInput()
 	{
-		this.GetComponent<Animator> ().Play ("Idle 04");
+
 		if (Input.GetAxis ("Horizontal") > movementKeyThreshhold) 
 		{
 			if (currentTile.right) 
@@ -129,10 +129,16 @@ public class Player : MonoBehaviour {
 				currentTile.occupant = null;
 			}
 		}
+		if (!movementTarget) {
+			this.GetComponent<Animator> ().Play ("Idle 04");
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
+		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		camera.transform.position = this.transform.position + new Vector3 (0, 11, -6);
+
 		if (state == PLAYER_STATE.MOVING) {
 			Move ();
 		}

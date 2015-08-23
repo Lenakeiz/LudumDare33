@@ -69,20 +69,16 @@ public class Actors : MonoBehaviour {
 	float GetSpeed()
 	{
 		if (forceDirection) {
-			gameObject.GetComponent<Animator>().Play("Run 01");
 			return spookedSpeed;
 		}
 
 		LevelController.ACTOR_STATES state = GetActorFearState ();
 		if (state == LevelController.ACTOR_STATES.PANICKED) {
-			gameObject.GetComponent<Animator>().Play("Run 01");
 			return panicSpeed;
 		}
 		if (state == LevelController.ACTOR_STATES.SPOOKED) {
-			gameObject.GetComponent<Animator>().Play("Run 01");
 			return spookedSpeed;
 		}
-		gameObject.GetComponent<Animator> ().Play ("Walk 01");
 		return movementSpeed;
 	}
 
@@ -143,7 +139,6 @@ public class Actors : MonoBehaviour {
 	void OnTriggerEnter(Collider gameobject)
 	{
 		if (gameobject.tag == "Actor") {
-			Debug.Log("TriggerTriggered");
 			Actors a = gameobject.GetComponent<Actors>();
 			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING) &&
 			    a.talkCooldownTimer ==0 && this.talkCooldownTimer == 0 && !a.forceDirection &&
@@ -218,6 +213,13 @@ public class Actors : MonoBehaviour {
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
+			if(movementT ==0)
+			{
+				if(GetActorFearState() == LevelController.ACTOR_STATES.NORMAL)
+				{
+
+				}
+			}
 			movementT += Time.deltaTime * GetSpeed();
 			if(movementT < 1)
 			{
@@ -356,7 +358,14 @@ public class Actors : MonoBehaviour {
 				}
 				transform.LookAt(movementTarget.characterPosition,Vector3.up);
 				currentTile.occupant = null;
-
+				if(GetActorFearState()==LevelController.ACTOR_STATES.NORMAL &&
+				   !forceDirection)
+				{
+					gameObject.GetComponent<Animator>().Play("Walk 01");
+				}
+				else{
+					gameObject.GetComponent<Animator>().Play("Run 01");
+				}
 				state = ACTOR_STATE.MOVING;
 			}
 
