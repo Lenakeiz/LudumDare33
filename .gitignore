@@ -7,6 +7,7 @@
 /[Bb]uild/
 UnityGenerated/
 Assets/AssetStoreTools*
+Assets/ToonCharacterPack
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #

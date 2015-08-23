@@ -55,7 +55,9 @@ public class LevelController : MonoBehaviour {
 	public List<Situation> tasks;
 	public int numTasks;
 	public float levelTimeLimit;
+	public Map map;
 	float levelTimeLimitTimer;
+	bool initializeLevel = false;
 
 	bool CheckConditiosnEASY(Situation s, int task)
 	{
@@ -185,13 +187,34 @@ public class LevelController : MonoBehaviour {
 		}
 	}
 
+	public void InitializeLevel()
+	{
+		initializeLevel = true;
+	}
+
+	private void ResetLevel()
+	{
+
+	}
+
+	private void StartNewLevel()
+	{
+		map.PreparePrefabs();
+		RandomizeTasks();
+	}
+
 	// Use this for initialization
 	void Start () {
-		RandomizeTasks ();
+		//RandomizeTasks ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	if(initializeLevel)
+		{
+			initializeLevel = false;
+			ResetLevel();
+			StartNewLevel();
+		}
 	}
 }

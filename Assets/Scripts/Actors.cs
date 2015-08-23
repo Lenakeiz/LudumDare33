@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Actors : MonoBehaviour {
 
+	public Sprite Face;
+	public int uiIndex;
+
+	public Vector2 InitialOnGUIPos;
+	//public float GuiBarScriptOffet;
+	public GUIBarScript GuiScript;
+
 	public enum ACTOR_STATE
 	{
 		CHOOSING,
@@ -140,6 +147,22 @@ public class Actors : MonoBehaviour {
 		this.transform.position = currentTile.characterPosition;
 		pathHelper = gameObject.GetComponent<Astar>() as Astar;
 
+		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
+		if(uiElement != null)
+		{
+			Transform targetChild = uiElement.transform.GetChild(uiIndex);
+			if(targetChild != null)
+			{
+				GuiScript = targetChild.gameObject.GetComponentInChildren<GUIBarScript>();
+				if(GuiScript != null)
+				{
+					GuiScript.Position = InitialOnGUIPos;
+				}
+			}
+			else{Debug.Log("UI Child Not Found");};
+		}
+		else{Debug.Log("UI for lifes not found");}
+
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
 		Tile currTile = null;
 		for (int i = 0; i < tiles.Length; i++) {
@@ -154,6 +177,11 @@ public class Actors : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(GuiScript != null)
+		{
+			GuiScript.Value = fear * 0.01f;
+		}
 
 		if (fear > fearPanicAmount) {
 			isPanicking = true;

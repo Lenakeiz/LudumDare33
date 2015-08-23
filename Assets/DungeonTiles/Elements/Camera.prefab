@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &189286
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +79,7 @@ GameObject:
   - 124: {fileID: 12489288}
   - 81: {fileID: 8189288}
   - 114: {fileID: 11481238}
+  - 114: {fileID: 11447366}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -143,8 +144,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189288}
-  m_LocalRotation: {x: -.353553683, y: -.353552014, z: .146446109, w: -.85355401}
-  m_LocalPosition: {x: 11.6000004, y: 12.6999998, z: 0}
+  m_LocalRotation: {x: .57357651, y: 0, z: 0, w: .819151998}
+  m_LocalPosition: {x: -4.78999996, y: 29.9899998, z: -22.5799999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489286}
@@ -237,13 +238,28 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189288}
   m_Enabled: 1
---- !u!114 &11481238
+--- !u!114 &11447366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189288}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d9570ace75fed4e985433c650b119b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameras: []
+  numTasks: 0
+  levelTimeLimit: 0
+  map: {fileID: 0}
+--- !u!114 &11481238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189288}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea4eae62ba0e14f49b9e1728534c3564, type: 3}
   m_Name: 
