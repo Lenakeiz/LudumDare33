@@ -14,9 +14,9 @@ public class LevelController : MonoBehaviour {
 	};
 
 	string[] actor_names = new string[6]{
-		"Blond Bomb",
+		"Blondie",
 		"Green Goon",
-		"Blue Bloke",
+		"Axecop",
 		"Red Rube",
 		"Purple Person",
 		"anybody",
@@ -55,6 +55,7 @@ public class LevelController : MonoBehaviour {
 	string cameraNames = "Camera #";
 
 	public List<Situation> tasks;
+	public List<ACTOR_NAMES> activeActors;
 	public List<bool> taskIsDone;
 	public int numTasks;
 	public float levelTimeLimit = 15.0f;
@@ -134,7 +135,7 @@ public class LevelController : MonoBehaviour {
 		for (int i = 1; i < s.actorNames.Count; ++i) {
 			sitString += ", and " + GetName(s.actorNames[i]) + " looking " + GetName(s.actorStates[i]);
 		}*/
-		sitString += " in front of " + cameraNames + s.cameraNum + "\n";
+		sitString += " in front of " + cameraNames + (s.cameraNum+1) + "\n";
 		return sitString;
 
 	}
@@ -219,7 +220,7 @@ public class LevelController : MonoBehaviour {
 		Map map = GameObject.FindObjectOfType<Map> ();
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
-			task.actorNames.Add( ConvertIntToName(Random.Range (0, map ? map.actorPrefabs.Count : actor_names.Length)));
+			task.actorNames.Add( activeActors[Random.Range (0,activeActors.Count)]);
 			task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
 			task.cameraNum = Random.Range (0, cameras.Count);
 			Debug.Log(ParseSituation(task,false));
@@ -253,7 +254,7 @@ public class LevelController : MonoBehaviour {
 
 	private void ResetLevel()
 	{
-
+		map.ResetLevel ();
 	}
 
 	private void ResetMiniCamera()
@@ -265,10 +266,16 @@ public class LevelController : MonoBehaviour {
 
 	private void StartNewLevel()
 	{
+		activeActors = new List<ACTOR_NAMES> ();
 		map.PreparePrefabs();
 		RandomizeTasks();
 		uiUpdater.ResetGauge();
+<<<<<<< HEAD
 		ResetMiniCamera();
+=======
+	
+		levelTimeLimitTimer = 0.0f;
+>>>>>>> abb00f203113f32991635a7be774a031c92a1106
 		timerFinished = false;
 		lostGame = false;
 		Debug.Log ("Starting Timer");
@@ -288,6 +295,11 @@ public class LevelController : MonoBehaviour {
 		{
 			initializeLevel = false;
 			InitializeUIElements();
+			ResetLevel();
+			StartNewLevel();
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			ResetLevel();
 			StartNewLevel();
 		}

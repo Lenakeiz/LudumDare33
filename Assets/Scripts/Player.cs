@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
 
 	public float movementKeyThreshhold = 0.5f;
 
+	public string runAnimName;
+	public string idleAnimName;
 
 	public float movementSpeed = 1.0f;
 	float movementT = 0.0f;
@@ -92,7 +94,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.right;
 				transform.LookAt(this.transform.position + Vector3.right,Vector3.up);
-				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
+				this.GetComponent<Animator>().Play(runAnimName);
 				currentTile.occupant = null;
 			}
 		} 
@@ -103,7 +105,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.left;
 				transform.LookAt(this.transform.position + Vector3.left,Vector3.up);
-				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
+				this.GetComponent<Animator>().Play(runAnimName);
 				currentTile.occupant = null;
 			}
 		}
@@ -114,7 +116,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.up;
 				transform.LookAt(this.transform.position + Vector3.forward,Vector3.up);
-				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
+				this.GetComponent<Animator>().Play(runAnimName);
 				currentTile.occupant = null;
 			}
 		}
@@ -125,19 +127,27 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.down;
 				transform.LookAt(this.transform.position + Vector3.back,Vector3.up);
-				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
+				this.GetComponent<Animator>().Play(runAnimName);
 				currentTile.occupant = null;
 			}
 		}
 		if (!movementTarget) {
-			this.GetComponent<Animator> ().Play ("Idle 04");
+			this.GetComponent<Animator> ().Play (idleAnimName);
 		}
+	}
+
+	void FixedUpdate()
+	{
+		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		Vector3 vel = new Vector3 ();
+		camera.transform.position = Vector3.SmoothDamp (camera.transform.position, this.transform.position + 
+			new Vector3 (0, 11, -6),ref vel, 0.15f,100,Time.fixedDeltaTime);
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
-		camera.transform.position = this.transform.position + new Vector3 (0, 11, -6);
+
 
 		if (state == PLAYER_STATE.MOVING) {
 			Move ();

@@ -213,13 +213,6 @@ public class Actors : MonoBehaviour {
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
-			if(movementT ==0)
-			{
-				if(GetActorFearState() == LevelController.ACTOR_STATES.NORMAL)
-				{
-
-				}
-			}
 			movementT += Time.deltaTime * GetSpeed();
 			if(movementT < 1)
 			{
@@ -243,6 +236,7 @@ public class Actors : MonoBehaviour {
 						Haunt h = player.GetComponent<Haunt>();
 						moveDirection = h.HauntActor(this);
 						forceDirection = true;
+						gameObject.GetComponent<Animator>().Play("Run 01");
 					}
 				}
 

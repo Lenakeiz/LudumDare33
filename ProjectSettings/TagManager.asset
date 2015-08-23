@@ -9,7 +9,11 @@ TagManager:
   - Haunt
   - WorldStuff
   - UILife
+<<<<<<< HEAD
   - UIMiniCamera
+=======
+  - Obsticle
+>>>>>>> abb00f203113f32991635a7be774a031c92a1106
   layers:
   - Default
   - TransparentFX
