@@ -125,6 +125,7 @@ MonoBehaviour:
   taskIsDone: 
   numTasks: 3
   levelTimeLimit: 1200
+  map: {fileID: 0}
   checkTasks: 1
 --- !u!1 &507285586
 GameObject:
@@ -828,6 +829,10 @@ Prefab:
     - target: {fileID: 489288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11447366, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+      propertyPath: checkTasks
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}

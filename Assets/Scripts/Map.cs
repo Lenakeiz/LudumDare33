@@ -104,6 +104,7 @@ public class Map : MonoBehaviour {
 			g.name = g.GetComponent<Actors>().actorName.ToString();
 			actorNameIndex++;
 
+			/*
 			GameObject uiElement = GameObject.Instantiate(Resources.Load("UIPrefabs/Actor"),Vector3.zero,Quaternion.identity) as GameObject;
 
 			//actorPrefabs[i].GetComponent<Actors>().GuiScript = barscript;
@@ -117,7 +118,7 @@ public class Map : MonoBehaviour {
 
 			Vector2 healthGui = OnGuiInitialPos;
 			healthGui.y += i * OnGuiBarOffset;
-			actorPrefabs[i].GetComponent<Actors>().InitialOnGUIPos = healthGui;
+			actorPrefabs[i].GetComponent<Actors>().InitialOnGUIPos = healthGui;*/
 
 		}
 	}

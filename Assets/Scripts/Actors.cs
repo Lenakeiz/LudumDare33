@@ -9,7 +9,6 @@ public class Actors : MonoBehaviour {
 
 	public Vector2 InitialOnGUIPos;
 	//public float GuiBarScriptOffet;
-	public GUIBarScript GuiScript;
 
 	public enum ACTOR_STATE
 	{
@@ -184,10 +183,7 @@ public class Actors : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(GuiScript != null)
-		{
-			GuiScript.Value = fear * 0.01f;
-		}
+	
 
 		if (fear > fearPanicAmount) {
 			isPanicking = true;

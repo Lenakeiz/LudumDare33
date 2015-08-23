@@ -58,7 +58,7 @@ public class LevelController : MonoBehaviour {
 	public float levelTimeLimit;
 	public Map map;
 
-	public bool checkTasks = true;
+	public bool checkTasks = false;
 
 	float levelTimeLimitTimer;
 	bool initializeLevel = false;
@@ -209,11 +209,13 @@ public class LevelController : MonoBehaviour {
 	{
 		map.PreparePrefabs();
 		RandomizeTasks();
+		checkTasks = true;
 	}
 
 	// Use this for initialization
 	void Start () {
 		//RandomizeTasks ();
+		checkTasks = false;
 	}
 	
 	// Update is called once per frame
