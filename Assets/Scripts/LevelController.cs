@@ -271,12 +271,9 @@ public class LevelController : MonoBehaviour {
 		map.PreparePrefabs();
 		RandomizeTasks();
 		uiUpdater.ResetGauge();
-<<<<<<< HEAD
 		ResetMiniCamera();
-=======
 	
 		levelTimeLimitTimer = 0.0f;
->>>>>>> abb00f203113f32991635a7be774a031c92a1106
 		timerFinished = false;
 		lostGame = false;
 		Debug.Log ("Starting Timer");

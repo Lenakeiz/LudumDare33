@@ -1580,7 +1580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Face: {fileID: 21300000, guid: 58fde58c30bd6874380196cf66f3d2a2, type: 3}
-  uiIndex: 4
+  uiIndex: 0
   barScript: {fileID: 0}
   InitialOnGUIPos: {x: 0, y: 0}
   actorName: 0

@@ -3308,17 +3308,12 @@ Prefab:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-<<<<<<< HEAD
-      propertyPath: m_Layer
-      value: 0
-=======
       propertyPath: runAnimName
       value: Charge 01
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: idleAnimName
       value: Sit 01
->>>>>>> abb00f203113f32991635a7be774a031c92a1106
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
