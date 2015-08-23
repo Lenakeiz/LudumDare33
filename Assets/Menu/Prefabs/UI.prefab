@@ -60,7 +60,7 @@ GameObject:
   - 222: {fileID: 22220506}
   - 114: {fileID: 11455348}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,7 @@ GameObject:
   - 114: {fileID: 11466738}
   m_Layer: 5
   m_Name: Clapboard
-  m_TagString: Untagged
+  m_TagString: Clapboard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -485,7 +485,7 @@ GameObject:
   - 114: {fileID: 11414152}
   m_Layer: 5
   m_Name: SecondCamera
-  m_TagString: Untagged
+  m_TagString: UIMiniCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -737,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &165188
 GameObject:
   m_ObjectHideFlags: 1
@@ -801,7 +801,7 @@ GameObject:
   - 114: {fileID: 11444252}
   m_Layer: 5
   m_Name: MovieTape
-  m_TagString: Untagged
+  m_TagString: TimerUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3438,10 +3438,10 @@ RectTransform:
   - {fileID: 22474894}
   m_Father: {fileID: 22434976}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 596.666687, y: -57.7045746}
-  m_SizeDelta: {x: 206.666672, y: 55.4091492}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22413724
 RectTransform:
@@ -3548,7 +3548,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 95}
+  m_AnchoredPosition: {x: 0, y: 78.8000031}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22418426
@@ -4283,10 +4283,10 @@ RectTransform:
   - {fileID: 22471196}
   m_Father: {fileID: 22434976}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -57.7045746}
-  m_SizeDelta: {x: 206.666672, y: 55.4091492}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22492326
 RectTransform:
@@ -4371,10 +4371,10 @@ RectTransform:
   - {fileID: 22488126}
   m_Father: {fileID: 22434976}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 103.333336, y: -57.7045746}
-  m_SizeDelta: {x: 206.666672, y: 55.4091492}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22498832
 RectTransform:

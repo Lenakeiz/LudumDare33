@@ -11,6 +11,9 @@ TagManager:
   - UILife
   - UIMiniCamera
   - Obsticle
+  - Clapboard
+  - TimerUI
+  - MapTile
   layers:
   - Default
   - TransparentFX

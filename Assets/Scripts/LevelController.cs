@@ -251,6 +251,28 @@ public class LevelController : MonoBehaviour {
 		{
 			Debug.LogError("MiniCamera Text not found");
 		}
+
+		uiUpdater = GameObject.FindGameObjectWithTag("TimerUI").GetComponent<TimeUI>();
+
+		if(uiUpdater == null)
+		{
+			Debug.LogError("UI Game Timer not found");
+		}
+
+		uiTaskUpdater =  GameObject.FindGameObjectWithTag("Clapboard").GetComponent<TaskUIScript>();
+
+		if(uiTaskUpdater == null)
+		{
+			Debug.LogError("UI Task Updater not found");
+		}
+
+		map = GameObject.FindGameObjectWithTag("MapTile").GetComponent<Map>();
+
+		if(uiTaskUpdater == null)
+		{
+			Debug.LogError("Map not found");
+		}
+
 	}
 
 	private void ResetLevel()
