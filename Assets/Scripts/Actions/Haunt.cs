@@ -55,6 +55,7 @@ public class Haunt : MonoBehaviour {
 		hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
 		hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
 		actor.AddFear (amountOfFear);
+		actor.state = Actors.ACTOR_STATE.MOVING;
 		if(hauntDirection.z >0)
 		{
 			return Actors.ACTOR_DIRECTION.UP;

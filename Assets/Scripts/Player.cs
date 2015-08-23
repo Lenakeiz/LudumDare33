@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 			}
 			else
 			{
+			this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
 				currentTile = movementTarget;
 				movementTarget=null;
 				movementT = 0.0f;
@@ -88,6 +89,7 @@ public class Player : MonoBehaviour {
 			{
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.right;
+				transform.LookAt(this.transform.position + Vector3.right,Vector3.up);
 				currentTile.occupant = null;
 			}
 		} 
@@ -97,6 +99,7 @@ public class Player : MonoBehaviour {
 			{
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.left;
+				transform.LookAt(this.transform.position + Vector3.left,Vector3.up);
 				currentTile.occupant = null;
 			}
 		}
@@ -106,6 +109,7 @@ public class Player : MonoBehaviour {
 			{
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.up;
+				transform.LookAt(this.transform.position + Vector3.forward,Vector3.up);
 				currentTile.occupant = null;
 			}
 		}
@@ -115,6 +119,7 @@ public class Player : MonoBehaviour {
 			{
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.down;
+				transform.LookAt(this.transform.position + Vector3.back,Vector3.up);
 				currentTile.occupant = null;
 			}
 		}

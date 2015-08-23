@@ -79,7 +79,7 @@ public class LevelController : MonoBehaviour {
 		for (int i = 0; i < s.actorNames.Count; ++i) {
 			for(int j = 0; j < tasks[task].actorNames.Count; ++j)
 			{
-				if(s.actorNames[i] == tasks[task].actorNames[j] || tasks[task].actorNames[j]==ACTOR_NAMES.ANY &&
+				if((s.actorNames[i] == tasks[task].actorNames[j] || tasks[task].actorNames[j] == ACTOR_NAMES.ANY) &&
 				   s.actorStates[i] == tasks[task].actorStates[j])
 				{
 					Debug.Log(s.actorNames[i] + " : " + tasks[task].actorNames[j]);
@@ -189,9 +189,10 @@ public class LevelController : MonoBehaviour {
 	{
 		tasks = new List<Situation> ();
 		taskIsDone = new List<bool>();
+		Map map = GameObject.FindObjectOfType<Map> ();
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
-			task.actorNames.Add( ConvertIntToName(Random.Range (0, actor_names.Length)));
+			task.actorNames.Add( ConvertIntToName(Random.Range (0, map ? map.actorPrefabs.Count : actor_names.Length)));
 			task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
 			task.cameraNum = Random.Range (0, cameras.Count);
 			Debug.Log(ParseSituation(task,false));

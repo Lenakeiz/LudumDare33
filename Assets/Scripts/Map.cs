@@ -96,12 +96,13 @@ public class Map : MonoBehaviour {
 			Tile t =actorSpawnPositions[Random.Range(0,actorSpawnPositions.Count)];
 			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
 			g.GetComponent<Actors>().currentTile = t;
+			g.transform.position = t.characterPosition;
 			g.GetComponent<Actors>().actorName = LevelController.ConvertIntToName(actorNameIndex);
+			g.name = g.GetComponent<Actors>().actorName.ToString();
 			actorNameIndex++;
 
 			GameObject uiElement = GameObject.Instantiate(Resources.Load("UIPrefabs/Actor"),Vector3.zero,Quaternion.identity) as GameObject;
 
-			//actorPrefabs[i].GetComponent<Actors>().GuiScript = barscript;
 			uiElement.GetComponent<RectTransform>().SetParent(ActorUIPrefabHolder.GetComponent<RectTransform>(),false);
 			uiElement.GetComponent<Image>().sprite = actorPrefabs[i].GetComponent<Actors>().Face;
 			actorPrefabs[i].GetComponent<Actors>().uiIndex = i;
@@ -110,7 +111,6 @@ public class Map : MonoBehaviour {
 			imagePos.y += i * ImageGuiOffset;
 			uiElement.GetComponent<RectTransform>().localPosition = imagePos;//new Vector2(imagePos.x, imagePos.y);
 
-//		
 		}
 	}
 

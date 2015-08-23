@@ -196,7 +196,6 @@ GameObject:
   - 20: {fileID: 2079346}
   - 124: {fileID: 12430240}
   - 92: {fileID: 9260920}
-  - 81: {fileID: 8158822}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: Untagged
@@ -766,13 +765,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121362}
   m_Mesh: {fileID: 4300016, guid: c36e80d6c1c568445bd227cfd6936f4c, type: 3}
---- !u!81 &8158822
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165762}
-  m_Enabled: 1
 --- !u!92 &9260920
 Behaviour:
   m_ObjectHideFlags: 1
