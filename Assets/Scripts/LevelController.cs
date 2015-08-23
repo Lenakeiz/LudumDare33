@@ -113,9 +113,10 @@ public class LevelController : MonoBehaviour {
 			if(GeometryUtility.TestPlanesAABB(planes,
 			                                  actor.GetComponent<CapsuleCollider>().bounds))
 			{
-				//Debug.Log("I SEE A GUY");
-				sit.actorNames.Add(actor.actorName);
-				sit.actorStates.Add (actor.GetActorFearState());
+
+					//Debug.Log("I SEE A GUY");
+					sit.actorNames.Add(actor.actorName);
+					sit.actorStates.Add (actor.GetActorFearState());
 			}
 		}
 		sit.cameraNum = cameraNumber;

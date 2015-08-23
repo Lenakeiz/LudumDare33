@@ -1753,7 +1753,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 508d6af7b72e3e54a97ef2ef3d7e0ac3, type: 2}
+  - {fileID: 2100000, guid: 3ddfc0eed57cad544b45d64361ab4a08, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -3315,6 +3315,10 @@ Prefab:
       propertyPath: idleAnimName
       value: Sit 01
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3ddfc0eed57cad544b45d64361ab4a08, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196610}
