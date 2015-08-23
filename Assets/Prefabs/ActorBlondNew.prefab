@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9be34f5103aaa4bba86428d3d4ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Face: {fileID: 21300000, guid: 1d410685ff612b4469b050b4f7aa9d59, type: 3}
+  Face: {fileID: 21300000, guid: 58fde58c30bd6874380196cf66f3d2a2, type: 3}
   uiIndex: 4
   barScript: {fileID: 0}
   InitialOnGUIPos: {x: 0, y: 0}
@@ -3338,7 +3338,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Face
       value: 
-      objectReference: {fileID: 21300000, guid: 1d410685ff612b4469b050b4f7aa9d59,
+      objectReference: {fileID: 21300000, guid: 58fde58c30bd6874380196cf66f3d2a2,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
