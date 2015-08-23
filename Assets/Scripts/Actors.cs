@@ -7,12 +7,12 @@ public class Actors : MonoBehaviour {
 	public enum ACTOR_STATE
 	{
 		CHOOSING,
-		STANDING,
 		MOVING,
+		HAUNTED,
 		FIENTED
 	}
 
-	enum ACTOR_DIRECTION{
+	public enum ACTOR_DIRECTION{
 		NONE =-1,
 		UP =0,
 		DOWN = 1,
@@ -24,6 +24,8 @@ public class Actors : MonoBehaviour {
 	public LevelController.ACTOR_NAMES actorName;
 	public ACTOR_STATE state = ACTOR_STATE.CHOOSING;
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
+	bool forceDirection = false;
+
 
 	public Tile currentTile;
 	Tile previousTile;
@@ -36,7 +38,8 @@ public class Actors : MonoBehaviour {
 	public float fearReductionPerSecond = 1.0f;
 
 	public float movementSpeed = 1.0f;
-	public float panicSpeed = 1.4f;
+	public float spookedSpeed = 1.4f;
+	public float panicSpeed = 2.0f;
 	float movementT = 0.0f;
 	Tile movementTarget;
 
@@ -48,6 +51,23 @@ public class Actors : MonoBehaviour {
 
 	private Astar pathHelper;
 	public int markedTilesPercentage = 35;
+
+	float GetSpeed()
+	{
+		if (forceDirection) {
+			return spookedSpeed;
+		}
+
+		LevelController.ACTOR_STATES state = GetActorFearState ();
+		if (state == LevelController.ACTOR_STATES.PANICKED) {
+			return panicSpeed;
+		}
+		if (state == LevelController.ACTOR_STATES.SPOOKED) {
+			return spookedSpeed;
+		}
+		return movementSpeed;
+	}
+
 
 	public LevelController.ACTOR_STATES GetActorFearState()
 	{
@@ -93,42 +113,6 @@ public class Actors : MonoBehaviour {
 		return ACTOR_DIRECTION.NONE;
 	}
 
-	ACTOR_DIRECTION MakeChoice()
-	{
-		List<ACTOR_DIRECTION> possibleChoices = new List<ACTOR_DIRECTION> ();
-		int panicModifier = (isPanicking ? 3 : 1);
-
-		if (currentTile.up) {
-				possibleChoices.Add(ACTOR_DIRECTION.UP);
-			if(currentTile.up != previousTile)
-			{
-				possibleChoices.Add(ACTOR_DIRECTION.UP);
-			}
-		}
-		if (currentTile.down) {
-			possibleChoices.Add(ACTOR_DIRECTION.DOWN);
-			if(currentTile.down != previousTile)
-			{
-				possibleChoices.Add(ACTOR_DIRECTION.DOWN);
-			}
-		}
-		if (currentTile.left) {
-			possibleChoices.Add(ACTOR_DIRECTION.LEFT);
-			if(currentTile.left != previousTile)
-			{
-				possibleChoices.Add(ACTOR_DIRECTION.LEFT);
-			}
-		}if (currentTile.right) {
-			possibleChoices.Add(ACTOR_DIRECTION.RIGHT);
-			if(currentTile.right != previousTile)
-			{
-				possibleChoices.Add(ACTOR_DIRECTION.RIGHT);
-			}
-		}
-
-		return possibleChoices [Random.Range (0, possibleChoices.Count)];
-	}
-
 	public void AddFear (float argFear)
 	{
 		//we can trigger animations in here
@@ -151,7 +135,7 @@ public class Actors : MonoBehaviour {
 		}
 		roamingT = 0f;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -170,7 +154,7 @@ public class Actors : MonoBehaviour {
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
-			movementT += Time.deltaTime * (isPanicking ? panicSpeed : movementSpeed);
+			movementT += Time.deltaTime * GetSpeed();
 			if(movementT < 1)
 			{
 				this.transform.position = Vector3.Lerp(currentTile.characterPosition,
@@ -181,17 +165,81 @@ public class Actors : MonoBehaviour {
 			{
 				previousTile = currentTile;
 				currentTile = movementTarget;
-				//movementTarget = null;
-				movementTarget = pathHelper.GetNextMove();
-				currentTile.occupant = this.gameObject;
 				movementT = 0;
+				//movementTarget = null;
+
+				currentTile.occupant = this.gameObject;
+				if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.HAUNT)
+				{
+					GameObject player = GameObject.FindGameObjectWithTag("Player");
+					if(player)
+					{
+						Haunt h = player.GetComponent<Haunt>();
+						moveDirection = h.HauntActor(this);
+						forceDirection = true;
+					}
+				}
+
+
 				//state = ACTOR_STATE.CHOOSING;
-				if(movementTarget == null)
+				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+				if(!forceDirection)
+				{
+					movementTarget = pathHelper.GetNextMove();
+				}
+				if(forceDirection)
+				{
+					if(moveDirection== ACTOR_DIRECTION.UP)
+					{
+						if(currentTile.up)
+						{
+							movementTarget = currentTile.up;
+						}
+						else{
+							forceDirection = false;
+							state = ACTOR_STATE.CHOOSING;
+						}
+					}
+					else if(moveDirection == ACTOR_DIRECTION.DOWN)
+					{
+						if(currentTile.down)
+						{
+							movementTarget = currentTile.down;
+						}
+						else{
+							forceDirection = false;
+							state = ACTOR_STATE.CHOOSING;
+						}
+					}
+					else if(moveDirection== ACTOR_DIRECTION.LEFT)
+					{
+						if(currentTile.left)
+						{
+							movementTarget = currentTile.left;
+						}
+						else{
+							forceDirection = false;
+							state = ACTOR_STATE.CHOOSING;
+						}
+					}
+					else if(moveDirection == ACTOR_DIRECTION.RIGHT)
+					{
+						if(currentTile.right)
+						{
+							movementTarget = currentTile.right;
+						}
+						else{
+							forceDirection = false;
+							state = ACTOR_STATE.CHOOSING;
+						}
+					}
+
+				}
+
+				if(movementTarget == null || movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
 				{
 					state = ACTOR_STATE.CHOOSING;
 				}
-
-				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 				if(isPanicking)
 				{
 					roamingWaitTime = 0.1f;
@@ -205,61 +253,23 @@ public class Actors : MonoBehaviour {
 			{
 				//moveDirection = MakeChoice();
 				roamingT = 0;
-				pathHelper.RequestNewRandomPath(currentTile);
-				Debug.Log(moveDirection);
-
-				state = ACTOR_STATE.STANDING;
-			}
-
-		}
-
-		if (state == ACTOR_STATE.STANDING) {
-			movementTarget = pathHelper.GetNextMove();
-			if(movementTarget != null)
-			{
-				currentTile.occupant = null;
+				for(int i =0; i < 10; i++)
+				{
+					pathHelper.RequestNewRandomPath(currentTile);
+					movementTarget =pathHelper.GetNextMove();
+					if(!movementTarget)
+					{
+						continue;
+					}
+					if(movementTarget.effectsOnTile != Tile.TILE_EFFECTS.CHILL)
+					{
+						break;
+					}
+				}
 				state = ACTOR_STATE.MOVING;
 			}
-			else
-			{
-				state = ACTOR_STATE.CHOOSING;
-			}
-//			if (moveDirection ==ACTOR_DIRECTION.RIGHT) 
-//			{
-//				if (currentTile.right) 
-//				{
-//					state = ACTOR_STATE.MOVING;
-//					movementTarget = currentTile.right;
-//					currentTile.occupant = null;
-//				}
-//			} 
-//			else if(moveDirection == ACTOR_DIRECTION.LEFT)
-//			{
-//				if (currentTile.left) 
-//				{
-//					state = ACTOR_STATE.MOVING;
-//					movementTarget = currentTile.left;
-//					currentTile.occupant = null;
-//				}
-//			}
-//			else if (moveDirection == ACTOR_DIRECTION.UP)
-//			{
-//				if(currentTile.up)
-//				{
-//					state = ACTOR_STATE.MOVING;
-//					movementTarget = currentTile.up;
-//					currentTile.occupant = null;
-//				}
-//			}
-//			else if (moveDirection == ACTOR_DIRECTION.DOWN)
-//			{
-//				if(currentTile.down)
-//				{
-//					state = ACTOR_STATE.MOVING;
-//					movementTarget = currentTile.down;
-//					currentTile.occupant = null;
-//				}
-//			}
+
 		}
+
 	}
 }

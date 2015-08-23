@@ -6,7 +6,7 @@ public class Tile : MonoBehaviour {
 	public enum TILE_EFFECTS{
 		NONE,
 		CHILL,
-
+		HAUNT,
 	}
 
 	public bool debugDrawGrid = false;
@@ -37,9 +37,9 @@ public class Tile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (effectsOnTile == TILE_EFFECTS.CHILL) {
+		if (effectsOnTile == TILE_EFFECTS.HAUNT) {
 			Debug.DrawLine(this.transform.position,
-			               this.transform.position + new Vector3(0,2,0),Color.cyan);
+			               this.transform.position + new Vector3(0,10,0),Color.red);
 		}
 
 

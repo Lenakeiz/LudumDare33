@@ -203,7 +203,6 @@ public class Astar : MonoBehaviour {
 			currTargetPosition = markedTiles[randIdx];
 
 			CalculatePath();
-
 		}
 		else{Debug.Log ("No Tiles Have been Added");}
 	}
