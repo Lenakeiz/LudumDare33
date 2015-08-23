@@ -1595,6 +1595,10 @@ MonoBehaviour:
   menuPanel: {fileID: 164008}
   pausePanel: {fileID: 198696}
   gamePanel: {fileID: 106398}
+  MenuButtons:
+  - {fileID: 11446616}
+  - {fileID: 11487658}
+  - {fileID: 11433024}
 --- !u!114 &11433024
 MonoBehaviour:
   m_ObjectHideFlags: 1
