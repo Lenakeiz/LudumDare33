@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 			}
 			else
 			{
-			this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
+				
 				currentTile = movementTarget;
 				movementTarget=null;
 				movementT = 0.0f;
@@ -75,6 +75,7 @@ public class Player : MonoBehaviour {
 			int lockNumber = Random.Range(0,100);
 			if(this.GetComponent<Haunt>().Activate(lockNumber))
 			{
+				this.GetComponent<Animator>().Play("Magic 01");
 				actionLockNumber =lockNumber;
 				state = PLAYER_STATE.DOING_ACTION;
 			}
@@ -83,6 +84,7 @@ public class Player : MonoBehaviour {
 
 	void ReadMoveInput()
 	{
+		this.GetComponent<Animator> ().Play ("Idle 04");
 		if (Input.GetAxis ("Horizontal") > movementKeyThreshhold) 
 		{
 			if (currentTile.right) 
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.right;
 				transform.LookAt(this.transform.position + Vector3.right,Vector3.up);
+				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
 				currentTile.occupant = null;
 			}
 		} 
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.left;
 				transform.LookAt(this.transform.position + Vector3.left,Vector3.up);
+				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
 				currentTile.occupant = null;
 			}
 		}
@@ -110,6 +114,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.up;
 				transform.LookAt(this.transform.position + Vector3.forward,Vector3.up);
+				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
 				currentTile.occupant = null;
 			}
 		}
@@ -120,6 +125,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.MOVING;
 				movementTarget = currentTile.down;
 				transform.LookAt(this.transform.position + Vector3.back,Vector3.up);
+				this.GetComponent<Animator>().Play("Walk 15 Sick Zombie");
 				currentTile.occupant = null;
 			}
 		}

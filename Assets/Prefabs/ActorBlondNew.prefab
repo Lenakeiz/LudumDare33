@@ -653,7 +653,7 @@ GameObject:
   - 114: {fileID: 11436446}
   m_Layer: 8
   m_Name: ActorBlondNew
-  m_TagString: Player
+  m_TagString: Actor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1516,10 +1516,10 @@ Animator:
   m_GameObject: {fileID: 187704}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e88f3d051335eea419d1f5bcf6667269, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5e122054eabe3664f9461424ed47522e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0be040dc7db365f43ad5ef3df430cdc1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1579,8 +1579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9be34f5103aaa4bba86428d3d4ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Face: {fileID: 0}
+  uiIndex: 0
+  InitialOnGUIPos: {x: 0, y: 0}
   actorName: 0
   state: 0
+  talkAnimation: Happy 01
   talkCooldown: 20
   talkTarget: {fileID: 0}
   currentTile: {fileID: 0}
@@ -1592,8 +1596,8 @@ MonoBehaviour:
   movementSpeed: .600000024
   spookedSpeed: 1.39999998
   panicSpeed: 2
-  maxRoamingWaitTime: 3
-  minRoamingWaitTime: 1
+  maxRoamingWaitTime: 5
+  minRoamingWaitTime: 1.5
   markedTilesPercentage: 35
 --- !u!119 &11915438
 Projector:
@@ -3309,6 +3313,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Actor
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0be040dc7db365f43ad5ef3df430cdc1, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxRoamingWaitTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minRoamingWaitTime
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
