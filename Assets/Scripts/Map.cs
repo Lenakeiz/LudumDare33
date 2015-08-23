@@ -23,6 +23,10 @@ public class Map : MonoBehaviour {
 	public Vector3 ImageInitialLocalPos;
 	public float ImageGuiOffset;
 
+	//a list of objects to be deleted when restarting
+
+	List<GameObject> tempObjects;
+
 	// Use this for initialization
 
 	bool breakout = false;
@@ -97,7 +101,6 @@ public class Map : MonoBehaviour {
 			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
 			g.GetComponent<Actors>().currentTile = t;
 			g.transform.position = t.characterPosition;
-			g.GetComponent<Actors>().actorName = LevelController.ConvertIntToName(actorNameIndex);
 			g.name = g.GetComponent<Actors>().actorName.ToString();
 			actorNameIndex++;
 
