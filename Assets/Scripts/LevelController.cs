@@ -53,9 +53,13 @@ public class LevelController : MonoBehaviour {
 	string cameraNames = "Camera #";
 
 	public List<Situation> tasks;
+	public List<bool> taskIsDone;
 	public int numTasks;
 	public float levelTimeLimit;
 	public Map map;
+
+	public bool checkTasks = true;
+
 	float levelTimeLimitTimer;
 	bool initializeLevel = false;
 
@@ -70,9 +74,11 @@ public class LevelController : MonoBehaviour {
 		for (int i = 0; i < s.actorNames.Count; ++i) {
 			for(int j = 0; j < tasks[task].actorNames.Count; ++j)
 			{
-				if((s.actorNames[i] == tasks[task].actorNames[j])|| tasks[task].actorNames[i]==ACTOR_NAMES.ANY &&
+				if(s.actorNames[i] == tasks[task].actorNames[j] || tasks[task].actorNames[j]==ACTOR_NAMES.ANY &&
 				   s.actorStates[i] == tasks[task].actorStates[j])
 				{
+					Debug.Log(s.actorNames[i] + " : " + tasks[task].actorNames[j]);
+					Debug.Log(s.actorStates[i] + " : " + tasks[task].actorStates[j]);
 					matches++;
 				}
 			}
@@ -117,7 +123,6 @@ public class LevelController : MonoBehaviour {
 			sitString += ", and " + GetName(s.actorNames[i]) + " looking " + GetName(s.actorStates[i]);
 		}
 		sitString += " infront of " + cameraNames + s.cameraNum;
-		Debug.Log (sitString);
 		return sitString;
 
 	}
@@ -177,13 +182,15 @@ public class LevelController : MonoBehaviour {
 	void RandomizeTasks()
 	{
 		tasks = new List<Situation> ();
+		taskIsDone = new List<bool>();
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
 			task.actorNames.Add( ConvertIntToName(Random.Range (0, actor_names.Length)));
 			task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
 			task.cameraNum = Random.Range (0, cameras.Count);
-			ParseSituation(task);
+			Debug.Log(ParseSituation(task));
 			tasks.Add(task);
+			taskIsDone.Add (false);
 		}
 	}
 
@@ -210,11 +217,31 @@ public class LevelController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	if(initializeLevel)
+		if(initializeLevel)
 		{
 			initializeLevel = false;
 			ResetLevel();
 			StartNewLevel();
+		}
+		
+		if (checkTasks) {
+			int numTasksDone = 0;
+			for (int i = 0; i < tasks.Count; ++i) {
+				if (!taskIsDone[i]) {
+					Situation s = BuildSituation (tasks [i].cameraNum);
+					if (CheckConditiosnEASY (s, i)) {
+						taskIsDone [i] = true;
+						Debug.Log (ParseSituation (s));
+						Debug.Log ("Is done!");
+					}
+				} else {
+					numTasksDone ++;
+				}
+			}
+			if (numTasksDone == tasks.Count) {
+				Debug.Log ("YOU WIN");
+				checkTasks = false;
+			}
 		}
 	}
 }

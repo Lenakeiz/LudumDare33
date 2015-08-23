@@ -22,13 +22,19 @@ public class Haunt : MonoBehaviour {
 	public float hauntCooldownTimer;
 	
 	public float amountOfFear;
-	
+
+	Tile[] hauntedTiles = new Tile[2];
+
 	int lockNumber;
 
 	public bool Activate(int lockNum)
 	{
 		if (hauntCooldownTimer > 0 || choosingDirection )return false;
 
+		if (hauntedTiles [0] && hauntedTiles [1]) {
+			hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+		}
 
 		choosingDirection = true;
 
@@ -40,6 +46,32 @@ public class Haunt : MonoBehaviour {
 		hauntDurationTimer = hauntDuration;
 		lockNumber = lockNum;
 		return true;
+	}
+
+	public Actors.ACTOR_DIRECTION HauntActor(Actors actor)
+	{
+		//play haunting animation
+		hauntPrefab.SetActive (false);
+		hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+		hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+		actor.AddFear (amountOfFear);
+		if(hauntDirection.z >0)
+		{
+			return Actors.ACTOR_DIRECTION.UP;
+		}
+		else if( hauntDirection.z <0)
+		{
+			return Actors.ACTOR_DIRECTION.DOWN;
+		}
+		if(hauntDirection.x >0)
+		{
+			return Actors.ACTOR_DIRECTION.RIGHT;
+		}
+		if(hauntDirection.x <0)
+		{
+			return Actors.ACTOR_DIRECTION.LEFT;
+		}
+		return Actors.ACTOR_DIRECTION.NONE;
 	}
 
 	// Use this for initialization
@@ -85,12 +117,35 @@ public class Haunt : MonoBehaviour {
 		if (choosingDirection) {
 			if (Input.GetButtonUp ("Fire2")) {
 				//release and spawn the haunt
+
 				hauntPrefab.SetActive(true);
 				hauntPrefab.transform.position = this.transform.position;
 				hauntPrefab.transform.localRotation = Quaternion.LookRotation(hauntDirection,Vector3.up);
 				arrowPrefab.gameObject.SetActive(false);
 				player.CancelAction(lockNumber);
 				hauntCooldownTimer = hauntCooldown;
+				player.currentTile.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+				hauntedTiles[0]=player.currentTile;
+				if(hauntDirection.z >0)
+				{
+					hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+					hauntedTiles[1] = hauntedTiles[0].up;
+				}
+				else if( hauntDirection.z <0)
+				{
+					hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+					hauntedTiles[1] = hauntedTiles[0].down;
+				}
+				if(hauntDirection.x >0)
+				{
+					hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+					hauntedTiles[1] = hauntedTiles[0].right;
+				}
+				if(hauntDirection.x <0)
+				{
+					hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+					hauntedTiles[1] = hauntedTiles[0].left;
+				}
 				choosingDirection = false;
 			}
 

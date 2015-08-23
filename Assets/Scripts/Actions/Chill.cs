@@ -32,11 +32,17 @@ public class Chill : MonoBehaviour {
 					{
 						if(!unMark)
 						{
-							col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.CHILL;
+							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
+							{
+								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.CHILL;
+							}
 						}
 						else
 						{
-							col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.NONE;
+							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
+							{
+								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.NONE;
+							}
 						}
 					}
 				}
