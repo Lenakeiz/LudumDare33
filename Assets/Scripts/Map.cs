@@ -31,7 +31,18 @@ public class Map : MonoBehaviour {
 
 	bool breakout = false;
 
+	public void ResetLevel()
+	{
+		actorNameIndex = 0;
+		foreach(GameObject g in tempObjects)
+		{
+			GameObject.Destroy(g);
+		}
+	}
+
 	void Start () {
+		tempObjects = new List<GameObject> ();
+
 		Queue<Tile> searchQueue = new Queue<Tile> ();
 
 		searchQueue.Enqueue (startingTile);
@@ -94,7 +105,8 @@ public class Map : MonoBehaviour {
 			Tile t = playerSpawnPositions[Random.Range(0,playerSpawnPositions.Count)];
 			GameObject g=(GameObject)GameObject.Instantiate(playerPrefab,t.characterPosition,Quaternion.identity);
 			g.GetComponent<Player>().currentTile = t;
-			
+
+			tempObjects.Add(g);
 		}
 		for (int i = 0; i < actorPrefabs.Count; ++i) {
 			Tile t =actorSpawnPositions[Random.Range(0,actorSpawnPositions.Count)];
@@ -102,7 +114,9 @@ public class Map : MonoBehaviour {
 			g.GetComponent<Actors>().currentTile = t;
 			g.transform.position = t.characterPosition;
 			g.name = g.GetComponent<Actors>().actorName.ToString();
+			GameObject.FindObjectOfType<LevelController>().activeActors.Add(g.GetComponent<Actors>().actorName);
 			actorNameIndex++;
+			tempObjects.Add(g);
 
 			GameObject uiElement = GameObject.Instantiate(Resources.Load("UIPrefabs/Actor"),Vector3.zero,Quaternion.identity) as GameObject;
 
@@ -113,7 +127,7 @@ public class Map : MonoBehaviour {
 			Vector3 imagePos = ImageInitialLocalPos;
 			imagePos.y += i * ImageGuiOffset;
 			uiElement.GetComponent<RectTransform>().localPosition = imagePos;//new Vector2(imagePos.x, imagePos.y);
-
+			tempObjects.Add(uiElement);
 		}
 	}
 

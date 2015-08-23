@@ -9,6 +9,7 @@ TagManager:
   - Haunt
   - WorldStuff
   - UILife
+  - Obsticle
   layers:
   - Default
   - TransparentFX

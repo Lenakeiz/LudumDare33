@@ -1555,6 +1555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTile: {fileID: 0}
   movementKeyThreshhold: .100000001
+  runAnimName: Charge 01
+  idleAnimName: Sit 01
   movementSpeed: 3
 --- !u!114 &11440038
 MonoBehaviour:
@@ -3304,6 +3306,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: movementSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: runAnimName
+      value: Charge 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: idleAnimName
+      value: Sit 01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
