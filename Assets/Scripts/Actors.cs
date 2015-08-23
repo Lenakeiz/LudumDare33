@@ -131,21 +131,21 @@ public class Actors : MonoBehaviour {
 		this.transform.position = currentTile.characterPosition;
 		pathHelper = gameObject.GetComponent<Astar>() as Astar;
 
-		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
-		if(uiElement != null)
-		{
-			Transform targetChild = uiElement.transform.GetChild(uiIndex);
-			if(targetChild != null)
-			{
-				GuiScript = targetChild.gameObject.GetComponentInChildren<GUIBarScript>();
-				if(GuiScript != null)
-				{
-					GuiScript.Position = InitialOnGUIPos;
-				}
-			}
-			else{Debug.Log("UI Child Not Found");};
-		}
-		else{Debug.Log("UI for lifes not found");}
+//		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
+//		if(uiElement != null)
+//		{
+//			Transform targetChild = uiElement.transform.GetChild(uiIndex);
+//			if(targetChild != null)
+//			{
+//				GuiScript = targetChild.gameObject.GetComponentInChildren<GUIBarScript>();
+//				if(GuiScript != null)
+//				{
+//					GuiScript.Position = InitialOnGUIPos;
+//				}
+//			}
+//			else{Debug.Log("UI Child Not Found");};
+//		}
+//		else{Debug.Log("UI for lifes not found");}
 
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
 		Tile currTile = null;
