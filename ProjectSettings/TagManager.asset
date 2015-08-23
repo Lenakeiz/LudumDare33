@@ -9,6 +9,7 @@ TagManager:
   - Haunt
   - WorldStuff
   - UILife
+  - UIMiniCamera
   layers:
   - Default
   - TransparentFX
