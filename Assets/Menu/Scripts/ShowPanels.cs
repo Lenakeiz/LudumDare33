@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ShowPanels : MonoBehaviour {
@@ -8,6 +9,22 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
 	public GameObject gamePanel;
+
+	public Button[] MenuButtons;
+
+	public void DisableMenuButtons()
+	{
+		for (int i = 0; i < MenuButtons.Length; i++) {
+			MenuButtons[i].interactable = false;
+		}
+	}
+
+	public void EnableMenuButtons()
+	{
+		for (int i = 0; i < MenuButtons.Length; i++) {
+			MenuButtons[i].interactable = true;
+		}
+	}
 
 	public void ShowGamePanel()
 	{
