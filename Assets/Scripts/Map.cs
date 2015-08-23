@@ -98,7 +98,9 @@ public class Map : MonoBehaviour {
 			Tile t =actorSpawnPositions[Random.Range(0,actorSpawnPositions.Count)];
 			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
 			g.GetComponent<Actors>().currentTile = t;
+			g.transform.position = t.characterPosition;
 			g.GetComponent<Actors>().actorName = LevelController.ConvertIntToName(actorNameIndex);
+			g.name = g.GetComponent<Actors>().actorName.ToString();
 			actorNameIndex++;
 		}
 	}

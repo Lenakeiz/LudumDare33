@@ -8,6 +8,7 @@ public class Actors : MonoBehaviour {
 	{
 		CHOOSING,
 		MOVING,
+		TALKING,
 		HAUNTED,
 		FIENTED
 	}
@@ -26,6 +27,10 @@ public class Actors : MonoBehaviour {
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
 	bool forceDirection = false;
 
+
+	public float talkCooldown = 5.0f;
+	float talkCooldownTimer =0.0f;
+	public Actors talkTarget; 
 
 	public Tile currentTile;
 	Tile previousTile;
@@ -112,16 +117,33 @@ public class Actors : MonoBehaviour {
 
 		return ACTOR_DIRECTION.NONE;
 	}
-
+	
 	public void AddFear (float argFear)
 	{
 		//we can trigger animations in here
 		fear += argFear;
 	}
 
+	void OnTriggerEnter(Collider gameobject)
+	{
+		if (gameobject.tag == "Actor") {
+			Debug.Log("TriggerTriggered");
+			Actors a = gameobject.GetComponent<Actors>();
+			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING) &&
+			    a.talkCooldownTimer ==0 && this.talkCooldownTimer == 0 && !a.forceDirection &&
+			    !forceDirection)
+			{
+				a.talkTarget = this;
+				talkTarget = a;
+			}
+		}
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		this.transform.position = currentTile.characterPosition;
+		this.talkTarget = null;
 		pathHelper = gameObject.GetComponent<Astar>() as Astar;
 
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
@@ -144,13 +166,21 @@ public class Actors : MonoBehaviour {
 		} else {
 			isPanicking = false;
 		}
-		if (fear == 100) {
+		if (fear >= 100) {
 			state = ACTOR_STATE.FIENTED;
 		}
 		if (fear > 0) {
 			fear -= Time.deltaTime * fearReductionPerSecond;
 		}
-		fear = Mathf.Max(fear, 0);
+		fear = Mathf.Max(fear, 0);	
+
+		if (talkCooldownTimer > 0) {
+			talkCooldownTimer -= Time.deltaTime;
+			if(talkCooldownTimer<0)
+			{
+				talkCooldownTimer = 0;
+			}
+		}
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
@@ -180,11 +210,17 @@ public class Actors : MonoBehaviour {
 					}
 				}
 
+				if(talkTarget != null)
+				{
+					state = ACTOR_STATE.TALKING;
+				}
+
 
 				//state = ACTOR_STATE.CHOOSING;
 				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 				if(!forceDirection)
 				{
+
 					movementTarget = pathHelper.GetNextMove();
 				}
 				if(forceDirection)
@@ -233,12 +269,14 @@ public class Actors : MonoBehaviour {
 							state = ACTOR_STATE.CHOOSING;
 						}
 					}
-
 				}
 
 				if(movementTarget == null || movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
 				{
 					state = ACTOR_STATE.CHOOSING;
+				}
+				else{
+					transform.LookAt(movementTarget.characterPosition,Vector3.up);
 				}
 				if(isPanicking)
 				{
@@ -266,9 +304,40 @@ public class Actors : MonoBehaviour {
 						break;
 					}
 				}
+				transform.LookAt(movementTarget.characterPosition,Vector3.up);
+				currentTile.occupant = null;
+
 				state = ACTOR_STATE.MOVING;
 			}
 
+		}
+		if (state == ACTOR_STATE.TALKING) {
+			//PLAY TALK ANIMATION
+			transform.LookAt(talkTarget.transform.position,Vector3.up);
+			if(this.currentTile == talkTarget.currentTile)
+			{
+				state = ACTOR_STATE.MOVING;
+				movementTarget = previousTile;
+			}
+			if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.HAUNT)
+			{
+				GameObject player = GameObject.FindGameObjectWithTag("Player");
+				if(player)
+				{
+					Haunt h = player.GetComponent<Haunt>();
+					moveDirection = h.HauntActor(this);
+					forceDirection = true;
+					talkTarget = null;
+					talkCooldownTimer = talkCooldown;
+				}
+			}
+			if(talkTarget.talkTarget == null || talkTarget.talkTarget != this||
+			   currentTile.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
+			{
+				talkTarget = null;
+				state = ACTOR_STATE.CHOOSING;
+				talkCooldownTimer = talkCooldown;
+			}
 		}
 
 	}
