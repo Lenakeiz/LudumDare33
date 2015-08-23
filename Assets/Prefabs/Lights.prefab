@@ -154,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.1399994, y: -9.89000034, z: -19.4300003}
+  m_LocalPosition: {x: -25.1399994, y: -12.3000002, z: -19.4300003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417616}
@@ -218,7 +218,7 @@ Light:
   m_Type: 2
   m_Color: {r: .544117689, g: 1, b: .584989846, a: 1}
   m_Intensity: 2
-  m_Range: 14.0019302
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -250,7 +250,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .459229171, b: .367647052, a: 1}
   m_Intensity: 2
-  m_Range: 17
+  m_Range: 10.5099287
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -282,7 +282,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .851724148, b: .367647052, a: 1}
   m_Intensity: 2
-  m_Range: 13.8991623
+  m_Range: 14.5022345
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -314,7 +314,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .459229171, b: .367647052, a: 1}
   m_Intensity: 2
-  m_Range: 10.5438538
+  m_Range: 10.4808722
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -346,7 +346,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .851724148, b: .367647052, a: 1}
   m_Intensity: 2
-  m_Range: 15
+  m_Range: 13.834384
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -438,9 +438,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205b2cbc140fe42b7aed35cf829757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 18
-  minRange: 17
-  pulseSpeed: .800000012
+  maxRange: 13
+  minRange: 10
+  pulseSpeed: 3
 --- !u!114 &11467112
 MonoBehaviour:
   m_ObjectHideFlags: 1
