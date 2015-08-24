@@ -6,6 +6,8 @@ public class Chill : MonoBehaviour {
 
 	Player player;
 
+	public AudioClip chillSound;
+
 	public float chillSphereRadius;
 	public GameObject chillObject;
 	public float chillDuration;
@@ -32,6 +34,8 @@ public class Chill : MonoBehaviour {
 					{
 						if(!unMark)
 						{
+							chillObject.GetComponent<AudioSource>().clip = chillSound;
+							chillObject.GetComponent<AudioSource>().Play();
 							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
 							{
 								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.CHILL;
@@ -103,8 +107,10 @@ public class Chill : MonoBehaviour {
 
 		if (chillDurationTimer > 0) {
 			chillDurationTimer -= Time.deltaTime;
+			chillObject.GetComponent<AudioSource>().volume = chillDurationTimer/chillDuration;
 			if(chillDurationTimer <= 0 && chillDuration >0)
 			{
+				chillObject.GetComponent<AudioSource>().Stop();
 				MarkChilledNodes(true);
 				chillDurationTimer = 0;
 				chillObject.SetActive(false);
