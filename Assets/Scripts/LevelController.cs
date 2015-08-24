@@ -216,8 +216,8 @@ public class LevelController : MonoBehaviour {
 
 	void RandomizeTasks()
 	{
-		tasks = new List<Situation> ();
-		taskIsDone = new List<bool>();
+		tasks.Clear();
+		taskIsDone.Clear();
 		Map map = GameObject.FindObjectOfType<Map> ();
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
@@ -307,6 +307,7 @@ public class LevelController : MonoBehaviour {
 	void Start () {
 		//RandomizeTasks ();
 		checkTasks = false;
+		tasks = new List<Situation>();
 	}
 	
 	// Update is called once per frame

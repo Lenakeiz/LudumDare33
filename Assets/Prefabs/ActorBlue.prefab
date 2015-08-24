@@ -108,6 +108,7 @@ GameObject:
   - 114: {fileID: 11401204}
   - 135: {fileID: 13539206}
   - 114: {fileID: 11466980}
+  - 82: {fileID: 8221010}
   m_Layer: 8
   m_Name: ActorBlue
   m_TagString: Actor
@@ -1506,6 +1507,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .196913689, y: .353678346, z: .197059095}
   m_Center: {x: .0984568447, y: -.0211153924, z: -.00612384826}
+--- !u!82 &8221010
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114254}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9579556
 Animator:
   serializedVersion: 3
@@ -1534,12 +1604,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9be34f5103aaa4bba86428d3d4ab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Face: {fileID: 21300000, guid: 1d410685ff612b4469b050b4f7aa9d59, type: 3}
-  uiIndex: 1
+  Face: {fileID: 21300000, guid: 8faef04339f475b4985e411c40b6e2ca, type: 3}
+  uiIndex: 2
   barScript: {fileID: 0}
   InitialOnGUIPos: {x: 0, y: 0}
   actorName: 2
   state: 0
+  audioSource: {fileID: 0}
+  sfx: {fileID: 0}
+  minDelayTimeTalking: 0
+  maxDelayTimeTalking: 3
+  clips:
+  - {fileID: 8300000, guid: 7ed58e27c408268438f1a5d1ca4b1d82, type: 3}
+  - {fileID: 8300000, guid: 500ad562ece2d7a449eb00c3548d1e91, type: 3}
+  - {fileID: 8300000, guid: e7faedd441b4184419cffa791d046883, type: 3}
+  - {fileID: 8300000, guid: c7da9ae62f97fe843811fe8c4189a58c, type: 3}
+  - {fileID: 8300000, guid: 9c5301a42047a3d46a9e583953bcce47, type: 3}
   talkAnimation: Arguing 01
   talkCooldown: 20
   talkTarget: {fileID: 0}
@@ -3300,6 +3380,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: clips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: talkAnimation
       value: Arguing 01
       objectReference: {fileID: 0}
@@ -3310,6 +3394,15 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Actor
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Face
+      value: 
+      objectReference: {fileID: 21300000, guid: 8faef04339f475b4985e411c40b6e2ca,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

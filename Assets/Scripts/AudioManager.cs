@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 
+public enum SoundsType{Ambient = 0, Effect = 1, Conversation = 2};
+
 public class AudioManager : MonoBehaviour {
 
 
-	public enum SoundsType{Ambient = 0, Effect = 1, Conversation = 2};
-	
 	[System.Serializable]
 	public class CustomSound
 	{
@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour {
 	public AudioMixerGroup sfx;
 	// Use this for initialization
 	void Start () {
+		sources = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -38,7 +39,10 @@ public class AudioManager : MonoBehaviour {
 			}
 		}
 	}
-	
+	/// <summary>
+	/// DEPRECATED
+	/// </summary>
+	/// <param name="sound">Sound.</param>
 	void SpawnAudioObject(CustomSound sound)
 	{
 		GameObject g = new GameObject ();
@@ -56,7 +60,10 @@ public class AudioManager : MonoBehaviour {
 		source.Play ();
 		sources.Add (g);
 	}
-	
+	/// <summary>
+	/// DEPRECATED
+	/// </summary>
+	/// <param name="clipname">Clipname.</param>
 	public AudioSource Play(string clipname)
 	{
 		for (int i=0; i<clips.Count; ++i) {
@@ -66,6 +73,47 @@ public class AudioManager : MonoBehaviour {
 			}
 		}
 		return null;
+	}
+
+	public void StopAmbientMusic()
+	{
+		for (int i=0; i<sources.Count; ++i) {
+			AudioSource source = sources[i].GetComponent<AudioSource>();
+
+			if(source.loop)
+			{
+				source.Stop();
+			}
+		}
+	}
+
+	public void Play(AudioClip audioClip, SoundsType soundtype, float delay)
+	{
+		GameObject go = new GameObject("GameSound");
+		go.transform.SetParent(gameObject.transform, false);
+
+		AudioSource source = go.AddComponent<AudioSource>();
+		source.playOnAwake = false;
+		
+		source.clip = audioClip;
+
+		switch (soundtype) {
+			case SoundsType.Ambient:
+				source.outputAudioMixerGroup = music;
+				source.loop = true;
+				StopAmbientMusic();
+				break;
+			case SoundsType.Conversation:
+			case SoundsType.Effect:
+				source.outputAudioMixerGroup = sfx;
+				break;
+			default:
+				break;
+		}
+
+		source.PlayDelayed(delay);
+		sources.Add(go);
+		
 	}
 	
 }

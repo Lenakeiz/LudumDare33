@@ -187,11 +187,30 @@ Prefab:
       objectReference: {fileID: 734387529}
     - target: {fileID: 189282, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &350439888 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 189288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+  m_PrefabInternal: {fileID: 350439887}
+--- !u!114 &350439889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 350439888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ff6ea858d1a9642ab5df3da947320a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips: []
+  sources: []
+  music: {fileID: 24324684, guid: 0ac7fb39e445048d89688f69c2a1839a, type: 2}
+  sfx: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a, type: 2}
 --- !u!1001 &601162687
 Prefab:
   m_ObjectHideFlags: 0
@@ -442,6 +461,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
+      propertyPath: actorPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 451564, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -478,6 +501,18 @@ Prefab:
       propertyPath: ActorUIPrefabHolder
       value: 
       objectReference: {fileID: 155111424}
+    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
+      propertyPath: actorPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 114254, guid: e78b462077ad55d4daa21b40cfd709bb, type: 2}
+    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
+      propertyPath: actorPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 114254, guid: 69fd45654d846b944baf2a40e8046635, type: 2}
+    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
+      propertyPath: actorPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 199972, guid: fa789f50cb488ba44b7f5adbbbc9c4c0, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
   m_IsPrefabParent: 0
