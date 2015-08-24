@@ -130,6 +130,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2076502, guid: 4fdd22bf73ee4bc4390fd18f55c23347, type: 2}
+      propertyPath: field of view
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4fdd22bf73ee4bc4390fd18f55c23347, type: 2}
   m_IsPrefabParent: 0
@@ -193,6 +197,10 @@ Prefab:
       propertyPath: cameras.Array.data[3]
       value: 
       objectReference: {fileID: 2073758986}
+    - target: {fileID: 11403580, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+      propertyPath: levelTimeLimit
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   m_IsPrefabParent: 0
@@ -368,6 +376,26 @@ Prefab:
     - target: {fileID: 22439792, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140550, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: m_TagString
+      value: LvlCounterUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 22465386, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 22444296, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -137
+      objectReference: {fileID: 0}
+    - target: {fileID: 106398, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128056, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMin.y
