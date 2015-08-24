@@ -5,6 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LevelController : MonoBehaviour {
+
+	public enum GAME_STATE{
+		PLAYING,
+		WIN,
+		LOSE
+	};
+
 	public enum ACTOR_NAMES{
 		BLOND_BOMB,
 		GREEN_GOON,
@@ -69,9 +76,12 @@ public class LevelController : MonoBehaviour {
 
 	public bool checkTasks = false;
 	public bool lostGame = false;
+	public bool gameOver = false;
 	public TimeUI uiUpdater;
 	public TaskUIScript uiTaskUpdater;
 	public Text cameraUIText;
+
+	public GAME_STATE gameState;
 
 	float levelTimeLimitTimer;
 	bool timerFinished = true;
@@ -341,10 +351,11 @@ public class LevelController : MonoBehaviour {
 	
 		levelTimeLimitTimer = 0.0f;
 		timerFinished = false;
-		lostGame = false;
 		Debug.Log ("Starting Timer");
 		checkTasks = true;
 		levelTimeLimitTimer = 0.0f;
+
+		gameState = GAME_STATE.PLAYING;
 
 		PlaySound(0,0f);
 	}
@@ -395,6 +406,7 @@ public class LevelController : MonoBehaviour {
 			if (numTasksDone == tasks.Count) {
 				PlaySound(7,0);
 				Debug.Log ("YOU WIN");
+				gameState = GAME_STATE.WIN;
 				uiTaskUpdater.WinGameText();
 				checkTasks = false;
 			}
@@ -409,7 +421,7 @@ public class LevelController : MonoBehaviour {
 				Debug.Log("Time is finished");
 				if(checkTasks)
 				{
-					lostGame = true;
+					gameState = GAME_STATE.LOSE;
 					PlaySound(Random.Range(4,7),0);
 					uiTaskUpdater.LoseGameText();
 				}
@@ -417,23 +429,21 @@ public class LevelController : MonoBehaviour {
 
 			if(uiUpdater != null)
 				uiUpdater.UpdateUI(1.0f - levelTimeLimitTimer/levelTimeLimit);
-			else Debug.Log ("UI Updater not found");
-			
+			else Debug.Log ("UI Updater not found");			
 		}
-		else
+
+		if(gameState == GAME_STATE.PLAYING)
 		{
-			//Detecting winnin condition;
-			if(lostGame)
-			{
-				
-			}
-			else
-			{
 
-			}
 		}
-
-
+		else if(gameState == GAME_STATE.WIN)
+		{
+			//Call Winning Animation
+		}
+		else if(gameState == GAME_STATE.LOSE)
+		{
+			//Call Losing Animation
+		}
 
 	}
 }
