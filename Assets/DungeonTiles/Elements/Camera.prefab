@@ -82,6 +82,7 @@ GameObject:
   - 114: {fileID: 11403580}
   - 82: {fileID: 8267976}
   - 114: {fileID: 11422298}
+  - 114: {fileID: 11453246}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -361,6 +362,19 @@ MonoBehaviour:
   sources: []
   music: {fileID: 24324684, guid: 0ac7fb39e445048d89688f69c2a1839a, type: 2}
   sfx: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a, type: 2}
+--- !u!114 &11453246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a185aaa229ebb3498b7ad6672c1c9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  failAnimationName: Fall 01
+  zoomedDistance: 4
 --- !u!114 &11481238
 MonoBehaviour:
   m_ObjectHideFlags: 1
