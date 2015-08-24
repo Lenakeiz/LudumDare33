@@ -81,6 +81,7 @@ public class Haunt : MonoBehaviour {
 
 	void OnDestroy()
 	{
+		Debug.Log("Haunt desroyed");
 		GameObject.Destroy (hauntPrefab);
 	}
 
@@ -95,9 +96,10 @@ public class Haunt : MonoBehaviour {
 
 		if (hauntPrefab) {
 			hauntPrefab = GameObject.Instantiate<GameObject>(hauntPrefab);
-			hauntPrefab.SetActive (false);
+
 			hauntPrefab.GetComponentInChildren<Animator>().speed=0;
 			hauntPrefab.GetComponentInChildren<Animator>().Play("Magic 01");
+			hauntPrefab.SetActive (false);
 		} else {
 			Debug.LogError ("NO HAUNT PREFAB FOR HAUNT");
 		}

@@ -56,6 +56,7 @@ public class Actors : MonoBehaviour {
 	public float fearSpookedAmount =30;
 	public float fearPanicAmount = 60;
 	public float fearReductionPerSecond = 1.0f;
+	private string fearStatus;
 
 	public float movementSpeed = 1.0f;
 	public float spookedSpeed = 1.4f;
@@ -200,10 +201,11 @@ public class Actors : MonoBehaviour {
 			if(targetChild != null)
 			{
 				barScript = targetChild.gameObject.GetComponentInChildren<BarScript>();
+				barScript.SetName(this.actorName.ToString());
 			}
-			else{Debug.Log("UI Child Not Found");};
+			else{Debug.LogError("UI Child Not Found");};
 		}
-		else{Debug.Log("UI for lifes not found");}
+		else{Debug.LogError("UI for lifes not found");}
 
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
 		Tile currTile = null;
@@ -222,7 +224,15 @@ public class Actors : MonoBehaviour {
 
 		if(barScript != null)
 		{
-			barScript.SetAmount(fear * 0.01f);
+			if(fear < fearSpookedAmount)
+			   fearStatus = "Normal";
+			else if (fear >= fearSpookedAmount && fear < fearPanicAmount)
+				fearStatus = "Spooked";
+			else if(fear >= fearPanicAmount && fear < 100)
+				fearStatus = "PANIC!";
+			else if(fear >= 100)
+				fearStatus = "FAINTED!";
+		   barScript.SetAmount(fear * 0.01f, fearStatus);
 		}
 
 		if (fear > fearPanicAmount) {
@@ -247,6 +257,8 @@ public class Actors : MonoBehaviour {
 				talkCooldownTimer = 0;
 			}
 		}
+
+
 
 		if (state == ACTOR_STATE.MOVING) 
 		{

@@ -34,6 +34,26 @@ public class StartOptions : MonoBehaviour {
 		playMusic = GetComponent<PlayMusic> ();
 	}
 
+	public void RestartButtonClicked()
+	{
+		if (changeMusicOnStart) 
+		{
+			playMusic.FadeDown(fadeColorAnimationClip.length);
+			Invoke ("PlayNewMusic", fadeAlphaAnimationClip.length);
+		}
+
+		inMainMenu = false;
+
+		//Set trigger for animator to start animation fading out Menu UI
+		animMenuAlpha.SetTrigger ("fade");
+		
+		//Wait until game has started, then hide the main menu
+		Invoke("HideGameOverDelayed", fadeAlphaAnimationClip.length);
+		
+		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
+		
+		//showPanels.DisableMenuButtons();
+	}
 
 	public void StartButtonClicked()
 	{
@@ -77,6 +97,15 @@ public class StartOptions : MonoBehaviour {
 
 		//Load the selected scene, by scene index number in build settings
 		Application.LoadLevel (sceneToStart);
+
+		animMenuAlpha.SetTrigger ("fade");
+		
+		//Wait until game has started, then hide the main menu
+		Invoke("HideDelayed", fadeAlphaAnimationClip.length);
+		
+		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
+		
+		//showPanels.DisableMenuButtons();
 	}
 
 
@@ -110,6 +139,14 @@ public class StartOptions : MonoBehaviour {
 		playMusic.FadeUp (fastFadeIn);
 		//Play music clip assigned to mainMusic in PlayMusic script
 		playMusic.PlaySelectedMusic (musicToChangeTo);
+	}
+
+	public void HideGameOverDelayed()
+	{
+		//Hide the main menu UI element
+		showPanels.HideGameOverMenu();
+		showPanels.ShowGamePanel();
+		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
 	}
 
 	public void HideDelayed()

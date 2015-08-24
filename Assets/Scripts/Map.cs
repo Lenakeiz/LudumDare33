@@ -36,7 +36,7 @@ public class Map : MonoBehaviour {
 		actorNameIndex = 0;
 		foreach(GameObject g in tempObjects)
 		{
-			GameObject.Destroy(g);
+			GameObject.DestroyImmediate(g);
 		}
 	}
 

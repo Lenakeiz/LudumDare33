@@ -15,6 +15,9 @@ TagManager:
   - TimerUI
   - MapTile
   - GameCameraCollisionBox
+  - Director
+  - GaugeBar
+  - UI
   layers:
   - Default
   - TransparentFX

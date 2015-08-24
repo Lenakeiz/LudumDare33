@@ -1644,7 +1644,7 @@ MonoBehaviour:
   actorName: 3
   state: 0
   audioSource: {fileID: 0}
-  sfx: {fileID: 0}
+  sfx: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a, type: 2}
   minDelayTimeTalking: 0
   maxDelayTimeTalking: 3
   clips:
@@ -3408,6 +3408,11 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 4269bcb5bbe255d49b9d862343b64733,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: sfx
+      value: 
+      objectReference: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 199972}

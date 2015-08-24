@@ -9,9 +9,10 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
 	public GameObject gamePanel;
+	public GameObject gameOverPanel;
 
 	public Button[] MenuButtons;
-
+	
 	public void DisableMenuButtons()
 	{
 		for (int i = 0; i < MenuButtons.Length; i++) {
@@ -55,6 +56,11 @@ public class ShowPanels : MonoBehaviour {
 	public void HideMenu()
 	{
 		menuPanel.SetActive (false);
+	}
+
+	public void HideGameOverMenu()
+	{
+		gameOverPanel.SetActive(false);
 	}
 	
 	//Call this function to activate and display the Pause panel during game play
