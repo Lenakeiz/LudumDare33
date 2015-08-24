@@ -9,7 +9,8 @@ public class LevelController : MonoBehaviour {
 	public enum GAME_STATE{
 		PLAYING,
 		WIN,
-		LOSE
+		LOSE,
+		WAITING
 	};
 
 	public enum ACTOR_NAMES{
@@ -398,6 +399,14 @@ public class LevelController : MonoBehaviour {
 		PlaySound(0,0f);
 	}
 
+	IEnumerator PrepareNewLevel()
+	{
+		yield return new WaitForSeconds(7.0f);
+		GameObject.Find ("Camera").GetComponent<GameOver>().Reset();
+		ResetLevel();
+		StartNewLevel();
+	}
+
 	// Use this for initialization
 	void Start () {
 		//RandomizeTasks ();
@@ -489,6 +498,10 @@ public class LevelController : MonoBehaviour {
 				levelDifficulty = DIFFICULTY.HARD;
 			}
 
+
+			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate(true);
+			StartCoroutine(PrepareNewLevel());
+			gameState = GAME_STATE.WAITING;
 		}
 		else if(gameState == GAME_STATE.LOSE)
 		{
@@ -496,6 +509,11 @@ public class LevelController : MonoBehaviour {
 			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate(false);
 			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().EnableGameOverButtons();
 			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().GameOverActivate();
+			gameState = GAME_STATE.WAITING;
+		}
+		else if(gameState == GAME_STATE.WAITING)
+		{
+
 		}
 
 	}

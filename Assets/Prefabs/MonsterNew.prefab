@@ -1614,7 +1614,7 @@ MonoBehaviour:
   hauntDuration: 10
   hauntCooldown: 1
   hauntCooldownTimer: 0
-  amountOfFear: 40
+  amountOfFear: 20
 --- !u!114 &11420840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   chillDuration: 6
   chillCooldown: 2
   chillCooldownTimer: 0
-  amountOfFear: 10
+  amountOfFear: 5
 --- !u!119 &11957552
 Projector:
   m_ObjectHideFlags: 1

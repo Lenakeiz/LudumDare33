@@ -268,7 +268,12 @@ public class Actors : MonoBehaviour {
 			}
 		}
 
-
+		if (state == ACTOR_STATE.FIENTED) {
+			if(fear < 80)
+			{
+				state = ACTOR_STATE.CHOOSING;
+			}
+		}
 
 		if (state == ACTOR_STATE.MOVING) 
 		{
@@ -440,7 +445,7 @@ public class Actors : MonoBehaviour {
 
 		}
 		if (state == ACTOR_STATE.TALKING) {
-
+			fear -= Time.deltaTime * fearReductionPerSecond;
 			//PLAY TALK ANIMATION
 			transform.LookAt(talkTarget.transform.position,Vector3.up);
 			if(this.currentTile == talkTarget.currentTile)

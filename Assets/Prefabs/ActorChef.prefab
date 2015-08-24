@@ -1630,7 +1630,7 @@ MonoBehaviour:
   fear: 0
   fearSpookedAmount: 30
   fearPanicAmount: 60
-  fearReductionPerSecond: 1
+  fearReductionPerSecond: 1.5
   movementSpeed: .600000024
   spookedSpeed: 1.39999998
   panicSpeed: 2
@@ -3410,6 +3410,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fearReductionPerSecond
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
