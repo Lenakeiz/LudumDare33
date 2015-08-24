@@ -370,8 +370,9 @@ public class LevelController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			ResetLevel();
-			StartNewLevel();
+			gameObject.GetComponent<GameOver>().GameOverActivate();
+			//ResetLevel();
+			//StartNewLevel();
 		}
 		
 		if (checkTasks && !timerFinished) {

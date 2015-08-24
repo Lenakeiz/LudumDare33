@@ -18,6 +18,7 @@ TagManager:
   - Director
   - GaugeBar
   - UI
+  - GameOverSplash
   layers:
   - Default
   - TransparentFX
