@@ -225,6 +225,7 @@ public class Actors : MonoBehaviour {
 		forceDirection = true;
 		state = ACTOR_STATE.MOVING;
 		gameObject.GetComponent<Animator>().Play("Run 01");
+		talkTarget = null;
 
 	}
 

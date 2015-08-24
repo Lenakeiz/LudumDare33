@@ -1629,6 +1629,8 @@ MonoBehaviour:
   shoutClip: {fileID: 8300000, guid: f913680a1d2a7c74f8bf47cb48356e5c, type: 3}
   shoutAnimName: Animal 01 Gorilla
   radius: 3
+  castTime: 1
+  castTimer: 0
   shoutCooldown: 2
   shoutCooldownTimer: 0
   amountOfFear: 20
@@ -3446,6 +3448,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: shoutAnimName
       value: Animal 01 Gorilla
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: castTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
