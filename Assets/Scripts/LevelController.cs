@@ -58,6 +58,8 @@ public class LevelController : MonoBehaviour {
 	public float maxDelayTimeTalking = 3.0f;
 	public List<AudioClip> clips;
 
+	DIFFICULTY levelDifficulty;
+
 	public class Situation
 	{
 		public Situation()
@@ -178,10 +180,10 @@ public class LevelController : MonoBehaviour {
 	{
 		string sitString = done ? "[X]" : "[]";
 		sitString += "Bring " + GetName(s.actorNames [0]) + " looking " + GetName(s.actorStates [0]);
-		/*
+
 		for (int i = 1; i < s.actorNames.Count; ++i) {
 			sitString += ", and " + GetName(s.actorNames[i]) + " looking " + GetName(s.actorStates[i]);
-		}*/
+		}
 		sitString += " in front of " + cameraNames + (s.cameraNum+1) + "\n";
 		return sitString;
 
@@ -265,9 +267,12 @@ public class LevelController : MonoBehaviour {
 		tasks.Clear();
 		taskIsDone.Clear();
 		Map map = GameObject.FindObjectOfType<Map> ();
+
+
+
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
-
+			List<ACTOR_NAMES> actorNames = new List<ACTOR_NAMES>(activeActors);
 			int complexity =1;
 			if(diff== DIFFICULTY.MEDIUM)
 			{
@@ -279,8 +284,11 @@ public class LevelController : MonoBehaviour {
 			}
 			for(int j=0; j< complexity; ++j)
 			{
-				task.actorNames.Add( activeActors[Random.Range (0,activeActors.Count)]);
-				task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
+				int nameChoice = Random.Range (0,actorNames.Count);
+				int stateChoice = Random.Range (0, actor_states.Length);
+				task.actorNames.Add( actorNames[nameChoice]);
+				actorNames.RemoveAt(nameChoice);
+				task.actorStates.Add( ConvertIntToState(stateChoice));
 			}
 			task.cameraNum = Random.Range (0, cameras.Count);
 			Debug.Log(ParseSituation(task,false));
@@ -364,7 +372,7 @@ public class LevelController : MonoBehaviour {
 	{
 		activeActors = new List<ACTOR_NAMES> ();
 		map.PreparePrefabs();
-		RandomizeTasks(DIFFICULTY.EASY);
+		RandomizeTasks(levelDifficulty);
 		uiUpdater.ResetGauge();
 		ResetMiniCamera();
 	
@@ -387,6 +395,7 @@ public class LevelController : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 		audioSource.playOnAwake = false;
 		audioSource.outputAudioMixerGroup = directorChannel;
+		levelDifficulty=DIFFICULTY.MEDIUM;
 	}
 	
 	// Update is called once per frame

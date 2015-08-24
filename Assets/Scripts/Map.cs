@@ -108,8 +108,13 @@ public class Map : MonoBehaviour {
 
 			tempObjects.Add(g);
 		}
+		List<Tile> spawnPoints = new List<Tile> (actorSpawnPositions);
+
 		for (int i = 0; i < actorPrefabs.Count; ++i) {
-			Tile t =actorSpawnPositions[Random.Range(0,actorSpawnPositions.Count)];
+
+			int spawnChoice = Random.Range(0,spawnPoints.Count);
+			Tile t =spawnPoints[spawnChoice];
+			spawnPoints.RemoveAt(spawnChoice);
 			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
 			g.GetComponent<Actors>().currentTile = t;
 			g.transform.position = t.characterPosition;
