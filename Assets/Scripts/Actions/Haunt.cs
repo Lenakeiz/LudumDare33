@@ -57,7 +57,9 @@ public class Haunt : MonoBehaviour {
 		//play haunting animation
 		hauntPrefab.SetActive (false);
 		hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-		hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+		if (hauntedTiles [1] != null) {
+			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+		}
 		actor.AddFear (amountOfFear);
 		actor.state = Actors.ACTOR_STATE.MOVING;
 		if(hauntDirection.z >0)

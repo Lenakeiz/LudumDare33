@@ -441,11 +441,7 @@ public class LevelController : MonoBehaviour {
 			StartNewLevel();
 		}
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			gameObject.GetComponent<GameOver>().GameOverActivate(true);
-			//ResetLevel();
-			//StartNewLevel();
-		}
+
 		
 		if (checkTasks && !timerFinished) {
 			int numTasksDone = 0;
