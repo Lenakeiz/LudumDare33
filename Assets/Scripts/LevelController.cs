@@ -268,20 +268,31 @@ public class LevelController : MonoBehaviour {
 		taskIsDone.Clear();
 		Map map = GameObject.FindObjectOfType<Map> ();
 
+		int req1 = 1;
+		int req2 = 1;
+		int req3 = 1;
+		if(diff== DIFFICULTY.MEDIUM)
+		{
+			req3 = 2;
+		}
+		else if(diff == DIFFICULTY.HARD)
+		{
+			req2 = 2;
+			req3 = 2;
+		}
+
+
+		int[] numRequirementsArr = new int[3]{
+			req1,
+			req2,
+			req3};
 
 
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
 			List<ACTOR_NAMES> actorNames = new List<ACTOR_NAMES>(activeActors);
-			int complexity =1;
-			if(diff== DIFFICULTY.MEDIUM)
-			{
-				complexity =2;
-			}
-			else if(diff == DIFFICULTY.HARD)
-			{
-				complexity =3;
-			}
+			int complexity = numRequirementsArr[i];
+
 			for(int j=0; j< complexity; ++j)
 			{
 				int nameChoice = Random.Range (0,actorNames.Count);
@@ -395,7 +406,7 @@ public class LevelController : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 		audioSource.playOnAwake = false;
 		audioSource.outputAudioMixerGroup = directorChannel;
-		levelDifficulty=DIFFICULTY.MEDIUM;
+		levelDifficulty = DIFFICULTY.EASY;
 	}
 	
 	// Update is called once per frame
@@ -468,6 +479,16 @@ public class LevelController : MonoBehaviour {
 		else if(gameState == GAME_STATE.WIN)
 		{
 			//Call Winning Animation
+
+			if(levelDifficulty == DIFFICULTY.EASY)
+			{
+				levelDifficulty = DIFFICULTY.MEDIUM;
+			}
+			else if(levelDifficulty == DIFFICULTY.MEDIUM)
+			{
+				levelDifficulty = DIFFICULTY.HARD;
+			}
+
 		}
 		else if(gameState == GAME_STATE.LOSE)
 		{

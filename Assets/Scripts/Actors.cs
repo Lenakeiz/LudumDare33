@@ -300,7 +300,7 @@ public class Actors : MonoBehaviour {
 					}
 				}
 
-				if(talkTarget != null)
+				if(talkTarget != null && !isPanicking)
 				{
 					this.GetComponent<Animator>().Play(talkAnimation);
 					state = ACTOR_STATE.TALKING;
@@ -372,6 +372,7 @@ public class Actors : MonoBehaviour {
 				}
 				if(isPanicking)
 				{
+					talkTarget = null;
 					roamingWaitTime = 0.1f;
 				}
 			}
