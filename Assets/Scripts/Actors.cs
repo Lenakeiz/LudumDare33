@@ -405,9 +405,18 @@ public class Actors : MonoBehaviour {
 					{
 						continue;
 					}
-					if(movementTarget.effectsOnTile != Tile.TILE_EFFECTS.CHILL)
+					if(movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
 					{
-						break;
+						Collider[] colliders = Physics.OverlapSphere(this.transform.position,3);
+						foreach(Collider col in colliders)
+						{
+							if(col.tag=="Tile" && col.GetComponent<Tile>().effectsOnTile!=
+							   Tile.TILE_EFFECTS.CHILL)
+							{
+								pathHelper.RequestPath(currentTile,col.GetComponent<Tile>());
+								movementTarget = pathHelper.GetNextMove();
+							}
+						}
 					}
 				}
 				if(movementTarget == null)
