@@ -1090,7 +1090,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102270}
   m_LocalRotation: {x: -.57357657, y: 3.7252903e-08, z: -3.7252903e-09, w: .819151938}
-  m_LocalPosition: {x: -16.1000004, y: -21.6299992, z: -7.88000011}
+  m_LocalPosition: {x: -16.1000004, y: -20.9699993, z: -7.63999987}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 468860}
@@ -1887,7 +1887,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133330}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
@@ -3357,7 +3357,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7, y: 5, z: 6}
+  m_Size: {x: 7, y: 5, z: 7.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6573434
 BoxCollider:
@@ -3434,7 +3434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e6ca6c7f74f57479375c56fc00cb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomIndex: 2
+  RoomIndex: 3
 --- !u!114 &11496688
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -444,6 +444,9 @@ public class LevelController : MonoBehaviour {
 		else if(gameState == GAME_STATE.LOSE)
 		{
 			//Call Losing Animation
+			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate();
+			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().EnableGameOverButtons();
+			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().GameOverActivate();
 		}
 
 	}
