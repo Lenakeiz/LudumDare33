@@ -142,23 +142,35 @@ public class Haunt : MonoBehaviour {
 				hauntedTiles[0]=player.currentTile;
 				if(hauntDirection.z >0)
 				{
-					hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-					hauntedTiles[1] = hauntedTiles[0].up;
+					if(hauntedTiles[0].up)
+					{
+						hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+						hauntedTiles[1] = hauntedTiles[0].up;
+					}
 				}
 				else if( hauntDirection.z <0)
 				{
-					hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-					hauntedTiles[1] = hauntedTiles[0].down;
+					if(hauntedTiles[0].down)
+					{
+						hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+						hauntedTiles[1] = hauntedTiles[0].down;
+					}
 				}
 				if(hauntDirection.x >0)
 				{
-					hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-					hauntedTiles[1] = hauntedTiles[0].right;
+					if(hauntedTiles[0].right)
+					{
+						hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+						hauntedTiles[1] = hauntedTiles[0].right;
+					}
 				}
 				if(hauntDirection.x <0)
 				{
-					hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-					hauntedTiles[1] = hauntedTiles[0].left;
+					if(hauntedTiles[0].left)
+					{
+						hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+						hauntedTiles[1] = hauntedTiles[0].left;
+					}
 				}
 				choosingDirection = false;
 			}
