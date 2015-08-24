@@ -79,6 +79,11 @@ public class Chill : MonoBehaviour {
 	}
 
 
+	void OnDestroy()
+	{
+		GameObject.Destroy (chillObject);
+	}
+
 	// Use this for initialization
 	void Start () {
 		player = this.GetComponent<Player> ();

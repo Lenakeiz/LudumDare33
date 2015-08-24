@@ -79,6 +79,11 @@ public class Haunt : MonoBehaviour {
 		return Actors.ACTOR_DIRECTION.NONE;
 	}
 
+	void OnDestroy()
+	{
+		GameObject.Destroy (hauntPrefab);
+	}
+
 	// Use this for initialization
 	void Start () {
 		if (arrowPrefab) {
@@ -91,6 +96,8 @@ public class Haunt : MonoBehaviour {
 		if (hauntPrefab) {
 			hauntPrefab = GameObject.Instantiate<GameObject>(hauntPrefab);
 			hauntPrefab.SetActive (false);
+			hauntPrefab.GetComponentInChildren<Animator>().speed=0;
+			hauntPrefab.GetComponentInChildren<Animator>().Play("Magic 01");
 		} else {
 			Debug.LogError ("NO HAUNT PREFAB FOR HAUNT");
 		}
