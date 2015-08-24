@@ -44,6 +44,12 @@ public class LevelController : MonoBehaviour {
 		"unconscious"
 	};
 
+	public enum DIFFICULTY{
+		EASY,
+		MEDIUM,
+		HARD,
+	}
+
 	public List<Camera> cameras = new List<Camera>();
 
 	public AudioSource audioSource;
@@ -254,15 +260,28 @@ public class LevelController : MonoBehaviour {
 		}
 	}
 
-	void RandomizeTasks()
+	void RandomizeTasks(DIFFICULTY diff )
 	{
 		tasks.Clear();
 		taskIsDone.Clear();
 		Map map = GameObject.FindObjectOfType<Map> ();
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
-			task.actorNames.Add( activeActors[Random.Range (0,activeActors.Count)]);
-			task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
+
+			int complexity =0;
+			if(diff== DIFFICULTY.MEDIUM)
+			{
+				complexity =1;
+			}
+			else if(diff == DIFFICULTY.HARD)
+			{
+				complexity =2;
+			}
+			for(int j=0; j< complexity; ++j)
+			{
+				task.actorNames.Add( activeActors[Random.Range (0,activeActors.Count)]);
+				task.actorStates.Add( ConvertIntToState(Random.Range (0, actor_states.Length)));
+			}
 			task.cameraNum = Random.Range (0, cameras.Count);
 			Debug.Log(ParseSituation(task,false));
 			tasks.Add(task);
@@ -345,7 +364,7 @@ public class LevelController : MonoBehaviour {
 	{
 		activeActors = new List<ACTOR_NAMES> ();
 		map.PreparePrefabs();
-		RandomizeTasks();
+		RandomizeTasks(DIFFICULTY.EASY);
 		uiUpdater.ResetGauge();
 		ResetMiniCamera();
 	
@@ -444,7 +463,7 @@ public class LevelController : MonoBehaviour {
 		else if(gameState == GAME_STATE.LOSE)
 		{
 			//Call Losing Animation
-			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate();
+			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate(false);
 			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().EnableGameOverButtons();
 			GameObject.FindGameObjectWithTag("UI").GetComponent<ShowPanels>().GameOverActivate();
 		}
