@@ -10,6 +10,7 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject pausePanel;							//Store a reference to the Game Object PausePanel 
 	public GameObject gamePanel;
 	public GameObject gameOverPanel;
+	public GameObject creditsPanel;
 
 	public Button[] MenuButtons;
 	public Button[] GameOverButtons;
@@ -56,6 +57,7 @@ public class ShowPanels : MonoBehaviour {
 	//Call this function to activate and display the Options panel during the main menu
 	public void ShowOptionsPanel()
 	{
+		menuPanel.SetActive(false);
 		optionsPanel.SetActive(true);
 		optionsTint.SetActive(true);
 	}
@@ -65,11 +67,18 @@ public class ShowPanels : MonoBehaviour {
 	{
 		optionsPanel.SetActive(false);
 		optionsTint.SetActive(false);
+		menuPanel.SetActive(true);
+	}
+
+	public void HideCredits()
+	{
+		creditsPanel.SetActive(false);
 	}
 
 	//Call this function to activate and display the main menu panel during the main menu
 	public void ShowMenu()
 	{
+		menuPanel.GetComponent<CanvasGroup>().alpha = 1.0f;
 		menuPanel.SetActive (true);
 	}
 
@@ -77,6 +86,12 @@ public class ShowPanels : MonoBehaviour {
 	public void HideMenu()
 	{
 		menuPanel.SetActive (false);
+	}
+
+	public void ShowCreditsPanel()
+	{
+		creditsPanel.GetComponent<CanvasGroup>().alpha = 1.0f;
+		creditsPanel.SetActive(true);
 	}
 
 	public void HideGameOverMenu()

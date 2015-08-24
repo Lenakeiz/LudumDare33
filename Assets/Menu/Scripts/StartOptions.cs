@@ -17,6 +17,7 @@ public class StartOptions : MonoBehaviour {
 	[HideInInspector] public Animator animColorFade; 					//Reference to animator which will fade to and from black when starting game.
 	public Animator animMenuAlpha;					//Reference to animator that will fade out alpha of MenuPanel canvas group
 	public Animator animGameOverAlpha;
+	public Animator animCreditAlpha;
 	[HideInInspector] public AnimationClip fadeColorAnimationClip;		//Animation clip fading to color (black default) when changing scenes
 	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;		//Animation clip fading out UI elements alpha
 
@@ -27,6 +28,7 @@ public class StartOptions : MonoBehaviour {
 
 	private bool lockRestart = false;
 	private bool lockStart =  false;
+	private bool lockCredits =  false;
 	
 	void Awake()
 	{
@@ -35,6 +37,34 @@ public class StartOptions : MonoBehaviour {
 
 		//Get a reference to PlayMusic attached to UI object
 		playMusic = GetComponent<PlayMusic> ();
+	}
+
+	public void CreditsButtonClicked()
+	{
+		if(!lockStart)
+		{
+			lockStart = true;
+			
+			//Set trigger for animator to start animation fading out Menu UI
+			animMenuAlpha.SetTrigger ("fade");
+			
+			//Wait until game has started, then hide the main menu
+			Invoke("ShowCredits", fadeAlphaAnimationClip.length);
+		}
+	}
+
+	public void BackFromCreditsButtonClicked()
+	{
+		if(!lockCredits)
+		{
+			lockCredits = true;
+
+			//Set trigger for animator to start animation fading out Menu UI
+			animCreditAlpha.SetTrigger ("fade");
+			
+			//Wait until game has started, then hide the main menu
+			Invoke("HideCredits", fadeAlphaAnimationClip.length);
+		}
 	}
 
 	public void RestartButtonClicked()
@@ -156,6 +186,20 @@ public class StartOptions : MonoBehaviour {
 		showPanels.ShowGamePanel();
 		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
 		lockRestart = false;
+	}
+
+	public void ShowCredits()
+	{
+		showPanels.HideMenu();
+		showPanels.ShowCreditsPanel();
+		lockStart = false;
+	}
+
+	public void HideCredits()
+	{
+		showPanels.HideCredits();
+		showPanels.ShowMenu();
+		lockCredits =  false;
 	}
 
 	public void HideDelayed()
