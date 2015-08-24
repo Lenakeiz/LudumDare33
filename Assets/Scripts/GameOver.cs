@@ -5,6 +5,7 @@ public class GameOver : MonoBehaviour {
 
 
 	public string failAnimationName;
+	public string winAinimationName;
 	GameObject player; 
 	GameObject mainCamera;
 	Vector3 originalCameraPos;
@@ -17,7 +18,7 @@ public class GameOver : MonoBehaviour {
 
 
 
-	public void GameOverActivate()
+	public void GameOverActivate(bool didWeWin)
 	{
 		t = 0;
 		player = GameObject.FindObjectOfType<Player> ().gameObject;
@@ -37,11 +38,16 @@ public class GameOver : MonoBehaviour {
 			a.enabled=false;
 		}
 		zoomCamera = true;
-		player.GetComponent<Animator> ().Play (failAnimationName);
+		if (didWeWin) {
+			player.GetComponent<Animator> ().Play (winAinimationName);
+		} else {
+			player.GetComponent<Animator> ().Play (failAnimationName);
+		}
 	}
 
 	public void Reset()
 	{
+		zoomCamera = false;
 	}
 	// Use this for initialization
 	void Start () {
@@ -55,6 +61,9 @@ public class GameOver : MonoBehaviour {
 			{
 				t += Time.deltaTime;
 				mainCamera.transform.position = Vector3.Lerp(originalCameraPos,player.transform.position,t);
+			}
+			else{
+				zoomCamera = false;
 			}
 		}
 	}

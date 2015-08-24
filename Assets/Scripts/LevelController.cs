@@ -23,9 +23,9 @@ public class LevelController : MonoBehaviour {
 
 	string[] actor_names = new string[6]{
 		"Blondie",
-		"Green Goon",
+		"Cheif",
 		"Axecop",
-		"Red Rube",
+		"Teacher",
 		"Purple Person",
 		"anybody",
 	};
@@ -381,7 +381,7 @@ public class LevelController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			gameObject.GetComponent<GameOver>().GameOverActivate();
+			gameObject.GetComponent<GameOver>().GameOverActivate(true);
 			//ResetLevel();
 			//StartNewLevel();
 		}

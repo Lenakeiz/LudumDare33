@@ -113,7 +113,7 @@ public class Map : MonoBehaviour {
 			GameObject g =(GameObject)GameObject.Instantiate(actorPrefabs[i],t.characterPosition,Quaternion.identity);
 			g.GetComponent<Actors>().currentTile = t;
 			g.transform.position = t.characterPosition;
-			g.name = g.GetComponent<Actors>().actorName.ToString();
+			g.name = GameObject.FindObjectOfType<LevelController>().GetName(g.GetComponent<Actors>().actorName);
 			GameObject.FindObjectOfType<LevelController>().activeActors.Add(g.GetComponent<Actors>().actorName);
 			actorNameIndex++;
 			tempObjects.Add(g);

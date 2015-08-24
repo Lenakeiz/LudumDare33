@@ -201,7 +201,7 @@ public class Actors : MonoBehaviour {
 			if(targetChild != null)
 			{
 				barScript = targetChild.gameObject.GetComponentInChildren<BarScript>();
-				barScript.SetName(this.actorName.ToString());
+				barScript.SetName(gameObject.name);
 			}
 			else{Debug.LogError("UI Child Not Found");};
 		}
