@@ -268,14 +268,14 @@ public class LevelController : MonoBehaviour {
 		for (int i=0; i < numTasks; ++i) {
 			Situation task = new Situation ();
 
-			int complexity =0;
+			int complexity =1;
 			if(diff== DIFFICULTY.MEDIUM)
 			{
-				complexity =1;
+				complexity =2;
 			}
 			else if(diff == DIFFICULTY.HARD)
 			{
-				complexity =2;
+				complexity =3;
 			}
 			for(int j=0; j< complexity; ++j)
 			{
