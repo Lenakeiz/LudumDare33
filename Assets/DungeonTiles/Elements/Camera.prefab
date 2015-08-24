@@ -378,7 +378,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   failAnimationName: Fall 01
+  winAinimationName: 
   zoomedDistance: 4
+  zoomSpeedMultiplier: .5
 --- !u!114 &11481238
 MonoBehaviour:
   m_ObjectHideFlags: 1

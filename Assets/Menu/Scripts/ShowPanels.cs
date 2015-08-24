@@ -16,6 +16,7 @@ public class ShowPanels : MonoBehaviour {
 
 	public void GameOverActivate()
 	{
+		gameOverPanel.GetComponent<CanvasGroup>().alpha = 1.0f;
 		gameOverPanel.SetActive(true);
 	}
 
