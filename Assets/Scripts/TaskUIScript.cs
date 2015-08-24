@@ -13,7 +13,7 @@ public class TaskUIScript : MonoBehaviour {
 
 	public void WinGameText()
 	{
-		text.text = "You truly are a star";
+		text.text = "GOOD JOB! You are truly a star";
 	}
 
 	public void SetCurrentTask(string situation)

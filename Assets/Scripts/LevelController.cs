@@ -23,10 +23,10 @@ public class LevelController : MonoBehaviour {
 	};
 
 	string[] actor_names = new string[6]{
-		"Blondie",
-		"Cheif",
-		"Axecop",
-		"Teacher",
+		"Sporty Spice",
+		"Mack Eroni",
+		"Bobby Blue",
+		"Miss Strict",
 		"Purple Person",
 		"anybody",
 	};
@@ -87,6 +87,8 @@ public class LevelController : MonoBehaviour {
 	public TimeUI uiUpdater;
 	public TaskUIScript uiTaskUpdater;
 	public Text cameraUIText;
+	public Text lvlCounterText;
+	public int lvlCounter = 1;
 
 	public GAME_STATE gameState;
 
@@ -333,6 +335,13 @@ public class LevelController : MonoBehaviour {
 			Debug.LogError("Map not found");
 		}
 
+		lvlCounterText = GameObject.FindGameObjectWithTag("LvlCounterUI").GetComponent<Text>();
+
+		if(lvlCounterText == null)
+		{
+			Debug.LogError("LvlCounterUINotFound");
+		}
+
 	}
 
 	private void ResetLevel()
@@ -367,6 +376,9 @@ public class LevelController : MonoBehaviour {
 		map.PreparePrefabs();
 		RandomizeTasks(DIFFICULTY.EASY);
 		uiUpdater.ResetGauge();
+
+		lvlCounterText.text = "Lvl #"+lvlCounter.ToString();
+
 		ResetMiniCamera();
 	
 		levelTimeLimitTimer = 0.0f;
@@ -403,6 +415,7 @@ public class LevelController : MonoBehaviour {
 		if(initializeLevel)
 		{
 			initializeLevel = false;
+			lvlCounter = 1;
 			InitializeUIElements();
 			ResetLevel();
 			StartNewLevel();
@@ -469,6 +482,7 @@ public class LevelController : MonoBehaviour {
 		{
 			GameObject.Find ("Camera").GetComponent<GameOver>().GameOverActivate(true);
 			StartCoroutine(PrepareNewLevel());
+			lvlCounter++;
 			gameState = GAME_STATE.WAITING;
 		}
 		else if(gameState == GAME_STATE.LOSE)

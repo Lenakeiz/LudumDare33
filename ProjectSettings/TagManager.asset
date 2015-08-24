@@ -19,6 +19,7 @@ TagManager:
   - GaugeBar
   - UI
   - GameOverSplash
+  - LvlCounterUI
   layers:
   - Default
   - TransparentFX
