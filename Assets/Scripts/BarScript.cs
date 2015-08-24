@@ -7,13 +7,21 @@ public class BarScript : MonoBehaviour {
 	private float currVelocity;
 
 	public Image image;
+	public Text percentage;
+	public Text actorName;
+	public Text panicStatus;
 
-	public void SetAmount(float targetValue)
+	public void SetName(string _name)
+	{
+		actorName.text = _name;
+	}
+
+	public void SetAmount(float targetValue, string _status)
 	{
 		float value = Mathf.SmoothDamp(image.fillAmount, targetValue, ref currVelocity, Time.deltaTime);
 		image.fillAmount = value;
-		Text _text =  GetComponentInChildren<Text>();
-		_text.text = (int)(value * 100) + "%";
+		percentage.text = (int)(value * 100) + "%";
+		panicStatus.text =  _status;
 	}
 
 	// Use this for initialization

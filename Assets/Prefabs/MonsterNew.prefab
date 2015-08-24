@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9818337f5ad9594480c9beb55217b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hauntClip: {fileID: 0}
+  hauntClip: {fileID: 8300000, guid: 2b744fcdcee84e048a7c6c218ccac588, type: 3}
   arrowPrefab: {fileID: 159284, guid: 2edd5cff4b07e9c4a89d13906c1f5c6d, type: 2}
   hauntPrefab: {fileID: 131798, guid: 663d0e739d1227c4aa7fb131aef7bbd7, type: 2}
   hauntDirection: {x: 0, y: 0, z: 0}
@@ -3405,6 +3405,10 @@ Prefab:
       value: 
       objectReference: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a,
         type: 2}
+    - target: {fileID: 0}
+      propertyPath: hauntClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b744fcdcee84e048a7c6c218ccac588, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196610}

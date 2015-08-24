@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -38,6 +39,11 @@ public class LevelController : MonoBehaviour {
 
 	public List<Camera> cameras = new List<Camera>();
 
+	public AudioSource audioSource;
+	public AudioMixerGroup directorChannel;
+	public float minDelayTimeTalking = 0.0f;
+	public float maxDelayTimeTalking = 3.0f;
+	public List<AudioClip> clips;
 
 	public class Situation
 	{
@@ -73,6 +79,25 @@ public class LevelController : MonoBehaviour {
 
 	int previousCameraIndex = -1;
 	int currCameraIndex = -1;
+
+	public void PlaySound(int indexSound, float delay)
+	{
+		if(indexSound >= clips.Count)
+		{
+			Debug.LogError("Index for audio is wrong");
+		}
+		else
+		{
+			Debug.Log("Playing director voice: " + indexSound); 
+			if(audioSource.isPlaying)
+			{
+				audioSource.Stop();
+			}
+			audioSource.clip = clips[indexSound];
+			audioSource.PlayDelayed(delay);
+		}
+		
+	}
 
 	bool CheckConditiosnEASY(Situation s, int task)
 	{
@@ -283,6 +308,20 @@ public class LevelController : MonoBehaviour {
 	private void ResetLevel()
 	{
 		map.ResetLevel ();
+		GameObject[] uiGauges = GameObject.FindGameObjectsWithTag("GaugeBar");
+		if(uiGauges == null)
+		{
+			Debug.LogError("Cannot Find gauges for erasing");
+		}
+		else
+		{
+			if(uiGauges.Length != 0)
+			{
+				for (int i = 0; i < uiGauges.Length; i++) {
+					GameObject.DestroyImmediate(uiGauges[i]);
+				}
+			}
+		}
 	}
 
 	private void ResetMiniCamera()
@@ -306,6 +345,8 @@ public class LevelController : MonoBehaviour {
 		Debug.Log ("Starting Timer");
 		checkTasks = true;
 		levelTimeLimitTimer = 0.0f;
+
+		PlaySound(0,0f);
 	}
 
 	// Use this for initialization
@@ -313,6 +354,9 @@ public class LevelController : MonoBehaviour {
 		//RandomizeTasks ();
 		checkTasks = false;
 		tasks = new List<Situation>();
+		audioSource = GetComponent<AudioSource>();
+		audioSource.playOnAwake = false;
+		audioSource.outputAudioMixerGroup = directorChannel;
 	}
 	
 	// Update is called once per frame
@@ -340,6 +384,7 @@ public class LevelController : MonoBehaviour {
 						taskIsDone [i] = true;
 						Debug.Log (ParseSituation (s,taskIsDone[i]));
 						Debug.Log ("Is done!");
+						PlaySound(Random.Range(1,4),0);
 					}
 				} else {
 					numTasksDone ++;
@@ -348,6 +393,7 @@ public class LevelController : MonoBehaviour {
 			}
 			uiTaskUpdater.SetCurrentTask(UIText);
 			if (numTasksDone == tasks.Count) {
+				PlaySound(7,0);
 				Debug.Log ("YOU WIN");
 				uiTaskUpdater.WinGameText();
 				checkTasks = false;
@@ -364,6 +410,7 @@ public class LevelController : MonoBehaviour {
 				if(checkTasks)
 				{
 					lostGame = true;
+					PlaySound(Random.Range(4,7),0);
 					uiTaskUpdater.LoseGameText();
 				}
 			}
@@ -372,6 +419,18 @@ public class LevelController : MonoBehaviour {
 				uiUpdater.UpdateUI(1.0f - levelTimeLimitTimer/levelTimeLimit);
 			else Debug.Log ("UI Updater not found");
 			
+		}
+		else
+		{
+			//Detecting winnin condition;
+			if(lostGame)
+			{
+				
+			}
+			else
+			{
+
+			}
 		}
 
 
