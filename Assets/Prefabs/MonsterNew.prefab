@@ -1685,7 +1685,7 @@ MonoBehaviour:
   chillSound: {fileID: 8300000, guid: 86b43e4d24d38f44297d784108e7b15b, type: 3}
   chillSphereRadius: 3
   chillObject: {fileID: 192994, guid: 68ab72d3feea5f84e9d57d46db472282, type: 2}
-  chillDuration: 4
+  chillDuration: 6
   chillCooldown: 2
   chillCooldownTimer: 0
   amountOfFear: 10
@@ -3452,6 +3452,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: castTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chillDuration
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
