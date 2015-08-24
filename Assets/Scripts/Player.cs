@@ -82,6 +82,14 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.DOING_ACTION;
 			}
 		}
+		else if (Input.GetButtonDown ("Fire3")) {
+			int lockNumber = Random.Range(0,100);
+			if(this.GetComponent<Shout>().Activate(lockNumber))
+			{
+				actionLockNumber =lockNumber;
+				state = PLAYER_STATE.DOING_ACTION;
+			}
+		}
 	}
 
 	void ReadMoveInput()

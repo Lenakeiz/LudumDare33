@@ -697,6 +697,7 @@ GameObject:
   - 114: {fileID: 11467088}
   - 114: {fileID: 11409046}
   - 82: {fileID: 8260128}
+  - 114: {fileID: 11420840}
   m_Layer: 0
   m_Name: MonsterNew
   m_TagString: Player
@@ -1614,6 +1615,23 @@ MonoBehaviour:
   hauntCooldown: 1
   hauntCooldownTimer: 0
   amountOfFear: 40
+--- !u!114 &11420840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9995d5f463b516c43b56129b256a8475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shoutClip: {fileID: 8300000, guid: f913680a1d2a7c74f8bf47cb48356e5c, type: 3}
+  shoutAnimName: Animal 01 Gorilla
+  radius: 3
+  shoutCooldown: 2
+  shoutCooldownTimer: 0
+  amountOfFear: 20
 --- !u!114 &11438100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3409,6 +3427,26 @@ Prefab:
       propertyPath: hauntClip
       value: 
       objectReference: {fileID: 8300000, guid: 2b744fcdcee84e048a7c6c218ccac588, type: 3}
+    - target: {fileID: 0}
+      propertyPath: shoutClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f913680a1d2a7c74f8bf47cb48356e5c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: radius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shoutCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: amountOfFear
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shoutAnimName
+      value: Animal 01 Gorilla
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196610}

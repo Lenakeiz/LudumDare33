@@ -32,8 +32,8 @@ public class Actors : MonoBehaviour {
 
 	public LevelController.ACTOR_NAMES actorName;
 	public ACTOR_STATE state = ACTOR_STATE.CHOOSING;
-	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
-	bool forceDirection = false;
+	public ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
+	public bool forceDirection = false;
 
 	public AudioSource audioSource;
 	public AudioMixerGroup sfx;
@@ -142,7 +142,7 @@ public class Actors : MonoBehaviour {
 		return ACTOR_DIRECTION.NONE;
 	}
 
-	static ACTOR_DIRECTION IntToDirection(int dir)
+	public static ACTOR_DIRECTION IntToDirection(int dir)
 	{
 		if (dir == 0)
 			return ACTOR_DIRECTION.UP;
@@ -217,6 +217,15 @@ public class Actors : MonoBehaviour {
 			}
 		}
 		roamingT = 0f;
+	}
+
+	public void ScreamedAt(ACTOR_DIRECTION dir)
+	{
+		moveDirection = dir;
+		forceDirection = true;
+		state = ACTOR_STATE.MOVING;
+		gameObject.GetComponent<Animator>().Play("Run 01");
+
 	}
 
 	// Update is called once per frame
@@ -438,6 +447,7 @@ public class Actors : MonoBehaviour {
 					forceDirection = true;
 					talkTarget = null;
 					talkCooldownTimer = talkCooldown;
+					gameObject.GetComponent<Animator>().Play("Run 01");
 					state = ACTOR_STATE.MOVING;
 					PlaySound(3,0);
 				}
