@@ -901,7 +901,7 @@ GameObject:
   - 95: {fileID: 9501450}
   - 225: {fileID: 22522502}
   m_Layer: 5
-  m_Name: GameOverScreen
+  m_Name: GameOverPanel
   m_TagString: GameOverSplash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -976,7 +976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &185424
 GameObject:
   m_ObjectHideFlags: 1
@@ -1538,7 +1538,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11488040}
-        m_MethodName: StartButtonClicked
+        m_MethodName: RestartButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2037,11 +2037,14 @@ MonoBehaviour:
   menuPanel: {fileID: 128056}
   pausePanel: {fileID: 198696}
   gamePanel: {fileID: 106398}
-  gameOverPanel: {fileID: 0}
+  gameOverPanel: {fileID: 174336}
   MenuButtons:
   - {fileID: 11488868}
   - {fileID: 11490700}
   - {fileID: 11420910}
+  GameOverButtons:
+  - {fileID: 11411230}
+  - {fileID: 11415470}
 --- !u!114 &11433418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2307,7 +2310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: .483999997}
+  m_Color: {r: 0, g: 0, b: 0, a: .470588237}
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -3116,6 +3119,7 @@ MonoBehaviour:
   inMainMenu: 1
   animColorFade: {fileID: 9520878}
   animMenuAlpha: {fileID: 9539568}
+  animGameOverAlpha: {fileID: 9501450}
   fadeColorAnimationClip: {fileID: 7400000, guid: ca6f1c3d28a5b4d7fac820172514263f,
     type: 2}
   fadeAlphaAnimationClip: {fileID: 7400000, guid: 60ffe2e0cce24e54eb5aa46966d599a8,
@@ -4407,13 +4411,13 @@ RectTransform:
   m_GameObject: {fileID: 113218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0314126, y: 1.03141236, z: 1.03141236}
   m_Children: []
   m_Father: {fileID: 22463270}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -7.62939453e-06, y: -165.690002}
+  m_AnchoredPosition: {x: -7.62939453e-06, y: 153}
   m_SizeDelta: {x: 212, y: 119}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22430720
@@ -4470,8 +4474,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 505, y: -60.1851807}
-  m_SizeDelta: {x: 310, y: 60.3703613}
+  m_AnchoredPosition: {x: 505, y: -60.0783691}
+  m_SizeDelta: {x: 310, y: 60.1567383}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22433930
 RectTransform:
@@ -5064,8 +5068,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 155, y: -60.1851807}
-  m_SizeDelta: {x: 310, y: 60.3703613}
+  m_AnchoredPosition: {x: 155, y: -60.0783691}
+  m_SizeDelta: {x: 310, y: 60.1567383}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22498832
 RectTransform:

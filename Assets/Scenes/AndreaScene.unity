@@ -185,6 +185,14 @@ Prefab:
       propertyPath: cameras.Array.data[1]
       value: 
       objectReference: {fileID: 734387529}
+    - target: {fileID: 11403580, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+      propertyPath: cameras.Array.data[2]
+      value: 
+      objectReference: {fileID: 1666266605}
+    - target: {fileID: 11403580, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+      propertyPath: cameras.Array.data[3]
+      value: 
+      objectReference: {fileID: 2073758986}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   m_IsPrefabParent: 0
@@ -232,7 +240,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!20 &734387529 stripped
 Camera:
-  m_PrefabParentObject: {fileID: 2076502, guid: 4fdd22bf73ee4bc4390fd18f55c23347,
+  m_PrefabParentObject: {fileID: 2044204, guid: 4fdd22bf73ee4bc4390fd18f55c23347,
     type: 2}
   m_PrefabInternal: {fileID: 178855811}
 --- !u!1001 &1477697566
@@ -277,6 +285,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ecc0be9c3d4f1ed42bda45b243417e0a, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &1666266605 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2089420, guid: 4fdd22bf73ee4bc4390fd18f55c23347,
+    type: 2}
+  m_PrefabInternal: {fileID: 178855811}
 --- !u!1001 &1827167833
 Prefab:
   m_ObjectHideFlags: 0
@@ -358,75 +371,75 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 96.6666641
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -60.0783691
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 193.333328
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22483492, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 60.1567383
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 330
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -60.0783691
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 193.333328
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22413564, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 60.1567383
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 563.333313
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -60.0783691
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 193.333328
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22424368, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 60.1567383
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
@@ -438,10 +451,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
-      propertyPath: actorPrefabs.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 451564, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -478,22 +487,11 @@ Prefab:
       propertyPath: ActorUIPrefabHolder
       value: 
       objectReference: {fileID: 155111424}
-    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
-      propertyPath: actorPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 114254, guid: e78b462077ad55d4daa21b40cfd709bb, type: 2}
-    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
-      propertyPath: actorPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 114254, guid: 69fd45654d846b944baf2a40e8046635, type: 2}
-    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
-      propertyPath: actorPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 199972, guid: fa789f50cb488ba44b7f5adbbbc9c4c0, type: 2}
-    - target: {fileID: 11444408, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
-      propertyPath: ImageGuiOffset
-      value: -55
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b363ad8e1b3d52479a4b99456155041, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &2073758986 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2076502, guid: 4fdd22bf73ee4bc4390fd18f55c23347,
+    type: 2}
+  m_PrefabInternal: {fileID: 178855811}

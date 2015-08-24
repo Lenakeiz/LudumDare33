@@ -12,7 +12,13 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject gameOverPanel;
 
 	public Button[] MenuButtons;
-	
+	public Button[] GameOverButtons;
+
+	public void GameOverActivate()
+	{
+		gameOverPanel.SetActive(true);
+	}
+
 	public void DisableMenuButtons()
 	{
 		for (int i = 0; i < MenuButtons.Length; i++) {
@@ -24,6 +30,20 @@ public class ShowPanels : MonoBehaviour {
 	{
 		for (int i = 0; i < MenuButtons.Length; i++) {
 			MenuButtons[i].interactable = true;
+		}
+	}
+
+	public void DisableGameOverButtons()
+	{
+		for (int i = 0; i < GameOverButtons.Length; i++) {
+			GameOverButtons[i].interactable = false;
+		}
+	}
+
+	public void EnableGameOverButtons()
+	{
+		for (int i = 0; i < GameOverButtons.Length; i++) {
+			GameOverButtons[i].interactable = true;
 		}
 	}
 
