@@ -13,8 +13,11 @@ public class GameOver : MonoBehaviour {
 
 	
 	public float zoomedDistance =2.0f;
+	public float zoomSpeedMultiplier = 0.5f;
 	bool zoomCamera;
 	float t=0;
+
+
 
 
 
@@ -56,14 +59,17 @@ public class GameOver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (zoomCamera) {
-			Vector3 camToPlayer = player.transform.position - mainCamera.transform.position;
-			if(camToPlayer.magnitude > zoomedDistance)
+			if(player != null)
 			{
-				t += Time.deltaTime;
-				mainCamera.transform.position = Vector3.Lerp(originalCameraPos,player.transform.position,t);
-			}
-			else{
-				zoomCamera = false;
+				Vector3 camToPlayer = player.transform.position - mainCamera.transform.position;
+				if(camToPlayer.magnitude > zoomedDistance)
+				{
+					t += Time.deltaTime;
+					mainCamera.transform.position = Vector3.Lerp(originalCameraPos,player.transform.position,t * zoomSpeedMultiplier);
+				}
+				else{
+					zoomCamera = false;
+				}
 			}
 		}
 	}

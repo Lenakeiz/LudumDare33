@@ -25,6 +25,8 @@ public class StartOptions : MonoBehaviour {
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
 
+	private bool lockRestart = false;
+	private bool lockStart =  false;
 	
 	void Awake()
 	{
@@ -37,53 +39,59 @@ public class StartOptions : MonoBehaviour {
 
 	public void RestartButtonClicked()
 	{
-		if (changeMusicOnStart) 
+		if(!lockRestart)
 		{
-			playMusic.FadeDown(fadeColorAnimationClip.length);
-			Invoke ("PlayNewMusic", fadeAlphaAnimationClip.length);
+			lockRestart = true;
+			showPanels.DisableGameOverButtons();
+			if (changeMusicOnStart) 
+			{
+				playMusic.FadeDown(fadeColorAnimationClip.length);
+				Invoke ("PlayNewMusic", fadeAlphaAnimationClip.length);
+			}
+			
+			inMainMenu = false;
+			
+			//Set trigger for animator to start animation fading out Menu UI
+			animGameOverAlpha.SetTrigger ("fade");
+			
+			//Wait until game has started, then hide the main menu
+			Invoke("HideGameOverDelayed", fadeAlphaAnimationClip.length);
+			
+			Debug.Log ("Game started in same scene! Put your game starting stuff here.");
 		}
-
-		inMainMenu = false;
-
-		//Set trigger for animator to start animation fading out Menu UI
-		animGameOverAlpha.SetTrigger ("fade");
-		
-		//Wait until game has started, then hide the main menu
-		Invoke("HideGameOverDelayed", fadeAlphaAnimationClip.length);
-		
-		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
-		showPanels.DisableGameOverButtons();
 	}
 
 	public void StartButtonClicked()
 	{
 		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
 		//To change fade time, change length of animation "FadeToColor"
-
-
-		if (changeMusicOnStart) 
+		if(!lockStart)
 		{
-			playMusic.FadeDown(fadeColorAnimationClip.length);
-			Invoke ("PlayNewMusic", fadeAlphaAnimationClip.length);
+			showPanels.DisableMenuButtons();
+			lockStart = true;
+			if (changeMusicOnStart) 
+			{
+				playMusic.FadeDown(fadeColorAnimationClip.length);
+				Invoke ("PlayNewMusic", fadeAlphaAnimationClip.length);
+			}
+			
+			//If changeScenes is true, start fading and change scenes halfway through animation when screen is blocked by FadeImage
+			if (changeScenes) 
+			{
+				//Use invoke to delay calling of LoadDelayed by half the length of fadeColorAnimationClip
+				Invoke ("LoadDelayed", fadeColorAnimationClip.length * .5f);
+				
+				//Set the trigger of Animator animColorFade to start transition to the FadeToOpaque state.
+				animColorFade.SetTrigger ("fade");
+			} 
+			
+			//If changeScenes is false, call StartGameInScene
+			else 
+			{
+				//Call the StartGameInScene function to start game without loading a new scene.
+				StartGameInScene();
+			}
 		}
-
-		//If changeScenes is true, start fading and change scenes halfway through animation when screen is blocked by FadeImage
-		if (changeScenes) 
-		{
-			//Use invoke to delay calling of LoadDelayed by half the length of fadeColorAnimationClip
-			Invoke ("LoadDelayed", fadeColorAnimationClip.length * .5f);
-
-			//Set the trigger of Animator animColorFade to start transition to the FadeToOpaque state.
-			animColorFade.SetTrigger ("fade");
-		} 
-
-		//If changeScenes is false, call StartGameInScene
-		else 
-		{
-			//Call the StartGameInScene function to start game without loading a new scene.
-			StartGameInScene();
-		}
-
 	}
 
 
@@ -129,7 +137,7 @@ public class StartOptions : MonoBehaviour {
 
 		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
 
-		showPanels.DisableMenuButtons();
+
 	}
 
 
@@ -147,6 +155,7 @@ public class StartOptions : MonoBehaviour {
 		showPanels.HideGameOverMenu();
 		showPanels.ShowGamePanel();
 		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
+		lockRestart = false;
 	}
 
 	public void HideDelayed()
@@ -154,6 +163,8 @@ public class StartOptions : MonoBehaviour {
 		//Hide the main menu UI element
 		showPanels.HideMenu();
 		showPanels.ShowGamePanel();
+		GameObject.Find ("Camera").GetComponent<GameOver>().Reset();
 		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
+		lockStart = false;
 	}
 }
