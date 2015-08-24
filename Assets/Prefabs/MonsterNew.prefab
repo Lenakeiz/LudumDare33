@@ -696,6 +696,7 @@ GameObject:
   - 114: {fileID: 11438100}
   - 114: {fileID: 11467088}
   - 114: {fileID: 11409046}
+  - 82: {fileID: 8260128}
   m_Layer: 0
   m_Name: MonsterNew
   m_TagString: Player
@@ -1506,6 +1507,76 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .196913689, y: .353678346, z: .197059095}
   m_Center: {x: .0984568447, y: -.0211153924, z: -.00612384826}
+--- !u!82 &8260128
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196610}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9561666
 Animator:
   serializedVersion: 3
@@ -1534,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9818337f5ad9594480c9beb55217b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hauntClip: {fileID: 0}
   arrowPrefab: {fileID: 159284, guid: 2edd5cff4b07e9c4a89d13906c1f5c6d, type: 2}
   hauntPrefab: {fileID: 131798, guid: 663d0e739d1227c4aa7fb131aef7bbd7, type: 2}
   hauntDirection: {x: 0, y: 0, z: 0}
@@ -1590,6 +1662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2693a6883ed4a4ca4ce92263e7097a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chillSound: {fileID: 8300000, guid: 86b43e4d24d38f44297d784108e7b15b, type: 3}
   chillSphereRadius: 3
   chillObject: {fileID: 192994, guid: 68ab72d3feea5f84e9d57d46db472282, type: 2}
   chillDuration: 4
@@ -3319,6 +3392,19 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3ddfc0eed57cad544b45d64361ab4a08, type: 2}
+    - target: {fileID: 0}
+      propertyPath: chillSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 86b43e4d24d38f44297d784108e7b15b, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24301952, guid: 0ac7fb39e445048d89688f69c2a1839a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196610}

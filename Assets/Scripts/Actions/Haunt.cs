@@ -8,6 +8,8 @@ public class Haunt : MonoBehaviour {
 
 	bool choosingDirection =false;
 
+	public AudioClip hauntClip;
+
 	public GameObject arrowPrefab;
 	public GameObject hauntPrefab;
 
@@ -50,6 +52,8 @@ public class Haunt : MonoBehaviour {
 
 	public Actors.ACTOR_DIRECTION HauntActor(Actors actor)
 	{
+		gameObject.GetComponent<AudioSource> ().clip = hauntClip;
+		gameObject.GetComponent<AudioSource> ().Play ();
 		//play haunting animation
 		hauntPrefab.SetActive (false);
 		hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;

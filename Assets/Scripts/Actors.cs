@@ -34,7 +34,6 @@ public class Actors : MonoBehaviour {
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
 	bool forceDirection = false;
 
-
 	public string talkAnimation ="Happy 01";
 
 	public float talkCooldown = 5.0f;
