@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class Actors : MonoBehaviour {
 
 	public Sprite Face;
@@ -28,11 +30,16 @@ public class Actors : MonoBehaviour {
 		RIGHT = 3,
 	}
 
-
 	public LevelController.ACTOR_NAMES actorName;
 	public ACTOR_STATE state = ACTOR_STATE.CHOOSING;
 	ACTOR_DIRECTION moveDirection = ACTOR_DIRECTION.NONE;
 	bool forceDirection = false;
+
+	public AudioSource audioSource;
+	public AudioMixerGroup sfx;
+	public float minDelayTimeTalking = 0.0f;
+	public float maxDelayTimeTalking = 3.0f;
+	public List<AudioClip> clips;
 
 	public string talkAnimation ="Happy 01";
 
@@ -64,6 +71,26 @@ public class Actors : MonoBehaviour {
 
 	private Astar pathHelper;
 	public int markedTilesPercentage = 35;
+
+	//private AudioManager audioManager;
+
+	public void PlaySound(int indexSound, float delay)
+	{
+		if(indexSound >= clips.Count)
+		{
+			Debug.LogError("Index for audio is wrong");
+		}
+		else
+		{
+			if(audioSource.isPlaying)
+			{
+				audioSource.Stop();
+			}
+			audioSource.clip = clips[indexSound];
+			audioSource.PlayDelayed(delay);
+		}
+
+	}
 
 	float GetSpeed()
 	{
@@ -156,6 +183,16 @@ public class Actors : MonoBehaviour {
 		this.talkTarget = null;
 		pathHelper = gameObject.GetComponent<Astar>() as Astar;
 
+		audioSource = GetComponent<AudioSource>();
+		audioSource.playOnAwake = false;
+		audioSource.outputAudioMixerGroup = sfx;
+//		audioManager = GameObject.FindObjectOfType<AudioManager>();
+//
+//		if(audioManager == null)
+//		{
+//			Debug.LogError("Audio Manager is not in the scene");
+//		}
+
 		GameObject uiElement = GameObject.FindGameObjectWithTag("UILife");
 		if(uiElement != null)
 		{
@@ -193,7 +230,8 @@ public class Actors : MonoBehaviour {
 		} else {
 			isPanicking = false;
 		}
-		if (fear >= 100) {
+		if (fear >= 100 && state != ACTOR_STATE.FIENTED) {
+			PlaySound(4,0.0f);
 			gameObject.GetComponent<Animator>().Play("Fall 03");
 			state = ACTOR_STATE.FIENTED;
 		}
@@ -235,6 +273,7 @@ public class Actors : MonoBehaviour {
 						Haunt h = player.GetComponent<Haunt>();
 						moveDirection = h.HauntActor(this);
 						forceDirection = true;
+						PlaySound(3,0);
 						gameObject.GetComponent<Animator>().Play("Run 01");
 					}
 				}
@@ -340,7 +379,7 @@ public class Actors : MonoBehaviour {
 				{
 					pathHelper.RequestNewRandomPath(currentTile);
 					movementTarget =pathHelper.GetNextMove();
-					if(!movementTarget)
+					if(movementTarget == null)
 					{
 						continue;
 					}
@@ -348,6 +387,11 @@ public class Actors : MonoBehaviour {
 					{
 						break;
 					}
+				}
+				if(movementTarget == null)
+				{
+					state = ACTOR_STATE.CHOOSING;
+					return;
 				}
 				transform.LookAt(movementTarget.characterPosition,Vector3.up);
 				currentTile.occupant = null;
@@ -364,6 +408,7 @@ public class Actors : MonoBehaviour {
 
 		}
 		if (state == ACTOR_STATE.TALKING) {
+
 			//PLAY TALK ANIMATION
 			transform.LookAt(talkTarget.transform.position,Vector3.up);
 			if(this.currentTile == talkTarget.currentTile)
@@ -381,6 +426,8 @@ public class Actors : MonoBehaviour {
 					forceDirection = true;
 					talkTarget = null;
 					talkCooldownTimer = talkCooldown;
+					state = ACTOR_STATE.MOVING;
+					PlaySound(3,0);
 				}
 			}
 			if(talkTarget == null || talkTarget.talkTarget == null || talkTarget.talkTarget != this||
@@ -390,6 +437,12 @@ public class Actors : MonoBehaviour {
 				state = ACTOR_STATE.CHOOSING;
 				talkCooldownTimer = talkCooldown;
 			}
+
+			if(!audioSource.isPlaying)
+			{
+				PlaySound(Random.Range(0,3),Random.Range(minDelayTimeTalking,maxDelayTimeTalking));
+			}
+
 		}
 
 	}
