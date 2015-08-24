@@ -194,6 +194,12 @@ public class Astar : MonoBehaviour {
 			return null;
 	}
 
+	public void RequestPath(Tile curren, Tile target)
+	{
+		currTargetPosition = target;
+		currInitialPosition = curren;
+	}
+
 	public void RequestNewRandomPath(Tile currPos)
 	{
 		if(markedTiles.Count != 0)
