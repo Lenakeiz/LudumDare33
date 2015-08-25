@@ -691,7 +691,7 @@ Transform:
   - {fileID: 1347267591}
   - {fileID: 1321574204}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!54 &631038534
 Rigidbody:
   m_ObjectHideFlags: 0
