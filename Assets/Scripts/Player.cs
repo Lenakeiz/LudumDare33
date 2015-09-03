@@ -23,33 +23,41 @@ public class Player : MonoBehaviour {
 	float movementT = 0.0f;
 	Tile movementTarget;
 
-
+	private GameObject camera;
+	Vector3 velDampening;
+	Vector3 moveAmount;
 	// Use this for initialization
 	void Start () {
 		this.transform.position = currentTile.characterPosition;
+	}
+
+	void Awake()
+	{
+		camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		moveAmount = camera.transform.position;
 	}
 
 
 	void Move()
 	{
 
-			movementT += Time.deltaTime * movementSpeed;
-			if(movementT < 1)
-			{
-				this.transform.position = Vector3.Lerp(currentTile.characterPosition,
-				                                       movementTarget.characterPosition,
-				                                       movementT);
-			}
-			else
-			{
-				
-				currentTile = movementTarget;
-				movementTarget=null;
-				movementT = 0.0f;
-				this.transform.position = currentTile.characterPosition;
-				state = PLAYER_STATE.STANDING;
-				currentTile.occupant = this.gameObject;
-			}
+		movementT += Time.deltaTime * movementSpeed;
+		if(movementT < 1)
+		{
+			this.transform.position = Vector3.Lerp(currentTile.characterPosition,
+			                                       movementTarget.characterPosition,
+			                                       movementT);
+		}
+		else
+		{
+			
+			currentTile = movementTarget;
+			movementTarget=null;
+			movementT = 0.0f;
+			this.transform.position = currentTile.characterPosition;
+			state = PLAYER_STATE.STANDING;
+			currentTile.occupant = this.gameObject;
+		}
 			
 
 	}
@@ -146,17 +154,20 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
-		Vector3 vel = new Vector3 ();
-		camera.transform.position = Vector3.SmoothDamp (camera.transform.position, this.transform.position + 
-			new Vector3 (0, 11, -6),ref vel, 0.15f,100,Time.fixedDeltaTime);
+		//camera.transform.position =  moveAmount * Time.fixedDeltaTime;
+
+		//Vector3 amount = new Vector3();
+
+		//camera.transform.position = Vector3.SmoothDamp (camera.transform.position, this.transform.position + 
+       // new Vector3 (0, 11, -6),ref amount,0.15f);
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-
+		camera.transform.position = Vector3.SmoothDamp (camera.transform.position, 
+        this.transform.position + new Vector3 (0, 11, -6),ref velDampening,0.015f,10, Time.deltaTime);
 		if (state == PLAYER_STATE.MOVING) {
 			Move ();
 		}

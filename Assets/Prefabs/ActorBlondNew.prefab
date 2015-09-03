@@ -1679,9 +1679,9 @@ MonoBehaviour:
   movementSpeed: .600000024
   spookedSpeed: 1.39999998
   panicSpeed: 2
-  maxRoamingWaitTime: 5
-  minRoamingWaitTime: 1.5
-  markedTilesPercentage: 35
+  maxRoamingWaitTime: 7
+  minRoamingWaitTime: 4
+  markedTilesPercentage: 20
 --- !u!119 &11915438
 Projector:
   m_ObjectHideFlags: 1
@@ -3411,11 +3411,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxRoamingWaitTime
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minRoamingWaitTime
-      value: 1.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: Face
@@ -3434,6 +3434,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: fearReductionPerSecond
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: markedTilesPercentage
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

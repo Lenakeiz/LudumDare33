@@ -17,14 +17,16 @@ public class Actors : MonoBehaviour {
 	{
 		CHOOSING,
 		MOVING,
+		GETNEXTTILE,
 		TALKING,
+		CHILLED,
 		HAUNTED,
 		FIENTED
 	}
 
 	public enum ACTOR_DIRECTION{
-		NONE =-1,
-		UP =0,
+		NONE = -1,
+		UP = 0,
 		DOWN = 1,
 		LEFT = 2,
 		RIGHT = 3,
@@ -73,6 +75,8 @@ public class Actors : MonoBehaviour {
 	private Astar pathHelper;
 	public int markedTilesPercentage = 35;
 
+	private int currIdleAnimationPlaying = 1;
+
 	//private AudioManager audioManager;
 
 	public void PlaySound(int indexSound, float delay)
@@ -116,15 +120,15 @@ public class Actors : MonoBehaviour {
 
 			return LevelController.ACTOR_STATES.PANICKED;
 		}
-		if (fear > fearSpookedAmount) {
+		else if (fear > fearSpookedAmount) {
 
 			return LevelController.ACTOR_STATES.SPOOKED;
 		}
-		if (fear >= 100) {
+		else if (fear >= 100) {
 			return LevelController.ACTOR_STATES.FAINTED;
 		}
-
-		return LevelController.ACTOR_STATES.NORMAL;
+		else
+			return LevelController.ACTOR_STATES.NORMAL;
 
 	}
 
@@ -163,12 +167,16 @@ public class Actors : MonoBehaviour {
 		fear += argFear;
 	}
 
+	/// <summary>
+	/// We will detect the characters talking in this collision detection
+	/// </summary>
+	/// <param name="gameobject">Gameobject.</param>
 	void OnTriggerEnter(Collider gameobject)
 	{
 		if (gameobject.tag == "Actor") {
 			Actors a = gameobject.GetComponent<Actors>();
 			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING) &&
-			    a.talkCooldownTimer ==0 && this.talkCooldownTimer == 0 && !a.forceDirection &&
+			    Mathf.Approximately(a.talkCooldownTimer,0.0f) && Mathf.Approximately(this.talkCooldownTimer,0.0f) && !a.forceDirection &&
 			    !forceDirection)
 			{
 				a.talkTarget = this;
@@ -229,9 +237,105 @@ public class Actors : MonoBehaviour {
 
 	}
 
+	private bool CheckTileState()
+	{
+		bool foundmarkedTile = false;
+
+		//Haunt has high priority respect to the chill effect
+		if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.HAUNT)
+		{
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			if(player)
+			{
+				Haunt h = player.GetComponent<Haunt>();
+				moveDirection = h.HauntActor(this);
+				forceDirection = true;
+				PlaySound(3,0);
+				gameObject.GetComponent<Animator>().Play("Run 01");
+				foundmarkedTile = true;
+			}
+			else
+			{
+				Debug.LogError("Found haunted tile but no player for getting the haunt direction");
+			}
+		}
+		else if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
+		{
+			//If entering a chill tile we should detect it and do something.
+			//TODO andrea start back from here
+		}
+
+		return foundmarkedTile;
+	}
+
+	private void TryForceActorToNextTile()
+	{
+		if(moveDirection== ACTOR_DIRECTION.UP)
+		{
+			if(currentTile.up)
+			{
+				movementTarget = currentTile.up;
+			}
+			else{
+				forceDirection = false;
+				moveDirection = ACTOR_DIRECTION.NONE;
+			}
+		}
+		else if(moveDirection == ACTOR_DIRECTION.DOWN)
+		{
+			if(currentTile.down)
+			{
+				movementTarget = currentTile.down;
+			}
+			else{
+				forceDirection = false;
+				moveDirection = ACTOR_DIRECTION.NONE;
+			}
+		}
+		else if(moveDirection== ACTOR_DIRECTION.LEFT)
+		{
+			if(currentTile.left)
+			{
+				movementTarget = currentTile.left;
+			}
+			else{
+				forceDirection = false;
+				moveDirection = ACTOR_DIRECTION.NONE;
+			}
+		}
+		else if(moveDirection == ACTOR_DIRECTION.RIGHT)
+		{
+			if(currentTile.right)
+			{
+				movementTarget = currentTile.right;
+			}
+			else{
+				forceDirection = false;
+				moveDirection = ACTOR_DIRECTION.NONE;
+			}
+		}
+	}
+
+	public void ResetTalkingActor()
+	{
+		if(talkTarget != null)
+		{
+			if(talkTarget.talkTarget !=  null)
+			{
+				talkTarget.talkTarget = null;
+			}
+			else 
+			{
+				Debug.LogError("Try to close conversation but talking target has already talking actor set to null");
+			}
+			talkTarget = null;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 
+		//Updating the UI
 		if(barScript != null)
 		{
 			if(fear < fearSpookedAmount)
@@ -241,23 +345,28 @@ public class Actors : MonoBehaviour {
 			else if(fear >= fearPanicAmount && fear < 100)
 				fearStatus = "PANIC!";
 			else if(fear >= 100)
-				fearStatus = "FAINTED!";
+				fearStatus = "FAINTED!!!";
 		   barScript.SetAmount(fear * 0.01f, fearStatus);
 		}
 
+		//Updating state for the player
 		if (fear > fearPanicAmount) {
 			isPanicking = true;
 		} else {
 			isPanicking = false;
 		}
+
 		if (fear >= 100 && state != ACTOR_STATE.FIENTED) {
 			PlaySound(4,0.0f);
 			gameObject.GetComponent<Animator>().Play("Fall 03");
 			state = ACTOR_STATE.FIENTED;
 		}
+
+		//Always decrease fear
 		if (fear > 0) {
 			fear -= Time.deltaTime * fearReductionPerSecond;
 		}
+		//Lower limit is zero
 		fear = Mathf.Max(fear, 0);	
 
 		if (talkCooldownTimer > 0) {
@@ -275,10 +384,31 @@ public class Actors : MonoBehaviour {
 			}
 		}
 
-		if (state == ACTOR_STATE.MOVING) 
+//		switch (state) {
+//		case ACTOR_STATE.MOVING:
+//			break;
+//		case ACTOR_STATE.GETNEXTTILE:
+//			break;
+//		case ACTOR_STATE.CHOOSING:
+//			break;
+//		default:
+//			break;
+//		}
+
+
+		else if (state == ACTOR_STATE.MOVING) 
 		{
+			if(GetActorFearState()==LevelController.ACTOR_STATES.NORMAL && !forceDirection)
+			{
+				gameObject.GetComponent<Animator>().Play("Walk 01");
+			}
+			else
+			{
+				gameObject.GetComponent<Animator>().Play("Run 01");
+			}
+
 			movementT += Time.deltaTime * GetSpeed();
-			if(movementT < 1)
+			if(movementT < 1.0f)
 			{
 				this.transform.position = Vector3.Lerp(currentTile.characterPosition,
 				                                       movementTarget.characterPosition,
@@ -286,110 +416,86 @@ public class Actors : MonoBehaviour {
 			}
 			else
 			{
-				previousTile = currentTile;
-				currentTile = movementTarget;
-				movementT = 0;
-				//movementTarget = null;
+				this.transform.position = movementTarget.characterPosition;
+				state = ACTOR_STATE.GETNEXTTILE;
+			}
 
-				currentTile.occupant = this.gameObject;
-				if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.HAUNT)
-				{
-					GameObject player = GameObject.FindGameObjectWithTag("Player");
-					if(player)
-					{
-						Haunt h = player.GetComponent<Haunt>();
-						moveDirection = h.HauntActor(this);
-						forceDirection = true;
-						PlaySound(3,0);
-						gameObject.GetComponent<Animator>().Play("Run 01");
-					}
-				}
+		}
+		else if(state == ACTOR_STATE.GETNEXTTILE)
+		{
+			previousTile = currentTile;
+			currentTile = movementTarget;
+			movementT = 0;
+						
+			currentTile.occupant = this.gameObject;
 
-				if(talkTarget != null && !isPanicking)
-				{
-					this.GetComponent<Animator>().Play(talkAnimation);
-					state = ACTOR_STATE.TALKING;
-				}
-
-
-				//state = ACTOR_STATE.CHOOSING;
-				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
-				if(!forceDirection)
-				{
-
-					movementTarget = pathHelper.GetNextMove();
-				}
+			//Checking if the tile is marked with something; if marked with something then return true;
+			//If not true can do next operation that is talking or continue moving if panicked
+			if(!CheckTileState())
+			{
 				if(forceDirection)
 				{
-					state = ACTOR_STATE.MOVING;
-					if(moveDirection== ACTOR_DIRECTION.UP)
+					//forcing actor to move in a direction, if failing forcedirection will be setted to false
+					TryForceActorToNextTile();
+					if(forceDirection)
 					{
-						if(currentTile.up)
-						{
-							movementTarget = currentTile.up;
-						}
-						else{
-							forceDirection = false;
-							state = ACTOR_STATE.CHOOSING;
-						}
+						transform.LookAt(movementTarget.characterPosition,Vector3.up);
+						state = ACTOR_STATE.MOVING;
 					}
-					else if(moveDirection == ACTOR_DIRECTION.DOWN)
+					else
 					{
-						if(currentTile.down)
-						{
-							movementTarget = currentTile.down;
-						}
-						else{
-							forceDirection = false;
-							state = ACTOR_STATE.CHOOSING;
-						}
-					}
-					else if(moveDirection== ACTOR_DIRECTION.LEFT)
-					{
-						if(currentTile.left)
-						{
-							movementTarget = currentTile.left;
-						}
-						else{
-							forceDirection = false;
-							state = ACTOR_STATE.CHOOSING;
-						}
-					}
-					else if(moveDirection == ACTOR_DIRECTION.RIGHT)
-					{
-						if(currentTile.right)
-						{
-							movementTarget = currentTile.right;
-						}
-						else{
-							forceDirection = false;
-							state = ACTOR_STATE.CHOOSING;
-						}
+						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+						roamingT = 0f;
+						state = ACTOR_STATE.CHOOSING;
 					}
 				}
+				else
+				{
+					//can talk or continue to move
+					if(talkTarget != null && !isPanicking)
+					{
+						this.GetComponent<Animator>().Play(talkAnimation);
+						state = ACTOR_STATE.TALKING;
+					}
+					else
+					{
+						if(isPanicking)
+						{
+							ResetTalkingActor();
+						}
 
-				if(movementTarget == null || movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
-				{
-					state = ACTOR_STATE.CHOOSING;
-				}
-				else{
-					transform.LookAt(movementTarget.characterPosition,Vector3.up);
-				}
-				if(isPanicking)
-				{
-					talkTarget = null;
-					roamingWaitTime = 0.1f;
+						movementTarget = pathHelper.GetNextMove();
+						if(movementTarget == null)
+						{
+
+							string str = "Idle 0"+Random.Range(1,3);
+							Debug.Log(str);
+							gameObject.GetComponent<Animator>().Play(str);
+							roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+							roamingT = 0f;
+							currIdleAnimationPlaying = Random.Range(1,3);
+							state = ACTOR_STATE.CHOOSING;
+						}
+						else
+						{
+							transform.LookAt(movementTarget.characterPosition,Vector3.up);
+							state = ACTOR_STATE.MOVING;
+						}
+					}
 				}
 			}
 		}
-		if (state == ACTOR_STATE.CHOOSING)
+		else if (state == ACTOR_STATE.CHOOSING)
 		{
-			if(roamingT == 0)
+			roamingT += Time.deltaTime;
+
+			//playing idle animation when choosing
+			if(roamingT < roamingWaitTime)
 			{
 				LevelController.ACTOR_STATES fearState = GetActorFearState();
 				if(fearState == LevelController.ACTOR_STATES.NORMAL)
 				{
-					string str = "Idle 0"+Random.Range(1,4);
+					string str = "Idle 0"+currIdleAnimationPlaying.ToString();
 					Debug.Log(str);
 					gameObject.GetComponent<Animator>().Play(str);
 				}
@@ -398,57 +504,55 @@ public class Actors : MonoBehaviour {
 				if(fearState == LevelController.ACTOR_STATES.PANICKED)
 					gameObject.GetComponent<Animator>().Play("Scared 02");
 			}
-			roamingT += Time.deltaTime;
-			if(roamingT > roamingWaitTime)
+			else
 			{
-				//moveDirection = MakeChoice();
 				roamingT = 0;
-				for(int i =0; i < 10; i++)
-				{
-					pathHelper.RequestNewRandomPath(currentTile);
-					movementTarget =pathHelper.GetNextMove();
-					if(movementTarget == null)
-					{
-						continue;
-					}
-					if(movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
-					{
-						Collider[] colliders = Physics.OverlapSphere(this.transform.position,3);
-						foreach(Collider col in colliders)
-						{
-							if(col.tag=="Tile" && col.GetComponent<Tile>().effectsOnTile!=
-							   Tile.TILE_EFFECTS.CHILL)
-							{
-								pathHelper.RequestPath(currentTile,col.GetComponent<Tile>());
-								movementTarget = pathHelper.GetNextMove();
-							}
-						}
-					}
-				}
+
+				pathHelper.RequestNewRandomPath(currentTile);
+				movementTarget = pathHelper.GetNextMove();
+
 				if(movementTarget == null)
 				{
+					roamingWaitTime = 0.1f;
 					state = ACTOR_STATE.CHOOSING;
 					return;
 				}
+				//We want the actor to be stucked with the block
+//				if(movementTarget.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
+//				{
+//					Collider[] colliders = Physics.OverlapSphere(this.transform.position,3);
+//					foreach(Collider col in colliders)
+//					{
+//						if(col.tag=="Tile" && col.GetComponent<Tile>().effectsOnTile!=
+//						   Tile.TILE_EFFECTS.CHILL)
+//						{
+//							pathHelper.RequestPath(currentTile,col.GetComponent<Tile>());
+//							movementTarget = pathHelper.GetNextMove();
+//						}
+//					}
+//				}
+
 				transform.LookAt(movementTarget.characterPosition,Vector3.up);
 				currentTile.occupant = null;
-				if(GetActorFearState()==LevelController.ACTOR_STATES.NORMAL &&
-				   !forceDirection)
-				{
-					gameObject.GetComponent<Animator>().Play("Walk 01");
-				}
-				else{
-					gameObject.GetComponent<Animator>().Play("Run 01");
-				}
+//				if(GetActorFearState()==LevelController.ACTOR_STATES.NORMAL && !forceDirection)
+//				{
+//					gameObject.GetComponent<Animator>().Play("Walk 01");
+//				}
+//				else
+//				{
+//					gameObject.GetComponent<Animator>().Play("Run 01");
+//				}
 				state = ACTOR_STATE.MOVING;
 			}
 
 		}
-		if (state == ACTOR_STATE.TALKING) {
+		else if (state == ACTOR_STATE.TALKING) {
+
 			fear -= Time.deltaTime * fearReductionPerSecond;
 			//PLAY TALK ANIMATION
-			transform.LookAt(talkTarget.transform.position,Vector3.up);
-			if(this.currentTile == talkTarget.currentTile)
+			if(talkTarget != null)
+				transform.LookAt(talkTarget.transform.position,Vector3.up);
+			if(talkTarget != null && this.currentTile == talkTarget.currentTile)
 			{
 				state = ACTOR_STATE.MOVING;
 				movementTarget = previousTile;
@@ -468,7 +572,9 @@ public class Actors : MonoBehaviour {
 					PlaySound(3,0);
 				}
 			}
-			if(talkTarget == null || talkTarget.talkTarget == null || talkTarget.talkTarget != this||
+			if(talkTarget == null || 
+			   talkTarget.talkTarget == null || 
+			   talkTarget.talkTarget != this ||
 			   currentTile.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
 			{
 				talkTarget = null;

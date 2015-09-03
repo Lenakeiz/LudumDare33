@@ -1636,7 +1636,7 @@ MonoBehaviour:
   panicSpeed: 2
   maxRoamingWaitTime: 5
   minRoamingWaitTime: 1.5
-  markedTilesPercentage: 35
+  markedTilesPercentage: 40
 --- !u!114 &11466980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3418,6 +3418,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: fearReductionPerSecond
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: markedTilesPercentage
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

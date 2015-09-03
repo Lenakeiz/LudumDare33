@@ -20,6 +20,10 @@ public class Chill : MonoBehaviour {
 
 	int lockNumber;
 
+	private bool Approximation(float a, float b, float tolerance)
+	{
+		return (Mathf.Abs(a - b) < tolerance);
+	}
 
 	void MarkChilledNodes(bool unMark)
 	{
@@ -39,6 +43,7 @@ public class Chill : MonoBehaviour {
 							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
 							{
 								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.CHILL;
+								col.transform.parent.GetComponent<Renderer>().material.color = new Color(1.0f,0.0f,0.0f);
 							}
 						}
 						else
@@ -46,6 +51,7 @@ public class Chill : MonoBehaviour {
 							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
 							{
 								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.NONE;
+								col.transform.parent.GetComponent<Renderer>().material.color = new Color(1.0f,1.0f,1.0f);
 							}
 						}
 					}

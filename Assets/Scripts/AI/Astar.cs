@@ -14,6 +14,8 @@ public class Astar : MonoBehaviour {
 	private Tile currTargetPosition;
 	private Tile currInitialPosition;
 
+	private Tile currTile;
+
 	private List<Tile> openList;
 	private List<Tile> closedList;
 
@@ -177,16 +179,17 @@ public class Astar : MonoBehaviour {
 
 	}
 
-	private void ComputeCost(Tile calculatingTile)
-	{
-
-	}
-
 	public Tile GetNextMove()
 	{
+		if(currTile != null)
+		{
+			currTile.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,1.0f,1.0f);
+		}
 		if(movements != null && movements.Count != 0)
 		{
 			Tile retTile = movements[movements.Count - 1];
+			currTile = retTile;
+			currTile.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,0.0f,1.0f);
 			movements.RemoveAt(movements.Count - 1);
 			return retTile;
 		}
@@ -207,6 +210,10 @@ public class Astar : MonoBehaviour {
 			currInitialPosition = currPos;
 			int randIdx = Random.Range(0,markedTiles.Count);
 			currTargetPosition = markedTiles[randIdx];
+
+			currTargetPosition.gameObject.GetComponent<Renderer>().material.color = new Color(0.0f,0.0f,1.0f);
+			currTile = currInitialPosition;
+			currInitialPosition.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,0.0f,1.0f);
 
 			CalculatePath();
 		}
