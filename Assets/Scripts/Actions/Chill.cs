@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Chill : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class Chill : MonoBehaviour {
 
 	public float amountOfFear;
 
+	public List<Tile> markedTiles;
+
 	int lockNumber;
 
 	private bool Approximation(float a, float b, float tolerance)
@@ -30,28 +33,29 @@ public class Chill : MonoBehaviour {
 		Collider[] colliders;
 		if ((colliders = Physics.OverlapSphere (chillObject.transform.position, chillSphereRadius)).Length > 0) {
 
+			markedTiles.Clear();
+
 			foreach(Collider col in colliders)
 			{
 				if(col.transform.parent !=null)
 				{
 					if(col.transform.parent.tag == "Tile")
 					{
+						Tile tile = col.transform.parent.GetComponent<Tile>();
+
 						if(!unMark)
 						{
 							chillObject.GetComponent<AudioSource>().clip = chillSound;
 							chillObject.GetComponent<AudioSource>().Play();
-							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
-							{
-								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.CHILL;
-								col.transform.parent.GetComponent<Renderer>().material.color = new Color(1.0f,0.0f,0.0f);
-							}
+
+							tile.effectsOnTile |= Tile.TILE_EFFECTS.CHILL;
+							markedTiles.Add (tile);
 						}
 						else
 						{
-							if(col.transform.parent.GetComponent<Tile>().effectsOnTile != Tile.TILE_EFFECTS.HAUNT)
+							if((tile.effectsOnTile & Tile.TILE_EFFECTS.CHILL) == Tile.TILE_EFFECTS.CHILL)
 							{
-								col.transform.parent.GetComponent<Tile>().effectsOnTile = Tile.TILE_EFFECTS.NONE;
-								col.transform.parent.GetComponent<Renderer>().material.color = new Color(1.0f,1.0f,1.0f);
+								tile.effectsOnTile &= ~Tile.TILE_EFFECTS.CHILL;
 							}
 						}
 					}
@@ -72,6 +76,7 @@ public class Chill : MonoBehaviour {
 		}
 		lockNumber = lockNum;
 		chillObject.SetActive (true);
+		//Unsetting previous tiles
 		MarkChilledNodes (true);
 		chillObject.transform.position = this.transform.position;
 		chillObject.transform.localScale = new Vector3 (chillSphereRadius*2,
@@ -87,11 +92,19 @@ public class Chill : MonoBehaviour {
 
 	void OnDestroy()
 	{
+		if(markedTiles.Count != 0)
+		{
+			foreach (var item in markedTiles) {
+				item.effectsOnTile = Tile.TILE_EFFECTS.NONE;
+			}
+			markedTiles.Clear();
+		}
 		GameObject.Destroy (chillObject);
 	}
 
 	// Use this for initialization
 	void Start () {
+		markedTiles = new List<Tile>();
 		player = this.GetComponent<Player> ();
 		if (player == null) {
 			Debug.LogError("CANT FIND PLAYER");
@@ -104,13 +117,15 @@ public class Chill : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(chillCooldownTimer == chillCooldown)
 		{
 			player.CancelAction(lockNumber);
 		}
+
 		if (chillCooldownTimer > 0) {
 			chillCooldownTimer -= Time.deltaTime;
-			if(chillCooldownTimer <= 0 && chillCooldown >0)
+			if(chillCooldownTimer < 0 && chillCooldown >0)
 			{
 				chillCooldownTimer = 0;
 			}
@@ -119,7 +134,7 @@ public class Chill : MonoBehaviour {
 		if (chillDurationTimer > 0) {
 			chillDurationTimer -= Time.deltaTime;
 			chillObject.GetComponent<AudioSource>().volume = chillDurationTimer/chillDuration;
-			if(chillDurationTimer <= 0 && chillDuration >0)
+			if(chillDurationTimer < 0 && chillDuration >0)
 			{
 				chillObject.GetComponent<AudioSource>().Stop();
 				MarkChilledNodes(true);

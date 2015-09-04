@@ -38,7 +38,7 @@ public class Haunt : MonoBehaviour {
 
 		choosingDirection = true;
 
-//TODO do with the bitwise
+		//Cancelling haunt on previously registered tile
 		if (hauntedTiles [0] != null 
 		    && 
 		    (hauntedTiles [0].effectsOnTile & Tile.TILE_EFFECTS.HAUNT) == Tile.TILE_EFFECTS.HAUNT)
@@ -50,12 +50,6 @@ public class Haunt : MonoBehaviour {
 
 		SetHauntDirection();
 
-		
-//		arrowPrefab.transform.position = this.transform.position + hauntDirection * arrowOffset;
-//		arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,hauntDirection);
-
-		//TODO setting haunt duration time; this should be setted in release to be honest
-		//hauntDurationTimer = hauntDuration;
 		lockNumber = lockNum;
 		return true;
 	}
@@ -67,12 +61,15 @@ public class Haunt : MonoBehaviour {
 		//play haunting animation
 		hauntPrefab.SetActive (false);
 
-		//TODO this is wrong, it may affect also other powers. CHANGED removing with bitwise 
-		hauntedTiles[0].effectsOnTile &= ~Tile.TILE_EFFECTS.HAUNT;
-
-//		if (hauntedTiles [1] != null) {
-//			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-//		}
+		//Changed to bitwisw
+		if((hauntedTiles[0].effectsOnTile & Tile.TILE_EFFECTS.HAUNT) == Tile.TILE_EFFECTS.HAUNT)
+		{
+			hauntedTiles[0].effectsOnTile &= ~Tile.TILE_EFFECTS.HAUNT;
+		}
+		else
+		{
+			Debug.LogError("Actor activated haunt but the tile is not the current one");
+		}
 
 		actor.AddFear (amountOfFear);
 
@@ -153,7 +150,7 @@ public class Haunt : MonoBehaviour {
 		direction.x = Input.GetAxis ("Horizontal");
 		direction.z = Input.GetAxis ("Vertical");
 
-		//TODO this may fail if no key is pressed. In that case we take the current lookat of the monster
+		//If no input we take the current forward facing of the player
 		if (direction.x != 0 || direction.z != 0) {
 			if (Mathf.Abs (direction.z) > Mathf.Abs (direction.x)) {
 				direction.x = 0f;
@@ -213,39 +210,6 @@ public class Haunt : MonoBehaviour {
 				player.currentTile.effectsOnTile |= Tile.TILE_EFFECTS.HAUNT;
 				hauntedTiles[0] = player.currentTile;
 
-//				TODO remove this as we just haunt on the arrow base.
-//				if(hauntDirection.z >0)
-//				{
-//					if(hauntedTiles[0].up)
-//					{
-//						hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-//						hauntedTiles[1] = hauntedTiles[0].up;
-//					}
-//				}
-//				else if( hauntDirection.z <0)
-//				{
-//					if(hauntedTiles[0].down)
-//					{
-//						hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-//						hauntedTiles[1] = hauntedTiles[0].down;
-//					}
-//				}
-//				if(hauntDirection.x >0)
-//				{
-//					if(hauntedTiles[0].right)
-//					{
-//						hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-//						hauntedTiles[1] = hauntedTiles[0].right;
-//					}
-//				}
-//				if(hauntDirection.x <0)
-//				{
-//					if(hauntedTiles[0].left)
-//					{
-//						hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-//						hauntedTiles[1] = hauntedTiles[0].left;
-//					}
-//				}
 				choosingDirection = false;
 				hauntDurationTimer = hauntDuration;
 			}

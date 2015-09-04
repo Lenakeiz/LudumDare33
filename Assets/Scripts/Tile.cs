@@ -39,17 +39,23 @@ public class Tile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if ((effectsOnTile & TILE_EFFECTS.HAUNT) == TILE_EFFECTS.HAUNT) 
-		{
-			Debug.DrawLine(this.transform.position,
-			               this.transform.position + new Vector3(0,10,0),Color.red);
-			this.gameObject.GetComponent<Renderer>().material.color = new Color(0.0f,1.0f,0.0f);
-		}
-		else
-		{
-			this.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,1.0f,1.0f);
-		}
+#if UNITY_EDITOR
+		switch (effectsOnTile) {
 
+		case TILE_EFFECTS.CHILL | TILE_EFFECTS.HAUNT:
+			this.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,0.0f,0.0f);
+			break;
+		case TILE_EFFECTS.HAUNT:
+			this.gameObject.GetComponent<Renderer>().material.color = new Color(0.0f,1.0f,0.0f);
+			break;
+		case TILE_EFFECTS.CHILL:
+			this.gameObject.GetComponent<Renderer>().material.color = new Color(0.0f,0.0f,1.0f);
+			break;
+		default:
+			this.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f,1.0f,1.0f);
+			break;
+		}
+#endif
 		if (debugDrawGrid) {
 			Debug.DrawLine (this.transform.position + new Vector3 (this.transform.localScale.x, 0, -this.transform.localScale.y),
 		                this.transform.position + new Vector3 (-this.transform.localScale.x, 0, -this.transform.localScale.y));

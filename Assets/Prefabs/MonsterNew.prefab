@@ -1611,7 +1611,7 @@ MonoBehaviour:
   hauntPrefab: {fileID: 131798, guid: 663d0e739d1227c4aa7fb131aef7bbd7, type: 2}
   hauntDirection: {x: 0, y: 0, z: 0}
   arrowOffset: 2
-  hauntDuration: 2
+  hauntDuration: 15
   amountOfFear: 20
 --- !u!114 &11420840
 MonoBehaviour:

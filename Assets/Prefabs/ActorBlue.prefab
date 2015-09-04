@@ -1628,8 +1628,8 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   isPanicking: 0
   fear: 0
-  fearSpookedAmount: 30
-  fearPanicAmount: 60
+  fearSpookedAmount: 50
+  fearPanicAmount: 80
   fearReductionPerSecond: 1.5
   movementSpeed: .600000024
   spookedSpeed: 1.39999998
@@ -3422,6 +3422,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: markedTilesPercentage
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fearSpookedAmount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fearPanicAmount
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
