@@ -484,6 +484,10 @@ public class Actors : MonoBehaviour {
 					}
 				}
 			}
+			else
+			{
+				//TODO you enter here because of the effect of some power.
+			}
 		}
 		else if (state == ACTOR_STATE.CHOOSING)
 		{

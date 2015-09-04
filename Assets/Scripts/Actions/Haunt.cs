@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Haunt : MonoBehaviour {
@@ -19,33 +19,43 @@ public class Haunt : MonoBehaviour {
 
 	public float hauntDuration;
 	float hauntDurationTimer;
-	
-	public float hauntCooldown;
-	public float hauntCooldownTimer;
+
+//  We don t need a cooldown for this power as we want the player to react quickly to the actors movement
+//	public float hauntCooldown;
+//	public float hauntCooldownTimer;
 	
 	public float amountOfFear;
 
+	//We need to chnge this and make it work only on the base
 	Tile[] hauntedTiles = new Tile[2];
 
 	int lockNumber;
 
 	public bool Activate(int lockNum)
 	{
-		if (hauntCooldownTimer > 0 || choosingDirection )return false;
-
-		if (hauntedTiles [0] && hauntedTiles [1]) {
-			hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-		}
+		//Already setting 
+		if (choosingDirection)return false;
 
 		choosingDirection = true;
 
+//TODO do with the bitwise
+		if (hauntedTiles [0] != null 
+		    && 
+		    (hauntedTiles [0].effectsOnTile & Tile.TILE_EFFECTS.HAUNT) == Tile.TILE_EFFECTS.HAUNT)
+		{
+			hauntedTiles [0].effectsOnTile &= ~Tile.TILE_EFFECTS.HAUNT;
+		}
+
 		arrowPrefab.SetActive (true);
-		arrowPrefab.transform.position = this.transform.position + hauntDirection * arrowOffset;
-		arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,hauntDirection);
 
+		SetHauntDirection();
 
-		hauntDurationTimer = hauntDuration;
+		
+//		arrowPrefab.transform.position = this.transform.position + hauntDirection * arrowOffset;
+//		arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,hauntDirection);
+
+		//TODO setting haunt duration time; this should be setted in release to be honest
+		//hauntDurationTimer = hauntDuration;
 		lockNumber = lockNum;
 		return true;
 	}
@@ -56,39 +66,56 @@ public class Haunt : MonoBehaviour {
 		gameObject.GetComponent<AudioSource> ().Play ();
 		//play haunting animation
 		hauntPrefab.SetActive (false);
-		hauntedTiles [0].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-		if (hauntedTiles [1] != null) {
-			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
-		}
+
+		//TODO this is wrong, it may affect also other powers. CHANGED removing with bitwise 
+		hauntedTiles[0].effectsOnTile &= ~Tile.TILE_EFFECTS.HAUNT;
+
+//		if (hauntedTiles [1] != null) {
+//			hauntedTiles [1].effectsOnTile = Tile.TILE_EFFECTS.NONE;
+//		}
+
 		actor.AddFear (amountOfFear);
+
+		//TODO NEVER CHANGE MACHINE STATES OUTSIDE OTHER CLASSES
 		actor.state = Actors.ACTOR_STATE.MOVING;
+
 		if(hauntDirection.z >0)
 		{
+			Debug.Log("Haunting up");
 			return Actors.ACTOR_DIRECTION.UP;
 		}
 		else if( hauntDirection.z <0)
 		{
+			Debug.Log("Haunting down");
 			return Actors.ACTOR_DIRECTION.DOWN;
 		}
-		if(hauntDirection.x >0)
+		if(hauntDirection.x > 0)
 		{
+			Debug.Log("Haunting right");
 			return Actors.ACTOR_DIRECTION.RIGHT;
 		}
-		if(hauntDirection.x <0)
+		else if(hauntDirection.x < 0)
 		{
+			Debug.Log("Haunting left");
 			return Actors.ACTOR_DIRECTION.LEFT;
 		}
-		return Actors.ACTOR_DIRECTION.NONE;
+		else
+		{
+			Debug.LogError("HAUNTING ACTOR HAS RETURNED WITH DIRECTION NONE");
+			return Actors.ACTOR_DIRECTION.NONE;
+		}
 	}
 
 	void OnDestroy()
 	{
-		Debug.Log("Haunt desroyed");
+		Debug.Log("Haunt destroyed");
 		GameObject.Destroy (hauntPrefab);
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+
 		if (arrowPrefab) {
 			arrowPrefab = GameObject.Instantiate<GameObject>(arrowPrefab);
 			arrowPrefab.SetActive (false);
@@ -109,28 +136,72 @@ public class Haunt : MonoBehaviour {
 		if (player == null) {
 			Debug.LogError("CANT FIND PLAYER");
 		}
+
+		if(hauntDuration < 2)
+		{
+			hauntDuration = 2;
+			hauntDurationTimer = 0;
+			Debug.LogError("CANNOT SET DURATION LESS THAN 2s");
+		}
+
 		hauntDirection = new Vector3 (0, 0, 1);
 	}
+
+	private void SetHauntDirection()
+	{
+		Vector3 direction = Vector3.zero;
+		direction.x = Input.GetAxis ("Horizontal");
+		direction.z = Input.GetAxis ("Vertical");
+
+		//TODO this may fail if no key is pressed. In that case we take the current lookat of the monster
+		if (direction.x != 0 || direction.z != 0) {
+			if (Mathf.Abs (direction.z) > Mathf.Abs (direction.x)) {
+				direction.x = 0f;
+			} else {
+				direction.z = 0f;
+			}
+			arrowPrefab.transform.position = this.transform.position + direction.normalized * arrowOffset;
+			arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up, direction.normalized );
+			player.transform.localRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+			hauntDirection = direction.normalized;
+		}
+		else
+		{
+			direction = this.transform.forward;
+			if (Mathf.Abs (direction.z) > Mathf.Abs (direction.x)) {
+				direction.x = 0f;
+			} else {
+				direction.z = 0f;
+			}
+			direction = direction.normalized;
+			arrowPrefab.transform.position = this.transform.position + direction * arrowOffset;
+			arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up, direction);
+			hauntDirection = direction;
+		}
+
+		Debug.Log("Haunt Direction x-z:" + hauntDirection.x + " " + hauntDirection.z);
+
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		if (hauntCooldownTimer > 0) {
-			hauntCooldownTimer -= Time.deltaTime;
-			if(hauntCooldown < 0 && hauntCooldown >0)
-			{
-				hauntCooldownTimer = 0;
-			}
-		}
-
-		if (hauntDurationTimer > 0) {
+		if (!choosingDirection && hauntDurationTimer > 0)
+		{
 			hauntDurationTimer -= Time.deltaTime;
-			if(hauntDurationTimer < 0 && hauntDuration >0)
+			if(hauntDurationTimer < 0)
 			{
 				hauntPrefab.SetActive(false);
+				if((hauntedTiles [0].effectsOnTile & Tile.TILE_EFFECTS.HAUNT) == Tile.TILE_EFFECTS.HAUNT)
+					hauntedTiles[0].effectsOnTile &= ~Tile.TILE_EFFECTS.HAUNT;
+				hauntDurationTimer = 0;
 			}
 		}
+		else if (choosingDirection)
+		{
 
-		if (choosingDirection) {
+			SetHauntDirection();
+
 			if (Input.GetButtonUp ("Fire2")) {
 				//release and spawn the haunt
 
@@ -139,57 +210,44 @@ public class Haunt : MonoBehaviour {
 				hauntPrefab.transform.localRotation = Quaternion.LookRotation(hauntDirection,Vector3.up);
 				arrowPrefab.gameObject.SetActive(false);
 				player.CancelAction(lockNumber);
-				hauntCooldownTimer = hauntCooldown;
-				player.currentTile.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-				hauntedTiles[0]=player.currentTile;
-				if(hauntDirection.z >0)
-				{
-					if(hauntedTiles[0].up)
-					{
-						hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-						hauntedTiles[1] = hauntedTiles[0].up;
-					}
-				}
-				else if( hauntDirection.z <0)
-				{
-					if(hauntedTiles[0].down)
-					{
-						hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-						hauntedTiles[1] = hauntedTiles[0].down;
-					}
-				}
-				if(hauntDirection.x >0)
-				{
-					if(hauntedTiles[0].right)
-					{
-						hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-						hauntedTiles[1] = hauntedTiles[0].right;
-					}
-				}
-				if(hauntDirection.x <0)
-				{
-					if(hauntedTiles[0].left)
-					{
-						hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
-						hauntedTiles[1] = hauntedTiles[0].left;
-					}
-				}
-				choosingDirection = false;
-			}
+				player.currentTile.effectsOnTile |= Tile.TILE_EFFECTS.HAUNT;
+				hauntedTiles[0] = player.currentTile;
 
-			Vector3 direction = Vector3.zero;
-			direction.x = Input.GetAxis ("Horizontal");
-			direction.z = Input.GetAxis ("Vertical");
-			if (direction.x != 0 || direction.z != 0) {
-				if (Mathf.Abs (direction.z) > Mathf.Abs (direction.x)) {
-					direction.x = 0;
-				} else {
-					direction.z = 0;
-				}
-				arrowPrefab.transform.position = this.transform.position + direction.normalized * arrowOffset;
-				arrowPrefab.transform.localRotation = Quaternion.LookRotation (Vector3.up,direction);
-				player.transform.localRotation = Quaternion.LookRotation(direction,Vector3.up);
-				hauntDirection = direction.normalized;
+//				TODO remove this as we just haunt on the arrow base.
+//				if(hauntDirection.z >0)
+//				{
+//					if(hauntedTiles[0].up)
+//					{
+//						hauntedTiles[0].up.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+//						hauntedTiles[1] = hauntedTiles[0].up;
+//					}
+//				}
+//				else if( hauntDirection.z <0)
+//				{
+//					if(hauntedTiles[0].down)
+//					{
+//						hauntedTiles[0].down.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+//						hauntedTiles[1] = hauntedTiles[0].down;
+//					}
+//				}
+//				if(hauntDirection.x >0)
+//				{
+//					if(hauntedTiles[0].right)
+//					{
+//						hauntedTiles[0].right.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+//						hauntedTiles[1] = hauntedTiles[0].right;
+//					}
+//				}
+//				if(hauntDirection.x <0)
+//				{
+//					if(hauntedTiles[0].left)
+//					{
+//						hauntedTiles[0].left.effectsOnTile = Tile.TILE_EFFECTS.HAUNT;
+//						hauntedTiles[1] = hauntedTiles[0].left;
+//					}
+//				}
+				choosingDirection = false;
+				hauntDurationTimer = hauntDuration;
 			}
 		}
 	}

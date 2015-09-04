@@ -81,6 +81,7 @@ public class Player : MonoBehaviour {
 				state = PLAYER_STATE.DOING_ACTION;
 			}
 		}
+		//HAUNT
 		else if (Input.GetButtonDown ("Fire2")) {
 			int lockNumber = Random.Range(0,100);
 			if(this.GetComponent<Haunt>().Activate(lockNumber))
