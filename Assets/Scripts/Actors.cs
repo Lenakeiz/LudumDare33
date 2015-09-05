@@ -80,7 +80,8 @@ public class Actors : MonoBehaviour {
 
 	public ACTOR_STATE processedState = ACTOR_STATE.NONE;
 
-	//private AudioManager audioManager;
+	public string scaredAnimation = string.Empty;
+	private bool deActivateChilled = false;
 
 	public void PlaySound(int indexSound, float delay)
 	{
@@ -178,9 +179,9 @@ public class Actors : MonoBehaviour {
 	{
 		if (gameobject.tag == "Actor") {
 			Actors a = gameobject.GetComponent<Actors>();
-			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING) &&
-			    Mathf.Approximately(a.talkCooldownTimer,0.0f) && Mathf.Approximately(this.talkCooldownTimer,0.0f) && !a.forceDirection &&
-			    !forceDirection)
+			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING || a.state == ACTOR_STATE.GETNEXTTILE) &&
+			    Mathf.Approximately(a.talkCooldownTimer,talkCooldown) && Mathf.Approximately(this.talkCooldownTimer,talkCooldown) 
+			    && !a.forceDirection && !forceDirection)
 			{
 				a.talkTarget = this;
 				talkTarget = a;
@@ -338,9 +339,9 @@ public class Actors : MonoBehaviour {
 		}
 	}
 
-	void CheckForcingActorMovement()
+	public void DeactivateChill()
 	{
-
+		deActivateChilled = true;
 	}
 
 	// Update is called once per frame
@@ -369,7 +370,8 @@ public class Actors : MonoBehaviour {
 
 		if (fear >= 100 && state != ACTOR_STATE.FIENTED) {
 			PlaySound(4,0.0f);
-			gameObject.GetComponent<Animator>().Play("Fall 03");
+			string randoFall = "Fall 0" + Random.Range(1,5);
+			gameObject.GetComponent<Animator>().Play(randoFall);
 			state = ACTOR_STATE.FIENTED;
 		}
 
@@ -380,24 +382,18 @@ public class Actors : MonoBehaviour {
 		//Lower limit is zero
 		fear = Mathf.Max(fear, 0);	
 
-		if (talkCooldownTimer > 0) {
-			talkCooldownTimer -= Time.deltaTime;
-			if(talkCooldownTimer<0)
-			{
-				talkCooldownTimer = 0;
-			}
-		}
-
-		if (state == ACTOR_STATE.FIENTED) {
+		if (state == ACTOR_STATE.FIENTED)
+		{
 			if(fear < 80)
 			{
+				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+				roamingT = 0f;
 				state = ACTOR_STATE.CHOOSING;
 			}
 		}
-
 		else if (state == ACTOR_STATE.MOVING) 
 		{
-			if(GetActorFearState()==LevelController.ACTOR_STATES.NORMAL && !forceDirection)
+			if(GetActorFearState() == LevelController.ACTOR_STATES.NORMAL && !forceDirection)
 			{
 				gameObject.GetComponent<Animator>().Play("Walk 01");
 			}
@@ -448,8 +444,10 @@ public class Actors : MonoBehaviour {
 					}
 					else
 					{
+						this.GetComponent<Animator>().Play("Run 06 Stop");
 						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
 						state = ACTOR_STATE.CHOOSING;
 					}
 				}
@@ -459,6 +457,7 @@ public class Actors : MonoBehaviour {
 					if(talkTarget != null && !isPanicking)
 					{
 						this.GetComponent<Animator>().Play(talkAnimation);
+						talkCooldownTimer = talkCooldown;
 						state = ACTOR_STATE.TALKING;
 					}
 					else
@@ -472,12 +471,12 @@ public class Actors : MonoBehaviour {
 						if(movementTarget == null)
 						{
 							
-							string str = "Idle 0"+Random.Range(1,3);
-							Debug.Log(str);
-							gameObject.GetComponent<Animator>().Play(str);
+							//string str = "Idle 0"+Random.Range(1,5);
+							//Debug.Log(str);
+							//gameObject.GetComponent<Animator>().Play(str);
 							roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 							roamingT = 0f;
-							currIdleAnimationPlaying = Random.Range(1,3);
+							currIdleAnimationPlaying = Random.Range(1,5);
 							state = ACTOR_STATE.CHOOSING;
 						}
 						else
@@ -502,15 +501,27 @@ public class Actors : MonoBehaviour {
 					{
 						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
 						state = ACTOR_STATE.CHOOSING;
 					}
 				}
 				break;
+			case ACTOR_STATE.CHILLED:
+				scaredAnimation = "Scared 0" + Random.Range(1,3);
+				GameObject player = GameObject.FindGameObjectWithTag("Player");
+				if(player)
+				{
+					Chill c = player.GetComponent<Chill>();
+					if(c)
+					{
+						c.AddActorToCurrentChill(this);
+					}
+				}
+				state = ACTOR_STATE.CHILLED;
+			break;
 			default:
 			break;
 			}
-
-
 		}
 		else if (state == ACTOR_STATE.CHOOSING)
 		{
@@ -521,14 +532,21 @@ public class Actors : MonoBehaviour {
 			switch (processedState) {
 				
 			case ACTOR_STATE.NONE:
+				//If someone is asking me to talk do that
+				if(talkTarget != null && !isPanicking)
+				{
+					this.GetComponent<Animator>().Play(talkAnimation);
+					talkCooldownTimer = talkCooldown;
+					state = ACTOR_STATE.TALKING;
+				}
 				//playing idle animation when choosing
-				if(roamingT < roamingWaitTime)
+				else if(roamingT < roamingWaitTime)
 				{
 					LevelController.ACTOR_STATES fearState = GetActorFearState();
 					if(fearState == LevelController.ACTOR_STATES.NORMAL)
 					{
 						string str = "Idle 0"+currIdleAnimationPlaying.ToString();
-						Debug.Log(str);
+						//Debug.Log(str);
 						gameObject.GetComponent<Animator>().Play(str);
 					}
 					if(fearState == LevelController.ACTOR_STATES.SPOOKED)
@@ -545,17 +563,20 @@ public class Actors : MonoBehaviour {
 					
 					if(movementTarget == null)
 					{
-						roamingWaitTime = 0.1f;
+						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
 						state = ACTOR_STATE.CHOOSING;
-						return;
 					}
-					
-					transform.LookAt(movementTarget.characterPosition,Vector3.up);
-					currentTile.occupant = null;
-					
-					state = ACTOR_STATE.MOVING;
+					else
+					{
+						transform.LookAt(movementTarget.characterPosition,Vector3.up);
+						currentTile.occupant = null;
+						state = ACTOR_STATE.MOVING;
+					}
 				}
 				break;
+
 			case ACTOR_STATE.HAUNTED:
 				if(forceDirection)
 				{
@@ -570,61 +591,131 @@ public class Actors : MonoBehaviour {
 					{
 						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
 						state = ACTOR_STATE.CHOOSING;
 					}
 				}
 				break;
+
+			case ACTOR_STATE.CHILLED:
+				scaredAnimation = "Scared 0" + Random.Range(1,3);
+				GameObject player = GameObject.FindGameObjectWithTag("Player");
+				if(player)
+				{
+					Chill c = player.GetComponent<Chill>();
+					if(c)
+					{
+						c.AddActorToCurrentChill(this);
+					}
+				}
+				state = ACTOR_STATE.CHILLED;
+				break;
 			default:
 				break;
 			}
-
-
-
 		}
 		else if (state == ACTOR_STATE.TALKING) {
 
 			fear -= Time.deltaTime * fearReductionPerSecond;
-			//PLAY TALK ANIMATION
-			if(talkTarget != null)
-				transform.LookAt(talkTarget.transform.position,Vector3.up);
-			if(talkTarget != null && this.currentTile == talkTarget.currentTile)
-			{
-				state = ACTOR_STATE.MOVING;
-				movementTarget = previousTile;
+
+			if (talkCooldownTimer > 0) {
+				talkCooldownTimer -= Time.deltaTime;
+				if(talkCooldownTimer < 0)
+				{
+					talkCooldownTimer = 0;
+				}
 			}
-			if(currentTile.effectsOnTile == Tile.TILE_EFFECTS.HAUNT)
-			{
+
+			CheckTileState();
+
+			switch (processedState) {
+				
+			case ACTOR_STATE.NONE:
+				//PLAY TALK ANIMATION
+				if(talkTarget != null)
+				{
+					transform.LookAt(talkTarget.transform.position,Vector3.up);
+
+					if(Mathf.Approximately(talkCooldownTimer,0.0f))
+					{
+						talkCooldownTimer = talkCooldown;
+						ResetTalkingActor();
+						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
+
+						if(audioSource.isPlaying)
+						{
+							audioSource.Stop();
+						}
+
+						state = ACTOR_STATE.CHOOSING;
+					}
+					else if(!audioSource.isPlaying)
+					{
+						PlaySound(Random.Range(0,3),Random.Range(minDelayTimeTalking,maxDelayTimeTalking));
+					}
+				}
+				//NICE! This makes them go back to the previous tile for talking: 
+				//TODO can be dangerous when applying powers
+//				if(talkTarget != null && this.currentTile == talkTarget.currentTile)
+//				{
+//					movementTarget = previousTile;
+//					state = ACTOR_STATE.MOVING;
+//				}
+				//STOP talking go to do something else
+				else if(talkTarget == null)
+				{
+					roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+					roamingT = 0f;
+					currIdleAnimationPlaying = Random.Range(1,5);
+					talkCooldownTimer = talkCooldown;
+					state = ACTOR_STATE.CHOOSING;
+
+				}
+
+				break;
+			case ACTOR_STATE.HAUNTED:
 				GameObject player = GameObject.FindGameObjectWithTag("Player");
 				if(player)
 				{
 					Haunt h = player.GetComponent<Haunt>();
 					moveDirection = h.HauntActor(this);
 					forceDirection = true;
-					talkTarget = null;
+					ResetTalkingActor();
 					talkCooldownTimer = talkCooldown;
 					gameObject.GetComponent<Animator>().Play("Run 01");
-					state = ACTOR_STATE.MOVING;
 					PlaySound(3,0);
+					state = ACTOR_STATE.MOVING;
 				}
+				break;
+			case ACTOR_STATE.CHILLED:
+				//TODO
+				break;
+			default:
+				break;
 			}
-			if(talkTarget == null || 
-			   talkTarget.talkTarget == null || 
-			   talkTarget.talkTarget != this ||
-			   currentTile.effectsOnTile == Tile.TILE_EFFECTS.CHILL)
+		}
+		else if (state == ACTOR_STATE.CHILLED)
+		{
+			if(scaredAnimation != string.Empty)
+				gameObject.GetComponent<Animator>().Play(scaredAnimation);
+
+			if(deActivateChilled)
 			{
-				talkTarget = null;
+				deActivateChilled = false;
+				roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+				roamingT = 0f;
+				currIdleAnimationPlaying = Random.Range(1,5);
 				state = ACTOR_STATE.CHOOSING;
-				talkCooldownTimer = talkCooldown;
 			}
-
-			if(!audioSource.isPlaying)
-			{
-				PlaySound(Random.Range(0,3),Random.Range(minDelayTimeTalking,maxDelayTimeTalking));
-			}
-
 		}
 		else if (state == ACTOR_STATE.NONE)
 		{
+			talkCooldownTimer = talkCooldown;
+			roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+			roamingT = 0f;
+			currIdleAnimationPlaying = Random.Range(1,5);
 			state = ACTOR_STATE.CHOOSING;
 		}
 

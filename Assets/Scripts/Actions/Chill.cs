@@ -7,6 +7,8 @@ public class Chill : MonoBehaviour {
 
 	Player player;
 
+	private List<Actors> chilledActors;
+
 	public AudioClip chillSound;
 
 	public float chillSphereRadius;
@@ -89,21 +91,42 @@ public class Chill : MonoBehaviour {
 		return true;
 	}
 
+	public void AddActorToCurrentChill(Actors act)
+	{
+		if(act.GetType() == typeof(Actors))
+			chilledActors.Add(act);
+	}
+
+	public void ResetActors()
+	{
+		if(chilledActors.Count != 0)
+		{
+			foreach (Actors act in chilledActors) {
+				act.DeactivateChill();
+			}
+			chilledActors.Clear();
+		}
+
+	}
 
 	void OnDestroy()
 	{
 		if(markedTiles.Count != 0)
 		{
-			foreach (var item in markedTiles) {
+			foreach (Tile item in markedTiles) {
 				item.effectsOnTile = Tile.TILE_EFFECTS.NONE;
 			}
 			markedTiles.Clear();
 		}
+
+		ResetActors();
+
 		GameObject.Destroy (chillObject);
 	}
 
 	// Use this for initialization
 	void Start () {
+		chilledActors = new List<Actors>();
 		markedTiles = new List<Tile>();
 		player = this.GetComponent<Player> ();
 		if (player == null) {
@@ -139,6 +162,7 @@ public class Chill : MonoBehaviour {
 				chillObject.GetComponent<AudioSource>().Stop();
 				MarkChilledNodes(true);
 				chillDurationTimer = 0;
+				ResetActors();
 				chillObject.SetActive(false);
 			}
 		}

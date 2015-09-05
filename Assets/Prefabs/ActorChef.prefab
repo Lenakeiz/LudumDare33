@@ -1099,7 +1099,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.2793226, y: 0, z: -22.8899994}
+  m_LocalPosition: {x: -12, y: 0, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 433006}
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Face: {fileID: 21300000, guid: 322f111ce3c9a554dbc01ef003c9e483, type: 3}
-  uiIndex: 1
+  uiIndex: 2
   barScript: {fileID: 0}
   InitialOnGUIPos: {x: 0, y: 0}
   actorName: 1
@@ -1634,9 +1634,11 @@ MonoBehaviour:
   movementSpeed: .600000024
   spookedSpeed: 1.39999998
   panicSpeed: 2
-  maxRoamingWaitTime: 5
-  minRoamingWaitTime: 1.5
+  maxRoamingWaitTime: 8
+  minRoamingWaitTime: 5
   markedTilesPercentage: 35
+  processedState: 0
+  scaredAnimation: 
 --- !u!114 &11466980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1698,7 +1700,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13570332
 SphereCollider:
@@ -3414,6 +3416,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: fearReductionPerSecond
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minRoamingWaitTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxRoamingWaitTime
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

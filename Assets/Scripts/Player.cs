@@ -24,8 +24,9 @@ public class Player : MonoBehaviour {
 	Tile movementTarget;
 
 	private GameObject camera;
-	Vector3 velDampening;
-	Vector3 moveAmount;
+	float velDampening = 0.015f;
+	public float maxCameraSpeed = 18.0f;
+	Vector3 moveAmount = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 		this.transform.position = currentTile.characterPosition;
@@ -34,9 +35,7 @@ public class Player : MonoBehaviour {
 	void Awake()
 	{
 		camera = GameObject.FindGameObjectWithTag ("MainCamera");
-		moveAmount = camera.transform.position;
 	}
-
 
 	void Move()
 	{
@@ -164,15 +163,24 @@ public class Player : MonoBehaviour {
 
 	}
 
+	void LateUpdate()
+	{
+		moveAmount = Vector3.zero;
+		Vector3 point = this.transform.position;
+		Vector3 destination = point + new Vector3 (0, 10, -6);
+		//Vector3 destination = camera.transform.position + delta;
+		camera.transform.position = Vector3.SmoothDamp(camera.transform.position, destination, ref moveAmount, velDampening, maxCameraSpeed);
+
+	}
+
 	// Update is called once per frame
 	void Update () {
 
-		camera.transform.position = Vector3.SmoothDamp (camera.transform.position, 
-        this.transform.position + new Vector3 (0, 11, -6),ref velDampening,0.015f,10, Time.deltaTime);
+
+			
 		if (state == PLAYER_STATE.MOVING) {
 			Move ();
 		}
-
 		if (state == PLAYER_STATE.STANDING) {
 			ReadActionInput();
 		}

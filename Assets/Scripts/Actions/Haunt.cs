@@ -78,22 +78,22 @@ public class Haunt : MonoBehaviour {
 
 		if(hauntDirection.z >0)
 		{
-			Debug.Log("Haunting up");
+			//Debug.Log("Haunting up");
 			return Actors.ACTOR_DIRECTION.UP;
 		}
 		else if( hauntDirection.z <0)
 		{
-			Debug.Log("Haunting down");
+			//Debug.Log("Haunting down");
 			return Actors.ACTOR_DIRECTION.DOWN;
 		}
 		if(hauntDirection.x > 0)
 		{
-			Debug.Log("Haunting right");
+			//Debug.Log("Haunting right");
 			return Actors.ACTOR_DIRECTION.RIGHT;
 		}
 		else if(hauntDirection.x < 0)
 		{
-			Debug.Log("Haunting left");
+			//Debug.Log("Haunting left");
 			return Actors.ACTOR_DIRECTION.LEFT;
 		}
 		else
@@ -122,13 +122,13 @@ public class Haunt : MonoBehaviour {
 
 		if (hauntPrefab) {
 			hauntPrefab = GameObject.Instantiate<GameObject>(hauntPrefab);
-
-			hauntPrefab.GetComponentInChildren<Animator>().speed=0;
+			hauntPrefab.GetComponentInChildren<Animator>().speed = 0;
 			hauntPrefab.GetComponentInChildren<Animator>().Play("Magic 01");
 			hauntPrefab.SetActive (false);
 		} else {
 			Debug.LogError ("NO HAUNT PREFAB FOR HAUNT");
 		}
+
 		player = this.GetComponent<Player> ();
 		if (player == null) {
 			Debug.LogError("CANT FIND PLAYER");
@@ -176,7 +176,7 @@ public class Haunt : MonoBehaviour {
 			hauntDirection = direction;
 		}
 
-		Debug.Log("Haunt Direction x-z:" + hauntDirection.x + " " + hauntDirection.z);
+		//Debug.Log("Haunt Direction x-z:" + hauntDirection.x + " " + hauntDirection.z);
 
 	}
 

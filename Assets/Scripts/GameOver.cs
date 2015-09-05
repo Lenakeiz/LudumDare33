@@ -17,10 +17,6 @@ public class GameOver : MonoBehaviour {
 	bool zoomCamera;
 	float t=0;
 
-
-
-
-
 	public void GameOverActivate(bool didWeWin)
 	{
 		t = 0;
@@ -32,7 +28,6 @@ public class GameOver : MonoBehaviour {
 			Debug.LogError("NO camera");
 		}
 		originalCameraPos = mainCamera.transform.position;
-
 
 		player.transform.rotation = Quaternion.LookRotation (new Vector3 (originalCameraPos.x, 1, originalCameraPos.z));
 

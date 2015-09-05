@@ -64154,8 +64154,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 196610, guid: 465ea1fc63206e5458d5f181a544900b, type: 2}
   actorPrefabs:
   - {fileID: 187704, guid: 456179ab1400ea94f8b80582f705a98a, type: 2}
-  - {fileID: 114254, guid: e78b462077ad55d4daa21b40cfd709bb, type: 2}
   - {fileID: 114254, guid: 69fd45654d846b944baf2a40e8046635, type: 2}
+  - {fileID: 114254, guid: e78b462077ad55d4daa21b40cfd709bb, type: 2}
   - {fileID: 199972, guid: fa789f50cb488ba44b7f5adbbbc9c4c0, type: 2}
   playerSpawnPositions:
   - {fileID: 11447076}
@@ -64172,7 +64172,7 @@ MonoBehaviour:
   - {fileID: 11413948}
   startGame: 0
   ActorUIPrefabHolder: {fileID: 0}
-  ImageInitialLocalPos: {x: 250, y: 150, z: 0}
+  ImageInitialLocalPos: {x: 250, y: 160, z: 0}
   ImageGuiOffset: -55
 --- !u!114 &11444824
 MonoBehaviour:

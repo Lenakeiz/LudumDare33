@@ -883,7 +883,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: -2}
+  m_LocalPosition: {x: -2, y: 0, z: 2.05999994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 466128}
@@ -1648,6 +1648,7 @@ MonoBehaviour:
   runAnimName: Charge 01
   idleAnimName: Sit 01
   movementSpeed: 3
+  maxCameraSpeed: 50
 --- !u!114 &11440038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1687,6 +1688,7 @@ MonoBehaviour:
   chillCooldown: 2
   chillCooldownTimer: 0
   amountOfFear: 5
+  markedTiles: []
 --- !u!119 &11957552
 Projector:
   m_ObjectHideFlags: 1
@@ -1920,7 +1922,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -.000601114414, y: .273698986, z: .00976282731}
+  m_ConnectedAnchor: {x: -.000601113425, y: .273698986, z: .0097628776}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2088,7 +2090,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .231208563, y: .123570569, z: -.0222614333}
+  m_ConnectedAnchor: {x: .231208563, y: .123570539, z: -.0222613886}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
