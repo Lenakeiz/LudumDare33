@@ -11,6 +11,7 @@ public class ShowPanels : MonoBehaviour {
 	public GameObject gamePanel;
 	public GameObject gameOverPanel;
 	public GameObject creditsPanel;
+	public GameObject tutorialPanel;
 
 	public Button[] MenuButtons;
 	public Button[] GameOverButtons;
@@ -80,6 +81,12 @@ public class ShowPanels : MonoBehaviour {
 	{
 		menuPanel.GetComponent<CanvasGroup>().alpha = 1.0f;
 		menuPanel.SetActive (true);
+	}
+	
+	public void ShowTutorial()
+	{
+		tutorialPanel.SetActive(true);
+		tutorialPanel.GetComponent<Tutorial>().SetInitializeTrigger();
 	}
 
 	//Call this function to deactivate and hide the main menu panel during the main menu

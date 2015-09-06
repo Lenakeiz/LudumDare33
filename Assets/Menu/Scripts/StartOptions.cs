@@ -15,7 +15,7 @@ public class StartOptions : MonoBehaviour {
 
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
 	[HideInInspector] public Animator animColorFade; 					//Reference to animator which will fade to and from black when starting game.
-	public Animator animMenuAlpha;					//Reference to animator that will fade out alpha of MenuPanel canvas group
+	public Animator animMenuAlpha;										//Reference to animator that will fade out alpha of MenuPanel canvas group
 	public Animator animGameOverAlpha;
 	public Animator animCreditAlpha;
 	[HideInInspector] public AnimationClip fadeColorAnimationClip;		//Animation clip fading to color (black default) when changing scenes
@@ -37,6 +37,18 @@ public class StartOptions : MonoBehaviour {
 
 		//Get a reference to PlayMusic attached to UI object
 		playMusic = GetComponent<PlayMusic> ();
+	}
+
+	public void TutorialButtonClicked()
+	{
+		if(!lockStart)
+		{
+			lockStart = true;
+			animMenuAlpha.SetTrigger("fade");
+			Invoke("StartTutorial", fadeAlphaAnimationClip.length);
+
+			showPanels.ShowTutorial();
+		}
 	}
 
 	public void CreditsButtonClicked()
@@ -186,6 +198,12 @@ public class StartOptions : MonoBehaviour {
 		showPanels.ShowGamePanel();
 		GameObject.Find ("Camera").GetComponent<LevelController>().InitializeLevel();
 		lockRestart = false;
+	}
+
+	public void StartTutorial()
+	{
+		showPanels.HideMenu();
+		lockStart = false;
 	}
 
 	public void ShowCredits()

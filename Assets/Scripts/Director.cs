@@ -3,15 +3,17 @@ using System.Collections;
 
 public class Director : MonoBehaviour {
 
-	public string animation = "Sit 03";
+	public string animation;
+	private Camera cam;
 
 	// Use this for initialization
-	void Start () {
-
+	void Awake () {
+		this.GetComponent<Animator> ().Play (animation);
+		cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		this.GetComponent<Animator> ().Play (animation);	
+		//transform.LookAt(cam.transform.position,Vector3.up);
 	}
 }

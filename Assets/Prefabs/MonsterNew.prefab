@@ -1612,7 +1612,7 @@ MonoBehaviour:
   hauntDirection: {x: 0, y: 0, z: 0}
   arrowOffset: 2
   hauntDuration: 15
-  amountOfFear: 20
+  amountOfFear: 18
 --- !u!114 &11420840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1626,12 +1626,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shoutClip: {fileID: 8300000, guid: f913680a1d2a7c74f8bf47cb48356e5c, type: 3}
   shoutAnimName: Animal 01 Gorilla
-  radius: 3
+  radius: 2.81999993
   castTime: 1
   castTimer: 0
-  shoutCooldown: 2
+  shoutCooldown: 4
   shoutCooldownTimer: 0
-  amountOfFear: 20
+  amountOfFear: 22
 --- !u!114 &11438100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   chillDuration: 6
   chillCooldown: 2
   chillCooldownTimer: 0
-  amountOfFear: 5
+  amountOfFear: 6
   markedTiles: []
 --- !u!119 &11957552
 Projector:
