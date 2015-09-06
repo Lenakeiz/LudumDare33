@@ -47,6 +47,8 @@ public class Actors : MonoBehaviour {
 	public string talkAnimation ="Happy 01";
 
 	public float talkCooldown = 5.0f;
+	public float talkRefresh = 5.0f;
+	float talkRefreshTimer = 0.0f;
 	float talkCooldownTimer =0.0f;
 	public Actors talkTarget; 
 
@@ -181,10 +183,15 @@ public class Actors : MonoBehaviour {
 			Actors a = gameobject.GetComponent<Actors>();
 			if ((a.state == ACTOR_STATE.MOVING || a.state == ACTOR_STATE.CHOOSING || a.state == ACTOR_STATE.GETNEXTTILE) &&
 			    Mathf.Approximately(a.talkCooldownTimer,talkCooldown) && Mathf.Approximately(this.talkCooldownTimer,talkCooldown) 
-			    && !a.forceDirection && !forceDirection)
+			    && !a.forceDirection && !forceDirection
+			    && talkTarget == null && a.talkTarget == null
+			    && Mathf.Approximately(talkRefreshTimer,0.0f) && Mathf.Approximately(a.talkRefreshTimer,0.0f))
 			{
-				a.talkTarget = this;
-				talkTarget = a;
+				if (Random.Range(0,11) > 5)
+				{
+					a.talkTarget = this;
+					talkTarget = a;
+				}
 			}
 		}
 	}
@@ -235,10 +242,21 @@ public class Actors : MonoBehaviour {
 	{
 		moveDirection = dir;
 		forceDirection = true;
-		state = ACTOR_STATE.MOVING;
-		gameObject.GetComponent<Animator>().Play("Run 01");
-		talkTarget = null;
-
+		TryForceActorToNextTile();
+		if(forceDirection)
+		{
+			transform.LookAt(movementTarget.characterPosition,Vector3.up);
+			gameObject.GetComponent<Animator>().Play("Run 01");
+			state = ACTOR_STATE.MOVING;
+		}
+		else
+		{
+			Debug.LogError("Screamed Actor in a non valid direction");
+			state = ACTOR_STATE.CHOOSING;
+		}
+		talkRefreshTimer = talkRefresh;
+		talkCooldownTimer = talkCooldown;
+		ResetTalkingActor();
 	}
 
 	private ACTOR_STATE CheckTileState()
@@ -347,6 +365,14 @@ public class Actors : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+		#if UNITY_EDITOR
+		if(currentTile == null)
+		{
+			Debug.Log(this.actorName + " no current tile");
+		}
+		#endif
+
 		//Updating the UI
 		if(barScript != null)
 		{
@@ -370,7 +396,7 @@ public class Actors : MonoBehaviour {
 
 		if (fear >= 100 && state != ACTOR_STATE.FIENTED) {
 			PlaySound(4,0.0f);
-			string randoFall = "Fall 0" + Random.Range(1,5);
+			string randoFall = "Fall 0" + Random.Range(1,4);
 			gameObject.GetComponent<Animator>().Play(randoFall);
 			state = ACTOR_STATE.FIENTED;
 		}
@@ -393,6 +419,15 @@ public class Actors : MonoBehaviour {
 		}
 		else if (state == ACTOR_STATE.MOVING) 
 		{
+			if(talkRefreshTimer > 0)
+			{
+				talkRefreshTimer -= Time.deltaTime;
+				if(talkRefreshTimer < 0)
+				{
+					talkRefreshTimer = 0;
+				}
+			}
+
 			if(GetActorFearState() == LevelController.ACTOR_STATES.NORMAL && !forceDirection)
 			{
 				gameObject.GetComponent<Animator>().Play("Walk 01");
@@ -405,9 +440,16 @@ public class Actors : MonoBehaviour {
 			movementT += Time.deltaTime * GetSpeed();
 			if(movementT < 1.0f)
 			{
-				this.transform.position = Vector3.Lerp(currentTile.characterPosition,
-				                                       movementTarget.characterPosition,
-				                                       movementT);
+				if(currentTile != null && movementTarget != null)
+				{
+					this.transform.position = Vector3.Lerp(currentTile.characterPosition,
+					                                       movementTarget.characterPosition,
+					                                       movementT);
+				}
+				else
+				{
+					Debug.LogError("Movement attempt without start or end tile");					
+				}
 			}
 			else
 			{
@@ -418,6 +460,15 @@ public class Actors : MonoBehaviour {
 		}
 		else if(state == ACTOR_STATE.GETNEXTTILE)
 		{
+			if(talkRefreshTimer > 0)
+			{
+				talkRefreshTimer -= Time.deltaTime;
+				if(talkRefreshTimer < 0)
+				{
+					talkRefreshTimer = 0;
+				}
+			}
+
 			previousTile = currentTile;
 			currentTile = movementTarget;
 			movementT = 0;
@@ -454,16 +505,19 @@ public class Actors : MonoBehaviour {
 				else
 				{
 					//can talk or continue to move
-					if(talkTarget != null && !isPanicking)
+					if(talkTarget != null && !isPanicking && Mathf.Approximately(talkRefreshTimer,0f))
 					{
 						this.GetComponent<Animator>().Play(talkAnimation);
 						talkCooldownTimer = talkCooldown;
+						talkRefreshTimer = talkRefresh;
 						state = ACTOR_STATE.TALKING;
 					}
 					else
 					{
 						if(isPanicking)
 						{
+							talkRefreshTimer = talkRefresh;
+							talkCooldownTimer = talkCooldown;
 							ResetTalkingActor();
 						}
 						
@@ -639,6 +693,7 @@ public class Actors : MonoBehaviour {
 					if(Mathf.Approximately(talkCooldownTimer,0.0f))
 					{
 						talkCooldownTimer = talkCooldown;
+						talkRefreshTimer = talkRefresh;
 						ResetTalkingActor();
 						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 						roamingT = 0f;
@@ -676,21 +731,46 @@ public class Actors : MonoBehaviour {
 
 				break;
 			case ACTOR_STATE.HAUNTED:
-				GameObject player = GameObject.FindGameObjectWithTag("Player");
-				if(player)
+				talkRefreshTimer = talkRefresh;
+				talkCooldownTimer = talkCooldown;
+				ResetTalkingActor();
+				if(forceDirection)
 				{
-					Haunt h = player.GetComponent<Haunt>();
-					moveDirection = h.HauntActor(this);
-					forceDirection = true;
-					ResetTalkingActor();
-					talkCooldownTimer = talkCooldown;
-					gameObject.GetComponent<Animator>().Play("Run 01");
-					PlaySound(3,0);
-					state = ACTOR_STATE.MOVING;
+					//forcing actor to move in a direction, if failing forcedirection will be setted to false
+					TryForceActorToNextTile();
+					if(forceDirection)
+					{
+						transform.LookAt(movementTarget.characterPosition,Vector3.up);
+						state = ACTOR_STATE.MOVING;
+					}
+					else
+					{
+						roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
+						roamingT = 0f;
+						currIdleAnimationPlaying = Random.Range(1,5);
+						state = ACTOR_STATE.CHOOSING;
+					}
 				}
 				break;
 			case ACTOR_STATE.CHILLED:
-				//TODO
+				scaredAnimation = "Scared 0" + Random.Range(1,3);
+				GameObject player = GameObject.FindGameObjectWithTag("Player");
+				if(player)
+				{
+					Chill c = player.GetComponent<Chill>();
+					if(c)
+					{
+						c.AddActorToCurrentChill(this);
+					}
+					else
+					{
+						Debug.LogError("Chilled activated but not detected from actrors");
+					}
+				}
+				talkRefreshTimer = talkRefresh;
+				talkCooldownTimer = talkCooldown;
+				ResetTalkingActor();
+				state = ACTOR_STATE.CHILLED;
 				break;
 			default:
 				break;
@@ -713,6 +793,7 @@ public class Actors : MonoBehaviour {
 		else if (state == ACTOR_STATE.NONE)
 		{
 			talkCooldownTimer = talkCooldown;
+			talkRefreshTimer = talkRefresh;
 			roamingWaitTime = Random.Range(minRoamingWaitTime,maxRoamingWaitTime);
 			roamingT = 0f;
 			currIdleAnimationPlaying = Random.Range(1,5);

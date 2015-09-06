@@ -74,7 +74,7 @@ public class Haunt : MonoBehaviour {
 		actor.AddFear (amountOfFear);
 
 		//TODO NEVER CHANGE MACHINE STATES OUTSIDE OTHER CLASSES
-		actor.state = Actors.ACTOR_STATE.MOVING;
+		//actor.state = Actors.ACTOR_STATE.MOVING;
 
 		if(hauntDirection.z >0)
 		{
@@ -207,11 +207,12 @@ public class Haunt : MonoBehaviour {
 				hauntPrefab.transform.localRotation = Quaternion.LookRotation(hauntDirection,Vector3.up);
 				arrowPrefab.gameObject.SetActive(false);
 				player.CancelAction(lockNumber);
+				
+				choosingDirection = false;
+				hauntDurationTimer = hauntDuration;
 				player.currentTile.effectsOnTile |= Tile.TILE_EFFECTS.HAUNT;
 				hauntedTiles[0] = player.currentTile;
 
-				choosingDirection = false;
-				hauntDurationTimer = hauntDuration;
 			}
 		}
 	}

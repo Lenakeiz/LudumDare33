@@ -1624,6 +1624,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1f618b87790a4fc479dc8af37dc93ce6, type: 3}
   talkAnimation: Arguing 01
   talkCooldown: 20
+  talkRefresh: 6
   talkTarget: {fileID: 0}
   currentTile: {fileID: 0}
   isPanicking: 0
@@ -3424,6 +3425,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxRoamingWaitTime
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: talkRefresh
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
