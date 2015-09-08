@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &112782
 GameObject:
   m_ObjectHideFlags: 1
@@ -459,7 +459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &128718
 GameObject:
   m_ObjectHideFlags: 1
@@ -1063,7 +1063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &158188
 GameObject:
   m_ObjectHideFlags: 1
@@ -1410,7 +1410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &188058
 GameObject:
   m_ObjectHideFlags: 1
@@ -1906,15 +1906,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialStructure:
-  - Text: Hello recruiter
+  - Text: Oh nice! Finally! Where have you been?!?... You seem changed... anyway we
+      are already in late. Let's move on!
     Movie: {fileID: 0}
-  - Text: This is a move
-    Movie: {fileID: 15200000, guid: 234c4ae49dcd76d4cab62b9d796be76e, type: 3}
-  - Text: End of Tutorial
+  - Text: So we have already set the cameras around the place... In totally there
+      are 4 different cameras, one in each room. It is up to you to find where they
+      are so you will remember better.
+    Movie: {fileID: 0}
+  - Text: Your job today is just following my tasks. Each of them consists on bringing
+      one or more actors in front of a certain camera and in a certain state of fear.
+    Movie: {fileID: 0}
+  - Text: In order to do so you can use the skills we have teached you while ago...
+      What?! You already forgot them?! No problem... take a look down there.
+    Movie: {fileID: 0}
+  - Text: You can use you CHILL (Q) power to immediately confuse the actor and stop
+      them.
+    Movie: {fileID: 15200000, guid: e45e735599073b74a98adc3db1047822, type: 3}
+  - Text: With your CLONE (W) you can scare actors in any direction you want. Remember
+      that you can place the clone and choose the direction afterwards.
+    Movie: {fileID: 15200000, guid: f64e3527ab557de4d8cfdfb28aa17260, type: 3}
+  - Text: Finally with your SCREAM (E) you will make people run out from you. Beware
+      that this cause the maximum amount of fear and actors can react very bad to
+      it.
+    Movie: {fileID: 15200000, guid: 15f3950104f630b4386c44ff03170ee8, type: 3}
+  - Text: Each power has a timer for which it stays active as well as a cooldown before
+      can be utilized again. So choose wisely!
+    Movie: {fileID: 0}
+  - Text: Also tasks can be done in any order you want... the important is that you
+      don't make the production run out of film!
+    Movie: {fileID: 0}
+  - Text: So if there are any questions I will go behind the screens! SHOW ME THE
+      STAR WITHIN YOU!
+    Movie: {fileID: 0}
+  - Text: (Mmmmh I am still thinking something is changed...)
     Movie: {fileID: 0}
   director: {fileID: 0}
   initialPos: {fileID: 0}
   finalPos: {fileID: 0}
+  lerpTimer: 0
+  speed: .300000012
 --- !u!114 &11404936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3323,7 +3353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
@@ -5596,10 +5626,10 @@ RectTransform:
   - {fileID: 22418722}
   m_Father: {fileID: 22469704}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -60.0000153}
-  m_SizeDelta: {x: 116, y: 60.0000305}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22413598
 RectTransform:
@@ -5893,10 +5923,10 @@ RectTransform:
   - {fileID: 22402464}
   m_Father: {fileID: 22469704}
   m_RootOrder: 4
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 662, y: -60.0000153}
-  m_SizeDelta: {x: 116, y: 60.0000305}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22424764
 RectTransform:
@@ -6297,10 +6327,10 @@ RectTransform:
   - {fileID: 22493076}
   m_Father: {fileID: 22469704}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 511, y: -60.0000153}
-  m_SizeDelta: {x: 116, y: 60.0000305}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22445202
 RectTransform:
@@ -6718,10 +6748,10 @@ RectTransform:
   - {fileID: 22468238}
   m_Father: {fileID: 22469704}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 58, y: -60.0000153}
-  m_SizeDelta: {x: 116, y: 60.0000305}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22477014
 RectTransform:
@@ -6807,10 +6837,10 @@ RectTransform:
   - {fileID: 22453874}
   m_Father: {fileID: 22469704}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 209, y: -60.0000153}
-  m_SizeDelta: {x: 116, y: 60.0000305}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22483562
 RectTransform:

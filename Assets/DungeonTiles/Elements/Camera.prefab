@@ -342,7 +342,7 @@ MonoBehaviour:
   activeActors: 
   taskIsDone: 
   numTasks: 3
-  levelTimeLimit: 10
+  levelTimeLimit: 300
   map: {fileID: 0}
   checkTasks: 1
   lostGame: 0
@@ -350,6 +350,8 @@ MonoBehaviour:
   uiUpdater: {fileID: 0}
   uiTaskUpdater: {fileID: 0}
   cameraUIText: {fileID: 0}
+  lvlCounterText: {fileID: 0}
+  lvlCounter: 1
   gameState: 0
 --- !u!114 &11422298
 MonoBehaviour:
@@ -378,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   failAnimationName: Fall 01
-  winAinimationName: 
+  winAinimationName: Jack Michaelson 01
   zoomedDistance: 4
   zoomSpeedMultiplier: .5
 --- !u!114 &11481238
