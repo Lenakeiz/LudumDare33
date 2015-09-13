@@ -339,10 +339,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f8d6fba1032e4be47b42f34d6de2a17a, type: 3}
   - {fileID: 8300000, guid: d065756d5a41bd44eb32a77326c305b3, type: 3}
   - {fileID: 8300000, guid: 7a7371179e0ee2c40b01c168796e6fb2, type: 3}
+  cameraInitialPosition: {fileID: 0}
   activeActors: 
   taskIsDone: 
   numTasks: 3
-  levelTimeLimit: 300
+  levelTimeLimit: 5
   map: {fileID: 0}
   checkTasks: 1
   lostGame: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   failAnimationName: Fall 01
   winAinimationName: Jack Michaelson 01
+  finalAngle: 40
   zoomedDistance: 4
   zoomSpeedMultiplier: .5
 --- !u!114 &11481238

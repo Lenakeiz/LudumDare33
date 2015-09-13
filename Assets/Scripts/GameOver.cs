@@ -9,10 +9,10 @@ public class GameOver : MonoBehaviour {
 	GameObject player; 
 	GameObject mainCamera;
 	Vector3 originalCameraPos;
+	float initialAngle;
+	public float finalAngle;
 
-
-	
-	public float zoomedDistance =2.0f;
+	public float zoomedDistance = 2.0f;
 	public float zoomSpeedMultiplier = 0.5f;
 	bool zoomCamera;
 	float t=0;
@@ -33,9 +33,11 @@ public class GameOver : MonoBehaviour {
 
 		Actors[] actors = GameOver.FindObjectsOfType<Actors> ();
 		foreach (Actors a in actors) {
+			a.GetComponent<Animator>().Play("Idle 01");
 			a.enabled=false;
 		}
 		zoomCamera = true;
+		initialAngle = mainCamera.transform.eulerAngles.x;
 		if (didWeWin) {
 			player.GetComponent<Animator> ().Play (winAinimationName);
 		} else {
@@ -61,6 +63,8 @@ public class GameOver : MonoBehaviour {
 				{
 					t += Time.deltaTime;
 					mainCamera.transform.position = Vector3.Lerp(originalCameraPos,player.transform.position,t * zoomSpeedMultiplier);
+					float calculatedAngle = Mathf.LerpAngle(initialAngle,finalAngle,t * zoomSpeedMultiplier);
+					mainCamera.transform.eulerAngles = new Vector3(calculatedAngle, 0 ,0);
 				}
 				else{
 					zoomCamera = false;

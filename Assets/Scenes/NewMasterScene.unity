@@ -403,6 +403,10 @@ Prefab:
       propertyPath: cameras.Array.data[3]
       value: 
       objectReference: {fileID: 734387529}
+    - target: {fileID: 11403580, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
+      propertyPath: cameraInitialPosition
+      value: 
+      objectReference: {fileID: 1752546791}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   m_IsPrefabParent: 0

@@ -59,6 +59,8 @@ public class LevelController : MonoBehaviour {
 	public float maxDelayTimeTalking = 3.0f;
 	public List<AudioClip> clips;
 
+	public Transform cameraInitialPosition;
+
 	DIFFICULTY levelDifficulty;
 
 	public class Situation
@@ -366,6 +368,12 @@ public class LevelController : MonoBehaviour {
 	private void ResetLevel()
 	{
 		map.ResetLevel ();
+		transform.position = new Vector3(cameraInitialPosition.position.x, cameraInitialPosition.position.y, cameraInitialPosition.position.z);
+
+		Quaternion tempRotation = transform.rotation;
+		tempRotation.eulerAngles = new Vector3(cameraInitialPosition.rotation.eulerAngles.x, cameraInitialPosition.rotation.eulerAngles.y, cameraInitialPosition.rotation.eulerAngles.z);
+		transform.rotation = tempRotation;
+
 		GameObject[] uiGauges = GameObject.FindGameObjectsWithTag("GaugeBar");
 		if(uiGauges == null)
 		{
